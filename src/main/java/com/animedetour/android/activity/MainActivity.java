@@ -89,11 +89,19 @@ public class MainActivity extends Activity
             R.string.drawer_open,
             R.string.drawer_close
         ) {
+            /**
+             * Stores the page title while the drawer is open
+             */
+            private CharSequence title;
+
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
+                MainActivity.this.getActionBar().setTitle(this.title);
             }
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                this.title = MainActivity.this.getActionBar().getTitle();
+                MainActivity.this.getActionBar().setTitle(R.string.app_name);
             }
         };
 
@@ -101,6 +109,7 @@ public class MainActivity extends Activity
         this.drawer.setDrawerListener(this.drawerToggle);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.drawable.flat_logo);
     }
 
     /**
@@ -109,6 +118,7 @@ public class MainActivity extends Activity
     @OnClick(R.id.drawer_home)
     protected void openLandingFragment()
     {
+        this.getActionBar().setTitle(R.string.home_title);
         this.drawer.closeDrawer(Gravity.START);
         this.contentFragmentTransaction(new LandingFragment(), false);
     }

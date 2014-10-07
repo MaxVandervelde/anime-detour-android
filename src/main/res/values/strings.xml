@@ -5,4 +5,5 @@
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
     <string name="drawer_home_label">Home</string>
+    <string name="home_title">Home</string>
 </resources>

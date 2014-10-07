@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.BaseProject" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/PrimaryBar</item>
+    </style>
 
+    <style name="PrimaryBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/foreground_inverse</item>
     </style>
 </resources>
