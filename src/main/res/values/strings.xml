@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">AnimeDetour</string>
     <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    <string name="drawer_home_label">Home</string>
 </resources>

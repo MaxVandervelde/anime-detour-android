@@ -9,4 +9,12 @@
         <item name="android:textSize">45sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+    <style name="drawer_row">
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/drawer_row_background</item>
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:padding">16sp</item>
+    </style>
 </resources>
