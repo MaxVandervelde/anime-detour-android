@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="default_content">
+        <item name="android:background">@color/background</item>
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+    <style name="banner">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+</resources>

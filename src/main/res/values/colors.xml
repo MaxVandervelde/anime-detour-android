@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dim">#ff3b50ce</color>
+    <color name="primary">#ff5677fc</color>
+    <color name="primary_highlight">#ff738ffe</color>
+
+    <color name="danger_dim">#ffc41411</color>
+    <color name="danger">#ffe51c23</color>
+    <color name="danger_highlight">#ffe84e40</color>
+
+    <color name="warning_dim">#ffef6c00</color>
+    <color name="warning">#ffff9800</color>
+    <color name="warning_highlight">#ffffa726</color>
+
+    <color name="success_dim">#ff056f00</color>
+    <color name="success">#ff259b24</color>
+    <color name="success_highlight">#ff2baf2b</color>
+
+
+    <color name="accent_dim">#ffad1457</color>
+    <color name="accent">#ffe91e63</color>
+    <color name="accent_highlight">#ffec407a</color>
+
+    <color name="foreground_dim">#ff000000</color>
+    <color name="foreground">#ff212121</color>
+    <color name="foreground_highlight">#ff424242</color>
+    <color name="foreground_inverse">#ffffffff</color>
+
+    <color name="background_dim">#ffe0e0e0</color>
+    <color name="background">#fffafafa</color>
+    <color name="background_highlight">#ffffffff</color>
+    <color name="background_inverse">#ff000000</color>
+</resources>
