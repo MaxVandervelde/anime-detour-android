@@ -27,5 +27,26 @@
             android:layout_height="wrap_content"
             android:text="@string/drawer_home_label"
         />
+        <TextView
+            android:id="@+id/drawer_guests"
+            style="@style/drawer_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drawer_guests_label"
+        />
+        <TextView
+            android:id="@+id/drawer_programming"
+            style="@style/drawer_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drawer_programming_label"
+        />
+        <TextView
+            android:id="@+id/drawer_maps"
+            style="@style/drawer_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/drawer_maps_label"
+        />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
