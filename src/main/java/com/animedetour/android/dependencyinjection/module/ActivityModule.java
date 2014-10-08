@@ -6,13 +6,14 @@
 package com.animedetour.android.dependencyinjection.module;
 
 import com.animedetour.android.fragment.LandingFragment;
+import com.animedetour.sched.api.dependencyinjection.ApiModule;
 import com.inkapplications.android.standard.dependencyinjection.module.StandardActivityModule;
 import com.animedetour.android.activity.MainActivity;
 import dagger.Module;
 
 @Module(
     includes = {
-
+        ApiModule.class,
     },
     injects = {
         MainActivity.class,
@@ -25,5 +26,4 @@ import dagger.Module;
 )
 public class ActivityModule
 {
-
 }

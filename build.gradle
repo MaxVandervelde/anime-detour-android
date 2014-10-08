@@ -24,6 +24,11 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/license/THIRD-PARTY.txt'
     }
 }
 
@@ -36,6 +41,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:4.0.+'
     compile 'com.squareup.dagger:dagger:1.1.+'
     compile 'com.squareup.dagger:dagger-compiler:1.1.+'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.squareup.retrofit:converter-jackson:1.6.+'
+    compile 'com.cedarsoft.serialization.commons-serializers:jackson:6.0.+'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.2.1'
     compile 'org.mockito:mockito-core:1.9.+'
     compile 'junit:junit:4.11'
     compile 'org.easytesting:fest-assert:1.4'
