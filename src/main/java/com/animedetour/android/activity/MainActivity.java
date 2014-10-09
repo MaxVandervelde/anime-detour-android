@@ -19,6 +19,8 @@ import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.animedetour.android.fragment.Fragment;
 import com.animedetour.android.fragment.LandingFragment;
+import com.animedetour.android.fragment.ScheduleFragment;
+import icepick.Icicle;
 
 /**
  * Main containing Activity
@@ -35,6 +37,14 @@ public class MainActivity extends Activity
     private ActionBarDrawerToggle drawerToggle;
 
     /**
+     * Storage of the current page title.
+     *
+     * This is used for when the drawer is opened/closed and the title is
+     * swapped with the application title
+     */
+    @Icicle String pageTitle;
+
+    /**
      * View of the main sliding left drawer
      */
     @InjectView(R.id.drawer_layout)
@@ -46,7 +56,12 @@ public class MainActivity extends Activity
         this.setContentView(R.layout.main);
         super.onCreate(savedInstanceState);
 
-        this.openLandingFragment();
+        if (null == savedInstanceState) {
+            this.openLandingFragment();
+        } else {
+            MainActivity.this.getActionBar().setTitle(this.pageTitle);
+        }
+
         this.setupNavigation();
     }
 
@@ -89,18 +104,12 @@ public class MainActivity extends Activity
             R.string.drawer_open,
             R.string.drawer_close
         ) {
-            /**
-             * Stores the page title while the drawer is open
-             */
-            private CharSequence title;
-
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                MainActivity.this.getActionBar().setTitle(this.title);
+                MainActivity.this.getActionBar().setTitle(MainActivity.this.pageTitle);
             }
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                this.title = MainActivity.this.getActionBar().getTitle();
                 MainActivity.this.getActionBar().setTitle(R.string.app_name);
             }
         };
@@ -118,9 +127,20 @@ public class MainActivity extends Activity
     @OnClick(R.id.drawer_home)
     protected void openLandingFragment()
     {
-        this.getActionBar().setTitle(R.string.home_title);
+        this.setPageTitle(R.string.home_title);
         this.drawer.closeDrawer(Gravity.START);
         this.contentFragmentTransaction(new LandingFragment(), false);
+    }
+
+    /**
+     * Opens the Schedule / Programming page in the main view
+     */
+    @OnClick(R.id.drawer_programming)
+    protected void openScheduleFragment()
+    {
+        this.setPageTitle(R.string.schedule_title);
+        this.drawer.closeDrawer(Gravity.START);
+        this.contentFragmentTransaction(new ScheduleFragment(), false);
     }
 
     /**
@@ -137,5 +157,16 @@ public class MainActivity extends Activity
             transaction.addToBackStack(null);
         }
         transaction.commit();
+    }
+
+    /**
+     * Sets the page title to appear in the action bar when the drawer is closed
+     *
+     * @param resourceId The current page title
+     */
+    protected void setPageTitle(int resourceId)
+    {
+        this.pageTitle = this.getString(resourceId);
+        this.getActionBar().setTitle(resourceId);
     }
 }

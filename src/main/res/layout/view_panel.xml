@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      style="@style/card"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+>
+    <TextView
+        style="@style/title"
+        android:id="@+id/view_panel_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Panel Name"
+    />
+
+    <TextView
+        style="@style/caption"
+        android:id="@+id/view_panel_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1:00 - 4:00 in Room B"
+    />
+</LinearLayout>

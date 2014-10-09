@@ -23,7 +23,6 @@ public class LandingFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.landing, container, false);
 
         return view;

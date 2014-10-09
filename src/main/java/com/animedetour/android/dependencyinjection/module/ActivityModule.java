@@ -6,6 +6,7 @@
 package com.animedetour.android.dependencyinjection.module;
 
 import com.animedetour.android.fragment.LandingFragment;
+import com.animedetour.android.fragment.ScheduleFragment;
 import com.animedetour.sched.api.dependencyinjection.ApiModule;
 import com.inkapplications.android.standard.dependencyinjection.module.StandardActivityModule;
 import com.animedetour.android.activity.MainActivity;
@@ -19,6 +20,7 @@ import dagger.Module;
         MainActivity.class,
 
         LandingFragment.class,
+        ScheduleFragment.class
     },
     addsTo = StandardActivityModule.class,
     complete = false,

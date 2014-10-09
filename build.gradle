@@ -45,6 +45,8 @@ dependencies {
     compile 'com.squareup.retrofit:converter-jackson:1.6.+'
     compile 'com.cedarsoft.serialization.commons-serializers:jackson:6.0.+'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.2.1'
+    compile 'com.github.frankiesardo:icepick:2.3.6'
+    provided 'com.github.frankiesardo:icepick-processor:2.3.6'
     compile 'org.mockito:mockito-core:1.9.+'
     compile 'junit:junit:4.11'
     compile 'org.easytesting:fest-assert:1.4'

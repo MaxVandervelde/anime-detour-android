@@ -6,6 +6,7 @@
     <string name="drawer_close">Close Drawer</string>
     <string name="drawer_home_label">Home</string>
     <string name="home_title">Home</string>
+    <string name="schedule_title">Schedule</string>
     <string name="drawer_guests_label">Guests</string>
     <string name="drawer_programming_label">Programming</string>
     <string name="drawer_maps_label">Maps</string>

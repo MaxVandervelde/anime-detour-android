@@ -15,6 +15,33 @@
         <item name="android:textColor">@color/foreground</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:padding">24sp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="display1">
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+    <style name="title">
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="body1">
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="caption">
+        <item name="android:textColor">@color/foreground_highlight</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="card">
+        <item name="android:background">@drawable/card_background</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:padding">16dp</item>
     </style>
 </resources>
