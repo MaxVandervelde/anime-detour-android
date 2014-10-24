@@ -10,4 +10,6 @@
     <string name="drawer_guests_label">Guests</string>
     <string name="drawer_programming_label">Programming</string>
     <string name="drawer_maps_label">Maps</string>
+
+    <string name="panel_details">%1$ta, %1$tl:%1$tM - %2$tl:%2$tM%2$tp in %3$s</string>
 </resources>

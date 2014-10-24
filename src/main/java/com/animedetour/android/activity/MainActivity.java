@@ -5,12 +5,12 @@
  */
 package com.animedetour.android.activity;
 
-import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,16 +50,24 @@ public class MainActivity extends Activity
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawer;
 
+    @InjectView(R.id.main_action_bar)
+    Toolbar actionBar;
+
+    @Override
+    protected void setupContentView()
+    {
+        this.setContentView(R.layout.main);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        this.setContentView(R.layout.main);
         super.onCreate(savedInstanceState);
 
         if (null == savedInstanceState) {
             this.openLandingFragment();
         } else {
-            MainActivity.this.getActionBar().setTitle(this.pageTitle);
+            MainActivity.this.actionBar.setTitle(this.pageTitle);
         }
 
         this.setupNavigation();
@@ -97,28 +105,26 @@ public class MainActivity extends Activity
      */
     protected void setupNavigation()
     {
+        Toolbar toolbar = this.actionBar;
+
         this.drawerToggle = new ActionBarDrawerToggle(
             this,
             this.drawer,
-            R.drawable.ic_drawer,
+            toolbar,
             R.string.drawer_open,
             R.string.drawer_close
         ) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                MainActivity.this.getActionBar().setTitle(MainActivity.this.pageTitle);
+                MainActivity.this.actionBar.setTitle(MainActivity.this.pageTitle);
             }
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                MainActivity.this.getActionBar().setTitle(R.string.app_name);
+                MainActivity.this.actionBar.setTitle(R.string.app_name);
             }
         };
 
-        ActionBar actionBar = this.getActionBar();
         this.drawer.setDrawerListener(this.drawerToggle);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.flat_logo);
     }
 
     /**
@@ -167,6 +173,6 @@ public class MainActivity extends Activity
     protected void setPageTitle(int resourceId)
     {
         this.pageTitle = this.getString(resourceId);
-        this.getActionBar().setTitle(resourceId);
+        this.actionBar.setTitle(resourceId);
     }
 }

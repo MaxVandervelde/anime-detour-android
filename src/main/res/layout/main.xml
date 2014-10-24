@@ -1,52 +1,71 @@
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
 >
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_action_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/primary"
+    />
+    <android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    />
-
-    <!-- The navigation drawer -->
-    <LinearLayout
-        style="@style/default_content"
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:orientation="vertical"
     >
-        <TextView
-            android:id="@+id/drawer_home"
-            style="@style/drawer_row"
+        <!-- The main content view -->
+        <FrameLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/drawer_home_label"
+            android:layout_height="match_parent"
         />
-        <TextView
-            android:id="@+id/drawer_guests"
-            style="@style/drawer_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/drawer_guests_label"
-        />
-        <TextView
-            android:id="@+id/drawer_programming"
-            style="@style/drawer_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/drawer_programming_label"
-        />
-        <TextView
-            android:id="@+id/drawer_maps"
-            style="@style/drawer_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/drawer_maps_label"
-        />
-    </LinearLayout>
-</android.support.v4.widget.DrawerLayout>
+
+        <!-- The navigation drawer -->
+        <LinearLayout
+            style="@style/default_content"
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+        >
+            <TextView
+                android:id="@+id/drawer_home"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_home_label"
+            />
+            <TextView
+                android:id="@+id/drawer_guests"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_guests_label"
+            />
+            <TextView
+                android:id="@+id/drawer_programming"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_programming_label"
+            />
+            <TextView
+                android:id="@+id/drawer_maps"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_maps_label"
+            />
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

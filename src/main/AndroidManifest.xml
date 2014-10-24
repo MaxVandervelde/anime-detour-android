@@ -9,16 +9,23 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.BaseProject"
-        android:name="com.animedetour.android.Application">
+        android:theme="@style/Theme.AnimeDetour"
+        android:name="com.animedetour.android.Application"
+    >
         <activity
             android:name="com.animedetour.android.activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:theme="@style/Theme.AnimeDetour.TransparentHeader"
+            android:name="com.animedetour.android.activity.EventActivity"
+            android:icon="@drawable/flat_logo"
+        />
     </application>
 
 </manifest>

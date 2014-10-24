@@ -20,7 +20,7 @@ import java.io.IOException;
  * Panel Date Deserializer
  *
  * This deserializes the format of the panel start and end dates from their
- * `yyyy-mm-dd HH:mm` format into a Joda DateTime object
+ * `yyyy-mm-dd HH:mm:ss` format into a Joda DateTime object
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
@@ -42,7 +42,7 @@ public class PanelDateDeserializer extends JsonDeserializer<ReadableInstant>
             return null;
         }
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-mm-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.parseDateTime(value);
     }
 }

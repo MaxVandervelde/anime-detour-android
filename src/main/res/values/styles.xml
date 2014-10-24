@@ -17,31 +17,34 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:padding">16dp</item>
     </style>
-    <style name="display1">
+    <style name="display1" parent="Base.TextAppearance.AppCompat.Display1">
         <item name="android:textColor">@color/foreground</item>
-        <item name="android:textSize">34sp</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:layout_marginBottom">12dp</item>
     </style>
-    <style name="title">
+    <style name="title" parent="Base.TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/foreground</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
-    <style name="body1">
+    <style name="headline" parent="Base.TextAppearance.AppCompat.Headline">
         <item name="android:textColor">@color/foreground</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_marginBottom">8dp</item>
     </style>
-    <style name="caption">
+    <style name="subhead" parent="Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/foreground</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+    <style name="body1" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+    <style name="caption" parent="Base.TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/foreground_highlight</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
     <style name="card">
         <item name="android:background">@drawable/card_background</item>
         <item name="android:layout_margin">4dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="panel">
         <item name="android:padding">16dp</item>
     </style>
 </resources>

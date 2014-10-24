@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.animedetour.android.R;
-import com.animedetour.sched.api.model.Panel;
+import com.animedetour.sched.api.model.Event;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -90,17 +90,17 @@ public class PanelView extends RelativeLayout
     /**
      * Bind a panel object to display in the view
      *
-     * @param panel The panel to sync data from
+     * @param event The panel to sync data from
      */
-    public void bind(Panel panel)
+    public void bind(Event event)
     {
-        String timeRange = this.getTimeRangeString(panel.getStartDateTime(), panel.getEndDateTime());
+        String timeRange = this.getTimeRangeString(event.getStartDateTime(), event.getEndDateTime());
         String inPreposition = this.getContext().getString(R.string.in_preposition);
-        String venue = panel.getVenue();
+        String venue = event.getVenue();
         String fullDescription = timeRange + " " + inPreposition + " " + venue;
 
         this.setDescription(fullDescription);
-        this.setTitle(panel.getName());
+        this.setTitle(event.getName());
     }
 
     /**

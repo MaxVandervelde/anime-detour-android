@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.animedetour.android.view.schedule.PanelView;
-import com.animedetour.sched.api.model.Panel;
+import com.animedetour.sched.api.model.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,30 +25,30 @@ import java.util.List;
 public class PanelListAdapter extends BaseAdapter
 {
     private Context context;
-    private List<Panel> panels;
+    private List<Event> events;
 
     public PanelListAdapter(Context context)
     {
         this.context = context;
-        this.panels = new ArrayList<Panel>();
+        this.events = new ArrayList<Event>();
     }
 
-    public void setPanels(List<Panel> panels)
+    public void setEvents(List<Event> events)
     {
-        this.panels = panels;
+        this.events = events;
         this.notifyDataSetChanged();
     }
 
     @Override
     public int getCount()
     {
-        return this.panels.size();
+        return this.events.size();
     }
 
     @Override
-    public Panel getItem(int i)
+    public Event getItem(int i)
     {
-        return this.panels.get(i);
+        return this.events.get(i);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class PanelListAdapter extends BaseAdapter
             view = (PanelView) recycledView;
         }
 
-        Panel panel = this.getItem(i);
-        view.bind(panel);
+        Event event = this.getItem(i);
+        view.bind(event);
 
         return view;
     }

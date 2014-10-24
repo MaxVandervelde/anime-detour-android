@@ -7,16 +7,20 @@ package com.animedetour.android.fragment;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
-import com.inkapplications.android.standard.fragment.BaseFragment;
+import com.animedetour.android.activity.Activity;
+import dagger.ObjectGraph;
 import icepick.Icepick;
 
-public class Fragment extends BaseFragment
+import java.util.List;
+
+public class Fragment extends android.app.Fragment
 {
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
 
+        this.injectDagger();
         ButterKnife.inject(this, this.getView());
     }
 
@@ -32,5 +36,31 @@ public class Fragment extends BaseFragment
         super.onSaveInstanceState(outState);
 
         Icepick.saveInstanceState(this, outState);
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    /**
+     * Inject Dagger
+     *
+     * Uses Dagger to inject the current class with the base activity
+     * dependencies.
+     * This method may not be overridden, as fragments do not need their own
+     * dependency graph.
+     */
+    private void injectDagger()
+    {
+        Activity parentActivity = (Activity) this.getActivity();
+        List<Object> parentModules = parentActivity.getModules();
+
+        ObjectGraph graph = ObjectGraph.create(parentModules.toArray());
+
+        graph.inject(this);
+        graph.injectStatics();
     }
 }

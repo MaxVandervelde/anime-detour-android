@@ -5,12 +5,17 @@
  */
 package com.animedetour.sched.api;
 
-import com.animedetour.sched.api.model.Schedule;
+import com.animedetour.sched.api.model.Event;
 import retrofit.Callback;
 import retrofit.http.GET;
 
+import java.util.List;
+
 public interface ScheduleEndpoint
 {
-    @GET("/sched_list")
-    public void getSchedule(Callback<Schedule> callback);
+    @GET("/sched_events")
+    public void getSchedule(Callback<List<Event>> callback);
+
+    @GET("/sched_events")
+    public List<Event> getSchedule();
 }

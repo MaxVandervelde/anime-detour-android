@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+>
+    <ScrollView
+        style="@style/default_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        >
+            <com.animedetour.android.view.ImageScrim
+                android:id="@+id/event_banner"
+                android:background="@color/primary"
+                app:image_title="Event Name"
+                app:image_textPaddingTop="72dp"
+                app:image_height="200dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+            />
+            <TextView
+                android:padding="16dp"
+                style="@style/subhead"
+                android:id="@+id/event_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed, 11:00AM-1:45PM in Room B"
+            />
+            <TextView
+                android:id="@+id/event_text"
+                style="@style/body1"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
+            />
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/event_action_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false"
+    />
+</FrameLayout>

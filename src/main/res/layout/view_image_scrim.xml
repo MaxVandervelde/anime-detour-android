@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/banner"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+    <View
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_double_scrim"
+    />
+    <TextView
+        style="@style/headline"
+        android:textColor="@color/foreground_inverse"
+        android:id="@+id/title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="bottom|start"
+        android:text="Image Title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+</merge>

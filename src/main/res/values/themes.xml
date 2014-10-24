@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.BaseProject" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/PrimaryBar</item>
+    <style name="Theme.AnimeDetour" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dim</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/primary</item>
     </style>
 
-    <style name="PrimaryBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/primary</item>
-        <item name="android:textColor">@color/foreground_inverse</item>
+    <style name="Theme.AnimeDetour.TransparentHeader" parent="Theme.AnimeDetour">
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>

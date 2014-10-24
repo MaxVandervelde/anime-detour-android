@@ -5,27 +5,29 @@
  */
 package com.animedetour.android.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import butterknife.InjectView;
 import com.animedetour.android.R;
+import com.animedetour.android.activity.EventActivity;
 import com.animedetour.android.adapter.PanelListAdapter;
-import com.animedetour.sched.api.ScheduleEndpoint;
-import com.animedetour.sched.api.model.Day;
-import com.animedetour.sched.api.model.Hour;
-import com.animedetour.sched.api.model.Panel;
-import com.animedetour.sched.api.model.Schedule;
+import com.animedetour.android.database.event.EventRepository;
+import com.animedetour.sched.api.model.Event;
 import icepick.Icicle;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import org.apache.commons.logging.Log;
+import org.joda.time.DateTime;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Schedule fragment
@@ -34,10 +36,13 @@ import java.util.ArrayList;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class ScheduleFragment extends Fragment implements Callback<Schedule>
+public class ScheduleFragment extends Fragment
 {
     @Inject
-    ScheduleEndpoint endpoint;
+    EventRepository eventData;
+
+    @Inject
+    Log logger;
 
     @InjectView(R.id.panel_list)
     ListView panelList;
@@ -69,35 +74,50 @@ public class ScheduleFragment extends Fragment implements Callback<Schedule>
 
         this.panelListAdapter = new PanelListAdapter(this.getActivity());
         this.panelList.setAdapter(this.panelListAdapter);
+        this.panelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Event selected = ScheduleFragment.this.panelListAdapter.getItem(i);
+                ScheduleFragment.this.selectEvent(selected);
+            }
+        });
 
-        this.endpoint.getSchedule(this);
+        Observable<List<Event>> eventsRequest = this.eventData.findAllOnDay(new DateTime("2014-04-04"));
+        eventsRequest.subscribe(new Subscriber<List<Event>>() {
+            @Override public void onCompleted() { }
+            @Override public void onError(Throwable e) {
+                ScheduleFragment.this.logger.error("Error fetching schedule", e);
+            }
+            @Override public void onNext(List<Event> events) {
+                ScheduleFragment.this.updateEvents(events);
+            }
+        });
     }
 
-    @Override
-    public void success(Schedule schedule, Response response)
+    public void selectEvent(Event selected)
     {
-        ArrayList<Panel> panels = new ArrayList<Panel>();
+        Intent intent = new Intent(getActivity(), EventActivity.class);
+        intent.putExtra(EventActivity.EXTRA_EVENT, selected);
+        startActivity(intent);
+    }
 
-        for (Day day : schedule.getDays()) {
-            for (Hour hour : day.getHours()) {
-                panels.addAll(hour.getPanels());
-            }
+    public void updateEvents(List<Event> events)
+    {
+        if (this.panelListAdapter.getCount() != 0) {
+            this.syncScrollPosition();
         }
-
-        this.panelListAdapter.setPanels(panels);
+        this.panelListAdapter.setEvents(events);
         this.panelList.setSelectionFromTop(this.scrollPosition, 0);
     }
 
-    @Override
-    public void failure(RetrofitError error)
+    public void syncScrollPosition()
     {
-        Log.e("schedule", error.getMessage());
+        this.scrollPosition = this.panelList.getFirstVisiblePosition();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
-        this.scrollPosition = this.panelList.getFirstVisiblePosition();
+        this.syncScrollPosition();
         super.onSaveInstanceState(outState);
     }
 }

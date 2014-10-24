@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageScrim">
+        <attr name="image_title" format="string" />
+        <attr name="image_background" format="reference" />
+        <attr name="image_height" format="dimension" />
+        <attr name="image_textPaddingTop" format="dimension" />
+    </declare-styleable>
+</resources>

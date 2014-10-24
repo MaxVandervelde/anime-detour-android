@@ -8,71 +8,90 @@ package com.animedetour.sched.api.model;
 import com.animedetour.sched.api.deserialization.PanelDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
 import org.joda.time.DateTime;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Panel / Event
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class Panel
+public class Event implements Serializable
 {
     /**
      * Globally Unique ID for the panel
      */
+    @DatabaseField(id = true)
     private String id;
 
     /**
      * A key specific to this panel
      */
+    @DatabaseField
     private String eventKey;
 
     /**
      * The Name of the panel
      */
+    @DatabaseField
     private String name;
 
     /**
      * The start time of the panel
      */
+    @DatabaseField(index = true, dataType = DataType.DATE_TIME)
     private DateTime start;
 
     /**
      * End time of the panel
      */
+    @DatabaseField(dataType = DataType.DATE_TIME)
     private DateTime end;
 
     /**
      * The Type specified for the event. E.g. 'Programming' or 'Room Parties'
      */
+    @DatabaseField(index = true)
     private String eventType;
 
     /**
      * An optional subtype for the event. E.g. 'Panel' or 'Game'
      */
+    @DatabaseField
     private String eventSubType;
 
     /**
      * The detailed description of the event panel
      */
+    @DatabaseField
     private String description;
 
     /**
      * The name of the venue location where the panel is located
      */
+    @DatabaseField
     private String venue;
 
     /**
      * A unique Identifier for the venue location where the panel is located
      */
+    @DatabaseField(index = true)
     private String venueId;
 
     /**
      * A list of official speakers running the event
      */
-    private List<Speaker> speakers;
+    @DatabaseField
+    private String speakers;
+
+    /**
+     * A URL to a relevant banner image to the event
+     */
+    @DatabaseField
+    private String mediaUrl;
 
     /**
      * @return Globally Unique ID for the panel
@@ -257,7 +276,7 @@ public class Panel
     /**
      * @return A list of official speakers running the event
      */
-    final public List<Speaker> getSpeakers()
+    final public String getSpeakers()
     {
         return speakers;
     }
@@ -266,8 +285,26 @@ public class Panel
      * @param speakers A list of official speakers running the event
      */
     @JsonProperty("speakers")
-    public void setSpeakers(List<Speaker> speakers)
+    public void setSpeakers(String speakers)
     {
         this.speakers = speakers;
+    }
+
+    /**
+     * @return A URL to a relevant banner image for the event
+     */
+    final public String getMediaUrl()
+    {
+        return this.mediaUrl;
+    }
+
+    /**
+     * @param url A URL to a relevant banner image for the event
+     */
+    @JsonProperty("media_url")
+    public void setMediaUrl(String url)
+    {
+        url = url.replaceAll(" ", "%20");
+        this.mediaUrl = url;
     }
 }
