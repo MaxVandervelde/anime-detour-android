@@ -13,7 +13,7 @@ import icepick.Icepick;
 
 import java.util.List;
 
-public class Fragment extends android.app.Fragment
+public class Fragment extends android.support.v4.app.Fragment
 {
     @Override
     public void onActivityCreated(Bundle savedInstanceState)

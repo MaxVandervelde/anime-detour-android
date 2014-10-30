@@ -5,9 +5,9 @@
  */
 package com.animedetour.android.activity;
 
-import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -135,7 +135,7 @@ public class MainActivity extends Activity
     {
         this.setPageTitle(R.string.home_title);
         this.drawer.closeDrawer(Gravity.START);
-        this.contentFragmentTransaction(new LandingFragment(), false);
+        this.contentFragmentTransaction(new LandingFragment());
     }
 
     /**
@@ -146,22 +146,19 @@ public class MainActivity extends Activity
     {
         this.setPageTitle(R.string.schedule_title);
         this.drawer.closeDrawer(Gravity.START);
-        this.contentFragmentTransaction(new ScheduleFragment(), false);
+        this.contentFragmentTransaction(new ScheduleFragment());
     }
 
     /**
      * Transition to the new fragment, optionally adding to the back stack.
      *
      * @param newFragment The fragment to add to the main content view
-     * @param addToBackStack Whether or not to add the fragment into the manager's backstack
      */
-    protected void contentFragmentTransaction(Fragment newFragment, boolean addToBackStack)
+    protected void contentFragmentTransaction(Fragment newFragment)
     {
-        FragmentTransaction transaction = this.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
         transaction.replace(R.id.content_frame, newFragment);
-        if (addToBackStack) {
-            transaction.addToBackStack(null);
-        }
         transaction.commit();
     }
 
