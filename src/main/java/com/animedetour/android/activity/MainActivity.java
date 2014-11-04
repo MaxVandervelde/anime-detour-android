@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import com.animedetour.android.fragment.Fragment;
 import com.animedetour.android.fragment.LandingFragment;
 import com.animedetour.android.fragment.ScheduleFragment;
 import icepick.Icicle;
+import prism.framework.Layout;
 
 /**
  * Main containing Activity
@@ -29,7 +31,8 @@ import icepick.Icicle;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class MainActivity extends Activity
+@Layout(R.layout.main)
+public class MainActivity extends ActionBarActivity
 {
     /**
      * Drawer Toggle handler for the main sliding left drawer
@@ -54,15 +57,9 @@ public class MainActivity extends Activity
     Toolbar actionBar;
 
     @Override
-    protected void setupContentView()
+    protected void onPostCreate(Bundle savedInstanceState)
     {
-        this.setContentView(R.layout.main);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+        super.onPostCreate(savedInstanceState);
 
         if (null == savedInstanceState) {
             this.openLandingFragment();
@@ -71,12 +68,6 @@ public class MainActivity extends Activity
         }
 
         this.setupNavigation();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
-        super.onPostCreate(savedInstanceState);
         this.drawerToggle.syncState();
     }
 
@@ -105,20 +96,18 @@ public class MainActivity extends Activity
      */
     protected void setupNavigation()
     {
-        Toolbar toolbar = this.actionBar;
-
         this.drawerToggle = new ActionBarDrawerToggle(
             this,
             this.drawer,
-            toolbar,
+            this.actionBar,
             R.string.drawer_open,
             R.string.drawer_close
         ) {
-            public void onDrawerClosed(View view) {
+            @Override public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 MainActivity.this.actionBar.setTitle(MainActivity.this.pageTitle);
             }
-            public void onDrawerOpened(View drawerView) {
+            @Override public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 MainActivity.this.actionBar.setTitle(R.string.app_name);
             }

@@ -1,6 +1,11 @@
+/*
+ * This file is part of the Anime Detour Android application
+ *
+ * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
+ */
 package com.animedetour.android.dependencyinjection.module;
 
-import android.app.Activity;
+import android.app.Application;
 import com.animedetour.android.database.event.EventDatabaseHelper;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.sched.api.ScheduleEndpoint;
@@ -18,10 +23,10 @@ import java.sql.SQLException;
 public class DataModule
 {
     @Provides EventRepository provideRepository(
-        Activity activity,
+        Application context,
         ScheduleEndpoint remote
     ) {
-        EventDatabaseHelper helper = new EventDatabaseHelper(activity);
+        EventDatabaseHelper helper = new EventDatabaseHelper(context);
         ConnectionSource connectionSource = new AndroidConnectionSource(helper);
 
         try {

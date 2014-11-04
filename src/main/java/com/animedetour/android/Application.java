@@ -5,19 +5,51 @@
  */
 package com.animedetour.android;
 
-import com.inkapplications.android.standard.BaseApplication;
+import android.app.Activity;
+import com.animedetour.android.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.dependencyinjection.module.ApplicationModule;
+import com.animedetour.android.framework.ExtraActivityInjections;
+import dagger.ObjectGraph;
+import prism.framework.ActivityInjector;
+import prism.framework.GraphContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Application extends BaseApplication
+public class Application extends android.app.Application implements GraphContext
 {
-    @Override
-    public List<Object> getModules()
-    {
-        List<Object> modules = super.getModules();
+    private ObjectGraph applicationGraph;
 
-        modules.add(new ApplicationModule());
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+
+        this.applicationGraph = ObjectGraph.create(this.getApplicationModules().toArray());
+
+        this.registerActivityLifecycleCallbacks(new ActivityInjector(this));
+        this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
+    }
+
+    @Override
+    public ObjectGraph getApplicationGraph()
+    {
+        return this.applicationGraph;
+    }
+
+    @Override
+    public Object[] getActivityModules(Activity activity)
+    {
+        return new Object[]{
+            new ActivityModule(activity),
+        };
+    }
+
+    private List<Object> getApplicationModules()
+    {
+        List<Object> modules = new ArrayList<Object>();
+
+        modules.add(new ApplicationModule(this));
 
         return modules;
     }

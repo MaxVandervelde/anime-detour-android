@@ -33,10 +33,13 @@ android {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
+    compile 'com.inkapplications:prism:0.0-SNAPSHOT'
+    compile 'com.inkapplications:android-logger:1.0.+'
     compile 'com.android.support:support-v4:19.1.+'
     compile "com.android.support:appcompat-v7:21.0.+"
     compile 'com.android.support:recyclerview-v7:21.0.+'
@@ -44,8 +47,8 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.netflix.rxjava:rxjava-android:0.20.+'
     compile 'com.jakewharton:butterknife:4.0.+'
-    compile 'com.squareup.dagger:dagger:1.1.+'
-    compile 'com.squareup.dagger:dagger-compiler:1.1.+'
+    compile 'com.squareup.dagger:dagger:1.2.+'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.+'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'com.squareup.okhttp:okhttp:2.0.+'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.+'
@@ -58,6 +61,5 @@ dependencies {
     compile 'junit:junit:4.11'
     compile 'org.easytesting:fest-assert:1.4'
     compile 'joda-time:joda-time:2.3'
-    compile 'com.inkapplications:android-standard:1.0.+'
     compile 'com.mcxiaoke.volley:library:1.0.7@aar'
 }

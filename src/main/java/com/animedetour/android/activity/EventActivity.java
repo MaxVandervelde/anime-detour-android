@@ -1,9 +1,14 @@
+/*
+ * This file is part of the Anime Detour Android application
+ *
+ * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
+ */
 package com.animedetour.android.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.InjectView;
@@ -13,6 +18,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.sched.api.model.Event;
 import org.apache.commons.logging.Log;
+import prism.framework.Layout;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -26,7 +32,8 @@ import java.util.Date;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class EventActivity extends Activity
+@Layout(R.layout.event)
+public class EventActivity extends ActionBarActivity
 {
     /**
      * Name of the intent-extra that the event is serialized into
@@ -71,28 +78,17 @@ public class EventActivity extends Activity
     private Event event;
 
     @Override
-    protected void setupContentView()
-    {
-        this.setContentView(R.layout.event);
-    }
-
-    /**
-     * Set up the activity.
-     *
-     * Here we get the event to be displayed from the intent extras and set up
-     * the view.
-     * The image loading is done first, followed by any other view setup to
-     * reduce visual delays.
-     *
-     * @todo replace serializable with an event ID & lookup
-     */
-    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.none);
-
         this.event = (Event) this.getIntent().getExtras().getSerializable(EXTRA_EVENT);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
         this.updateBannerImage();
 
         if (null != this.event.getDescription()) {

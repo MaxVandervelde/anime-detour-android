@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dim</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">@color/primary_highlight</item>
     </style>
 
     <style name="Theme.AnimeDetour.TransparentHeader" parent="Theme.AnimeDetour">
