@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.dependencyinjection.module;
+package com.animedetour.android.database;
 
 import android.app.Application;
 import com.animedetour.android.database.event.EventDatabaseHelper;

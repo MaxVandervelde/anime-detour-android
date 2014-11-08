@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <ImageView
+        android:id="@+id/heading_image"
+        android:src="@drawable/cat_food_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+    />
+    <TextView
+        android:id="@+id/title"
+        android:gravity="center"
+        android:layout_below="@+id/heading_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/headline"
+        android:textColor="@color/foreground_inverse"
+        android:text="Nothing to see."
+    />
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/subhead"
+        android:textColor="@color/foreground_inverse"
+        android:text="Events and panels will show here."
+    />
+</RelativeLayout>

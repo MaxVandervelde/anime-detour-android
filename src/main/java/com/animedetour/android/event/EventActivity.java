@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.activity;
+package com.animedetour.android.event;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

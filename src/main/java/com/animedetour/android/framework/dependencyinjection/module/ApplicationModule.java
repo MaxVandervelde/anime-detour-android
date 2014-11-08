@@ -3,20 +3,21 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.dependencyinjection.module;
+package com.animedetour.android.framework.dependencyinjection.module;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.animedetour.android.activity.EventActivity;
-import com.animedetour.android.activity.MainActivity;
-import com.animedetour.android.fragment.LandingFragment;
-import com.animedetour.android.fragment.ScheduleFragment;
+import com.animedetour.android.database.DataModule;
+import com.animedetour.android.event.EventActivity;
+import com.animedetour.android.landing.LandingActivity;
+import com.animedetour.android.landing.home.HomeFragment;
+import com.animedetour.android.landing.schedule.ScheduleFragment;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.sched.api.dependencyinjection.ApiModule;
 import com.inkapplications.android.logger.ConsoleLogger;
 import com.animedetour.android.BuildConfig;
-import com.animedetour.android.Application;
+import com.animedetour.android.framework.Application;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;
@@ -31,10 +32,10 @@ import javax.inject.Singleton;
     injects = {
         Application.class,
 
-        MainActivity.class,
+        LandingActivity.class,
         EventActivity.class,
 
-        LandingFragment.class,
+        HomeFragment.class,
         ScheduleFragment.class,
     },
     complete = false,

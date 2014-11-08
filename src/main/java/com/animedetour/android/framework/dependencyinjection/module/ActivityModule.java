@@ -3,13 +3,13 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.dependencyinjection.module;
+package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.app.Activity;
-import com.animedetour.android.activity.EventActivity;
-import com.animedetour.android.fragment.LandingFragment;
-import com.animedetour.android.fragment.ScheduleFragment;
-import com.animedetour.android.activity.MainActivity;
+import com.animedetour.android.event.EventActivity;
+import com.animedetour.android.landing.LandingActivity;
+import com.animedetour.android.landing.home.HomeFragment;
+import com.animedetour.android.landing.schedule.ScheduleFragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,10 +20,10 @@ import javax.inject.Singleton;
 
     },
     injects = {
-        MainActivity.class,
+        LandingActivity.class,
         EventActivity.class,
 
-        LandingFragment.class,
+        HomeFragment.class,
         ScheduleFragment.class
     },
     complete = false,

@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.activity;
+package com.animedetour.android.landing;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,9 +18,9 @@ import android.view.View;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
-import com.animedetour.android.fragment.Fragment;
-import com.animedetour.android.fragment.LandingFragment;
-import com.animedetour.android.fragment.ScheduleFragment;
+import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.landing.home.HomeFragment;
+import com.animedetour.android.landing.schedule.ScheduleFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
 
@@ -32,7 +32,7 @@ import prism.framework.Layout;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.main)
-public class MainActivity extends ActionBarActivity
+public class LandingActivity extends ActionBarActivity
 {
     /**
      * Drawer Toggle handler for the main sliding left drawer
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity
         if (null == savedInstanceState) {
             this.openLandingFragment();
         } else {
-            MainActivity.this.actionBar.setTitle(this.pageTitle);
+            LandingActivity.this.actionBar.setTitle(this.pageTitle);
         }
 
         this.setupNavigation();
@@ -105,11 +105,11 @@ public class MainActivity extends ActionBarActivity
         ) {
             @Override public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                MainActivity.this.actionBar.setTitle(MainActivity.this.pageTitle);
+                LandingActivity.this.actionBar.setTitle(LandingActivity.this.pageTitle);
             }
             @Override public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                MainActivity.this.actionBar.setTitle(R.string.app_name);
+                LandingActivity.this.actionBar.setTitle(R.string.app_name);
             }
         };
 
@@ -124,7 +124,7 @@ public class MainActivity extends ActionBarActivity
     {
         this.setPageTitle(R.string.home_title);
         this.drawer.closeDrawer(Gravity.START);
-        this.contentFragmentTransaction(new LandingFragment());
+        this.contentFragmentTransaction(new HomeFragment());
     }
 
     /**

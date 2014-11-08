@@ -3,12 +3,11 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android;
+package com.animedetour.android.framework;
 
 import android.app.Activity;
-import com.animedetour.android.dependencyinjection.module.ActivityModule;
-import com.animedetour.android.dependencyinjection.module.ApplicationModule;
-import com.animedetour.android.framework.ExtraActivityInjections;
+import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
+import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
 import dagger.ObjectGraph;
 import prism.framework.ActivityInjector;
 import prism.framework.GraphContext;

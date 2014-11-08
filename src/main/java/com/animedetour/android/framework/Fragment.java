@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.fragment;
+package com.animedetour.android.framework;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;

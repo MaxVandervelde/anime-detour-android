@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.view.schedule;
+package com.animedetour.android.landing.schedule;
 
 import android.content.Context;
 import android.content.res.TypedArray;
