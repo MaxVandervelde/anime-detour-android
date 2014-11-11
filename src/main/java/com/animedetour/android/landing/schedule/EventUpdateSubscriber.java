@@ -22,11 +22,11 @@ import java.util.List;
  */
 class EventUpdateSubscriber extends Subscriber<List<Event>>
 {
-    private ScheduleFragment fragment;
+    private DayFragment fragment;
     private View emptyView;
     private Log logger;
 
-    public EventUpdateSubscriber(ScheduleFragment fragment, View emptyView, Log logger)
+    public EventUpdateSubscriber(DayFragment fragment, View emptyView, Log logger)
     {
         this.fragment = fragment;
         this.emptyView = emptyView;

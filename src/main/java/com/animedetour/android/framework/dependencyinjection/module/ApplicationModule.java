@@ -12,7 +12,7 @@ import com.animedetour.android.database.DataModule;
 import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.landing.LandingActivity;
 import com.animedetour.android.landing.home.HomeFragment;
-import com.animedetour.android.landing.schedule.ScheduleFragment;
+import com.animedetour.android.landing.schedule.DayFragment;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.sched.api.dependencyinjection.ApiModule;
 import com.inkapplications.android.logger.ConsoleLogger;
@@ -36,7 +36,7 @@ import javax.inject.Singleton;
         EventActivity.class,
 
         HomeFragment.class,
-        ScheduleFragment.class,
+        DayFragment.class,
     },
     complete = false,
     library = true

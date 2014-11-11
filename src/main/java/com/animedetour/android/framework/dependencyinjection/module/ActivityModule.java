@@ -9,6 +9,7 @@ import android.app.Activity;
 import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.landing.LandingActivity;
 import com.animedetour.android.landing.home.HomeFragment;
+import com.animedetour.android.landing.schedule.DayFragment;
 import com.animedetour.android.landing.schedule.ScheduleFragment;
 import dagger.Module;
 import dagger.Provides;
@@ -24,7 +25,8 @@ import javax.inject.Singleton;
         EventActivity.class,
 
         HomeFragment.class,
-        ScheduleFragment.class
+        DayFragment.class,
+        ScheduleFragment.class,
     },
     complete = false,
     library = true
