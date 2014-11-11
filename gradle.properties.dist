@@ -1,0 +1,3 @@
+# Project-wide Gradle settings.
+
+keystore_password=don't-check-in-real-passwords

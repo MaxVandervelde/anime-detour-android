@@ -14,11 +14,15 @@ android {
     buildToolsVersion '21.0.2'
 
     defaultConfig {
-        applicationId "com.animedetour.android"
+        applicationId "org.animetwincities.animedetour"
         minSdkVersion 16
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode 200
+        versionName "2.0.0"
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     packagingOptions {
@@ -29,6 +33,28 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/license/THIRD-PARTY.txt'
+    }
+    signingConfigs {
+        release {
+            if (false == project.hasProperty("keystore_password")) {
+                throw new GradleException("You must set a keystore password. See README");
+            }
+
+            storeFile file('animetwincities.keystore')
+            storePassword project.getProperty("keystore_password")
+            keyAlias "adprogramguide"
+            keyPassword project.getProperty("keystore_password")
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+        }
+        release {
+            signingConfig signingConfigs.release
+        }
     }
 }
 

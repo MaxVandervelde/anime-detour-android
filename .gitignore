@@ -4,3 +4,7 @@ local.properties
 # Gradle
 /.gradle/
 /build/
+/gradle.properties
+
+# Signing Keys
+*.keystore
