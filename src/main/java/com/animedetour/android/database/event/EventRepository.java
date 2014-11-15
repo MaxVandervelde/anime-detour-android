@@ -14,11 +14,14 @@ import com.j256.ormlite.table.TableUtils;
 import org.joda.time.DateTime;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
+import rx.Observer;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -37,6 +40,8 @@ public class EventRepository
      * A remote endpoint for updating the local storage
      */
     final private ScheduleEndpoint remoteAccess;
+
+    private LinkedHashMap<String, Observable<List<Event>>> eventsRequests = new LinkedHashMap<String, Observable<List<Event>>>();
 
     /**
      * @param localAccess A local DAO for storing events
@@ -74,7 +79,7 @@ public class EventRepository
      * @param day The day to lookup events for
      * @return an observable that will update with events data
      */
-    public Observable<List<Event>> findAllOnDay(final DateTime day)
+    public Subscription findAllOnDay(final DateTime day, Observer<List<Event>> observer)
     {
         Observable<List<Event>> callback = Observable.create(new OnSubscribe<List<Event>>() {
             @Override public void call(final Subscriber<? super List<Event>> subscriber) {
@@ -84,7 +89,17 @@ public class EventRepository
         callback = callback.subscribeOn(Schedulers.io());
         callback = callback.observeOn(AndroidSchedulers.mainThread());
 
-        return callback;
+        String key = "findAllOnDay:" + day.getDayOfYear();
+        Observable<List<Event>> requests = this.eventsRequests.get(key);
+
+        Subscription subscription = null;
+        if (null == requests) {
+            callback.subscribe(observer);
+        } else {
+            requests.subscribe(observer);
+        }
+
+        return subscription;
     }
 
     /**
@@ -116,6 +131,9 @@ public class EventRepository
             List<Event> currentEvents = this.getAllOnDay(day);
             subscriber.onNext(currentEvents);
 
+            if (currentEvents.size() != 0) {
+                return;
+            }
             List<Event> events = this.remoteAccess.getSchedule();
             this.dropLocal();
             this.saveLocal(events);
@@ -160,6 +178,10 @@ public class EventRepository
         try {
             List<Event> currentEvents = this.getAll();
             subscriber.onNext(currentEvents);
+
+            if (currentEvents.size() != 0) {
+                return;
+            }
 
             List<Event> events = this.remoteAccess.getSchedule();
             this.dropLocal();

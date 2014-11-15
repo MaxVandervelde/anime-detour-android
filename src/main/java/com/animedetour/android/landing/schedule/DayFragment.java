@@ -90,7 +90,10 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
     public void onPause()
     {
         super.onPause();
-        this.eventUpdateSubscription.unsubscribe();
+
+        if (null != this.eventUpdateSubscription) {
+            this.eventUpdateSubscription.unsubscribe();
+        }
     }
 
     @Override
@@ -123,8 +126,10 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
         this.panelList.setLayoutManager(layoutManager);
         this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
 
-        Observable<List<Event>> eventsRequest = this.eventData.findAllOnDay(new DateTime(this.getDay()));
-        this.eventUpdateSubscription = eventsRequest.subscribe(new EventUpdateSubscriber(this, this.panelEmptyView, this.logger));
+        this.eventUpdateSubscription = this.eventData.findAllOnDay(
+            new DateTime(this.getDay()),
+            new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
+        );
     }
 
     /**
