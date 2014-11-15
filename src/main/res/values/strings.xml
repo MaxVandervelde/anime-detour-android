@@ -12,4 +12,5 @@
     <string name="drawer_maps_label">Maps</string>
 
     <string name="panel_details">%1$ta, %1$tl:%1$tM - %2$tl:%2$tM%2$tp in %3$s</string>
+    <string name="schedule_day_headline">%tA</string>
 </resources>

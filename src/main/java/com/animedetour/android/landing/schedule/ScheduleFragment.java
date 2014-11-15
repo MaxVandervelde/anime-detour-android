@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,12 @@ public class ScheduleFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        this.pager.setAdapter(new DaysPagerAdapter(this.getFragmentManager(), this.getDays()));
+        DaysPagerAdapter pagerAdapter = new DaysPagerAdapter(
+            this.getActivity(),
+            this.getFragmentManager(),
+            this.getDays()
+        );
+        this.pager.setAdapter(pagerAdapter);
     }
 
     /**
@@ -51,12 +57,12 @@ public class ScheduleFragment extends Fragment
      * @todo query the database here instead of hardcoding the days
      * @return A list of days in the schedule
      */
-    final protected List<String> getDays()
+    final protected List<DateTime> getDays()
     {
-        ArrayList<String> days = new ArrayList<String>();
-        days.add("2014-04-04");
-        days.add("2014-04-05");
-        days.add("2014-04-06");
+        ArrayList<DateTime> days = new ArrayList<DateTime>();
+        days.add(new DateTime("2014-04-04"));
+        days.add(new DateTime("2014-04-05"));
+        days.add(new DateTime("2014-04-06"));
 
         return days;
     }

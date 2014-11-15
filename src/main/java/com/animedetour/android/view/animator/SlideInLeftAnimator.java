@@ -21,18 +21,18 @@ import android.view.animation.Interpolator;
  */
 public class SlideInLeftAnimator extends DefaultItemAnimator
 {
-    private final Interpolator mInterpolator = new AccelerateInterpolator();
-    private final LinearLayoutManager mLayoutManager;
+    private final Interpolator interpolator = new AccelerateInterpolator();
+    private final LinearLayoutManager layoutManager;
 
     public SlideInLeftAnimator(LinearLayoutManager layoutManager) {
-        mLayoutManager = layoutManager;
+        this.layoutManager = layoutManager;
     }
 
     public boolean animateRemove(RecyclerView.ViewHolder holder) {
         final View view = holder.itemView;
         int width = getWidth(holder);
         ViewCompat.animate(view).cancel();
-        float interpolation = mInterpolator.getInterpolation((float) view.getTop() / mLayoutManager.getHeight());
+        float interpolation = interpolator.getInterpolation((float) view.getTop() / layoutManager.getHeight());
 
         ViewCompat.animate(view)
             .setStartDelay((long) (500 * interpolation))
@@ -48,7 +48,7 @@ public class SlideInLeftAnimator extends DefaultItemAnimator
         int width = getWidth(holder);
         ViewCompat.animate(view).cancel();
         ViewCompat.setTranslationX(holder.itemView, (float) -width);
-        float interpolation = mInterpolator.getInterpolation((float) view.getTop() / mLayoutManager.getHeight());
+        float interpolation = interpolator.getInterpolation((float) view.getTop() / layoutManager.getHeight());
         long startDelay = (long) (500 * interpolation);
         ViewCompat.animate(view)
             .setStartDelay(Math.max(0, startDelay))

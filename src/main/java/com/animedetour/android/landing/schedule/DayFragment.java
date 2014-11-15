@@ -23,7 +23,6 @@ import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
-import rx.Observable;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -61,12 +60,12 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
         super();
     }
 
-    public DayFragment(String day)
+    public DayFragment(DateTime day)
     {
         super();
 
         Bundle arguments = new Bundle();
-        arguments.putString("day", day);
+        arguments.putSerializable("day", day);
         super.setArguments(arguments);
     }
 
@@ -127,7 +126,7 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
         this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
 
         this.eventUpdateSubscription = this.eventData.findAllOnDay(
-            new DateTime(this.getDay()),
+            this.getDay(),
             new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
         );
     }
@@ -141,11 +140,9 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
     {
         if (this.panelList.getAdapter().getItemCount() != 0) {
             this.syncScrollPosition();
-            this.panelList.getItemAdapter().setItems(events);
-        } else {
-            this.panelList.getItemAdapter().addItems(events);
         }
 
+        this.panelList.getItemAdapter().setItems(events);
         this.panelList.setVerticalScrollbarPosition(this.scrollPosition);
     }
 
@@ -166,13 +163,13 @@ public class DayFragment extends Fragment implements ViewClickListener<PanelView
      *
      * @return The day this fragment is supposed to display
      */
-    public String getDay()
+    public DateTime getDay()
     {
         Bundle arguments = this.getArguments();
         if (null == arguments) {
             return null;
         }
 
-        return arguments.getString("day", null);
+        return (DateTime) arguments.getSerializable("day");
     }
 }

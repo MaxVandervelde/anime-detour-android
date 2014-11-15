@@ -5,9 +5,14 @@
         <item name="colorPrimaryDark">@color/primary_dim</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/primary_highlight</item>
+
+        <!-- v21 only values -->
+        <item name="android:statusBarColor">@color/primary_dim</item>
+        <item name="android:textColorPrimary">@color/foreground_inverse</item>
     </style>
 
     <style name="Theme.AnimeDetour.TransparentHeader" parent="Theme.AnimeDetour">
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
@@ -55,6 +56,16 @@ public class LandingActivity extends ActionBarActivity
 
     @InjectView(R.id.main_action_bar)
     Toolbar actionBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState)

@@ -39,11 +39,6 @@
     <style name="caption" parent="Base.TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/foreground_highlight</item>
     </style>
-    <style name="card">
-        <item name="android:background">@drawable/card_background</item>
-        <item name="android:layout_margin">4dp</item>
-        <item name="android:padding">16dp</item>
-    </style>
     <style name="panel">
         <item name="android:padding">16dp</item>
     </style>
