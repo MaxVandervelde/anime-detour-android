@@ -45,7 +45,7 @@ public class ScheduleFragment extends Fragment
 
         DaysPagerAdapter pagerAdapter = new DaysPagerAdapter(
             this.getActivity(),
-            this.getFragmentManager(),
+            this.getChildFragmentManager(),
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
