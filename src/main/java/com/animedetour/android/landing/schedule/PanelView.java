@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.animedetour.android.R;
@@ -22,6 +24,7 @@ import org.joda.time.format.DateTimeFormatter;
  *
  * This is a view for the small card / list format of a panel.
  *
+ * @todo Connect starred logic
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 public class PanelView extends RelativeLayout
@@ -37,6 +40,16 @@ public class PanelView extends RelativeLayout
     private TextView description;
 
     /**
+     * An icon indicating if the user has the panel starred.
+     */
+    private ImageView starred;
+
+    /**
+     * A semi-transperent fade over the panel to indicate that it is in the past.
+     */
+    private View fadeOverlay;
+
+    /**
      * The time format to use for the panel start and end time
      */
     final private static DateTimeFormatter timeFormat = DateTimeFormat.forPattern("hh:mma");
@@ -44,6 +57,8 @@ public class PanelView extends RelativeLayout
     public PanelView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        this.init(context);
+
         TypedArray attributes = context.getTheme().obtainStyledAttributes(
             attrs,
             R.styleable.PanelView,
@@ -54,10 +69,6 @@ public class PanelView extends RelativeLayout
         String name = attributes.getString(R.styleable.PanelView_name);
         String description = attributes.getString(R.styleable.PanelView_description);
 
-        LayoutInflater.from(context).inflate(R.layout.view_panel, this);
-        this.title = (TextView) this.findViewById(R.id.view_panel_name);
-        this.description = (TextView) this.findViewById(R.id.view_panel_description);
-
         this.title.setText(name);
         this.description.setText(description);
     }
@@ -65,10 +76,18 @@ public class PanelView extends RelativeLayout
     public PanelView(Context context)
     {
         super(context);
+        this.init(context);
+    }
 
+    /** Shared Constructor logic */
+    private void init(Context context)
+    {
         LayoutInflater.from(context).inflate(R.layout.view_panel, this);
         this.title = (TextView) this.findViewById(R.id.view_panel_name);
         this.description = (TextView) this.findViewById(R.id.view_panel_description);
+        this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
+        this.fadeOverlay = this.findViewById(R.id.view_panel_overlay);
+        this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
     }
 
     /**
@@ -101,6 +120,12 @@ public class PanelView extends RelativeLayout
 
         this.setDescription(fullDescription);
         this.setTitle(event.getName());
+
+        if (event.getStartDateTime().isBeforeNow()) {
+            this.fadeOverlay.setVisibility(VISIBLE);
+        } else {
+            this.fadeOverlay.setVisibility(GONE);
+        }
     }
 
     /**

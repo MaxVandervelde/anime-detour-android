@@ -28,6 +28,7 @@
 
     <color name="background_dim">#ffe0e0e0</color>
     <color name="background">#fffafafa</color>
+    <color name="background_faded">#99fafafa</color>
     <color name="background_highlight">#ffffffff</color>
     <color name="background_inverse">#ff000000</color>
 </resources>
