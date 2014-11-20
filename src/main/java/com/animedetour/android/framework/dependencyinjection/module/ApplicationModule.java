@@ -8,16 +8,11 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.animedetour.android.BuildConfig;
 import com.animedetour.android.database.DataModule;
-import com.animedetour.android.event.EventActivity;
-import com.animedetour.android.landing.LandingActivity;
-import com.animedetour.android.landing.home.HomeFragment;
-import com.animedetour.android.landing.schedule.DayFragment;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.sched.api.dependencyinjection.ApiModule;
 import com.inkapplications.android.logger.ConsoleLogger;
-import com.animedetour.android.BuildConfig;
-import com.animedetour.android.framework.Application;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;
@@ -28,15 +23,6 @@ import javax.inject.Singleton;
     includes = {
         DataModule.class,
         ApiModule.class,
-    },
-    injects = {
-        Application.class,
-
-        LandingActivity.class,
-        EventActivity.class,
-
-        HomeFragment.class,
-        DayFragment.class,
     },
     complete = false,
     library = true

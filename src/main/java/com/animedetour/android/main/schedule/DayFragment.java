@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.landing.schedule;
+package com.animedetour.android.main.schedule;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
-import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.database.event.EventRepository;
+import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.main.MainModule;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.sched.api.model.Event;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
@@ -23,6 +24,7 @@ import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
+import prism.framework.Scope;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -36,6 +38,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Scope(MainModule.class)
 public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject

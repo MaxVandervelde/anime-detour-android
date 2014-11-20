@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.landing.schedule;
+package com.animedetour.android.main.schedule;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.main.MainModule;
 import org.joda.time.DateTime;
+import prism.framework.Scope;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Scope(MainModule.class)
 public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)

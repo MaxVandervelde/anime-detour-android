@@ -1,4 +1,4 @@
-package com.animedetour.android.landing.schedule;
+package com.animedetour.android.main.schedule;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.animedetour.android.R;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;

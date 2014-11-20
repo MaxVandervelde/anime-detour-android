@@ -6,14 +6,16 @@
 package com.animedetour.android.framework;
 
 import android.app.Activity;
+import com.animedetour.android.event.EventModule;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
+import com.animedetour.android.main.MainModule;
 import dagger.ObjectGraph;
 import prism.framework.ActivityInjector;
 import prism.framework.GraphContext;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Application extends android.app.Application implements GraphContext
 {
@@ -24,7 +26,7 @@ public class Application extends android.app.Application implements GraphContext
     {
         super.onCreate();
 
-        this.applicationGraph = ObjectGraph.create(this.getApplicationModules().toArray());
+        this.applicationGraph = ObjectGraph.create(this.getApplicationModules());
 
         this.registerActivityLifecycleCallbacks(new ActivityInjector(this));
         this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
@@ -37,19 +39,27 @@ public class Application extends android.app.Application implements GraphContext
     }
 
     @Override
+    public Map<Class, Object> getScopeModules(Activity activity)
+    {
+        LinkedHashMap<Class, Object> definitions = new LinkedHashMap<Class, Object>();
+        definitions.put(MainModule.class, new MainModule());
+        definitions.put(EventModule.class, new EventModule());
+
+        return definitions;
+    }
+
+    @Override
     public Object[] getActivityModules(Activity activity)
     {
-        return new Object[]{
+        return new Object[] {
             new ActivityModule(activity),
         };
     }
 
-    private List<Object> getApplicationModules()
+    private Object[] getApplicationModules()
     {
-        List<Object> modules = new ArrayList<Object>();
-
-        modules.add(new ApplicationModule(this));
-
-        return modules;
+        return new Object[] {
+            new ApplicationModule(this),
+        };
     }
 }

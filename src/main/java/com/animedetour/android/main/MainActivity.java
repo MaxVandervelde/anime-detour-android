@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.landing;
+package com.animedetour.android.main;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -20,10 +20,11 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.landing.home.HomeFragment;
-import com.animedetour.android.landing.schedule.ScheduleFragment;
+import com.animedetour.android.main.home.HomeFragment;
+import com.animedetour.android.main.schedule.ScheduleFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
+import prism.framework.Scope;
 
 /**
  * Main containing Activity
@@ -32,8 +33,9 @@ import prism.framework.Layout;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Scope(MainModule.class)
 @Layout(R.layout.main)
-public class LandingActivity extends ActionBarActivity
+public class MainActivity extends ActionBarActivity
 {
     /**
      * Drawer Toggle handler for the main sliding left drawer
@@ -75,7 +77,7 @@ public class LandingActivity extends ActionBarActivity
         if (null == savedInstanceState) {
             this.openLandingFragment();
         } else {
-            LandingActivity.this.actionBar.setTitle(this.pageTitle);
+            MainActivity.this.actionBar.setTitle(this.pageTitle);
         }
 
         this.setupNavigation();
@@ -116,11 +118,11 @@ public class LandingActivity extends ActionBarActivity
         ) {
             @Override public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                LandingActivity.this.actionBar.setTitle(LandingActivity.this.pageTitle);
+                MainActivity.this.actionBar.setTitle(MainActivity.this.pageTitle);
             }
             @Override public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                LandingActivity.this.actionBar.setTitle(R.string.app_name);
+                MainActivity.this.actionBar.setTitle(R.string.app_name);
             }
         };
 

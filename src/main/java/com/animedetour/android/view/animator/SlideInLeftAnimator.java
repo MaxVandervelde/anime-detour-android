@@ -28,6 +28,7 @@ public class SlideInLeftAnimator extends DefaultItemAnimator
         this.layoutManager = layoutManager;
     }
 
+    @Override
     public boolean animateRemove(RecyclerView.ViewHolder holder) {
         final View view = holder.itemView;
         int width = getWidth(holder);

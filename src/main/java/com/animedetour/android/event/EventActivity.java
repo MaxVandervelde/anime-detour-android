@@ -19,6 +19,7 @@ import com.animedetour.android.view.ImageScrim;
 import com.animedetour.sched.api.model.Event;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
+import prism.framework.Scope;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -32,6 +33,7 @@ import java.util.Date;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Scope(EventModule.class)
 @Layout(R.layout.event)
 public class EventActivity extends ActionBarActivity
 {

@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.landing.schedule;
+package com.animedetour.android.main.schedule;
 
 import android.view.View;
 import com.animedetour.sched.api.model.Event;

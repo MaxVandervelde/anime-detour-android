@@ -4,15 +4,15 @@
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
 package com.animedetour.android.database.event;
-import java.sql.SQLException;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.animedetour.sched.api.model.Event;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+
+import java.sql.SQLException;
 
 /**
  * ORMLite Database Helper for Events
