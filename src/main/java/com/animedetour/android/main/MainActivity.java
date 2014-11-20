@@ -35,7 +35,7 @@ import prism.framework.Scope;
  */
 @Scope(MainModule.class)
 @Layout(R.layout.main)
-public class MainActivity extends ActionBarActivity
+final public class MainActivity extends ActionBarActivity
 {
     /**
      * Drawer Toggle handler for the main sliding left drawer

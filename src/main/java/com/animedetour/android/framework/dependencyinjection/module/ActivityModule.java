@@ -18,7 +18,7 @@ import javax.inject.Singleton;
     complete = false,
     library = true
 )
-public class ActivityModule
+final public class ActivityModule
 {
     final private Activity activity;
 

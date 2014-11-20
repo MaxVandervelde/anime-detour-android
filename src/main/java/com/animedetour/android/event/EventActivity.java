@@ -35,7 +35,7 @@ import java.util.Date;
  */
 @Scope(EventModule.class)
 @Layout(R.layout.event)
-public class EventActivity extends ActionBarActivity
+final public class EventActivity extends ActionBarActivity
 {
     /**
      * Name of the intent-extra that the event is serialized into

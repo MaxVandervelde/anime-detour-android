@@ -9,4 +9,4 @@ import dagger.Module;
     complete = false,
     library = true
 )
-public class EventModule {}
+final public class EventModule {}

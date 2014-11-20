@@ -16,7 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class LongImageCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache
+final public class LongImageCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache
 {
     public LongImageCache(int sizeInKiloBytes)
     {

@@ -16,4 +16,4 @@ import dagger.Module;
     library = true,
     complete = false
 )
-public class MainModule {}
+final public class MainModule {}

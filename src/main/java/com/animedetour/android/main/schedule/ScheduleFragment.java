@@ -28,7 +28,7 @@ import java.util.List;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Scope(MainModule.class)
-public class ScheduleFragment extends Fragment
+final public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)
     ViewPager pager;

@@ -39,7 +39,7 @@ import java.util.List;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Scope(MainModule.class)
-public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
+final public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
     EventRepository eventData;

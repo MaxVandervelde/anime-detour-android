@@ -21,7 +21,7 @@ import java.sql.SQLException;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class EventDatabaseHelper extends OrmLiteSqliteOpenHelper
+final public class EventDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour_events.db";
     private static final int DATABASE_VERSION = 1;

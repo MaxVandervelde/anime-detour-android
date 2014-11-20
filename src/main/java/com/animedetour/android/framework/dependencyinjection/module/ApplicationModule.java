@@ -27,7 +27,7 @@ import javax.inject.Singleton;
     complete = false,
     library = true
 )
-public class ApplicationModule
+final public class ApplicationModule
 {
     private android.app.Application application;
 

@@ -20,7 +20,7 @@ import dagger.Provides;
 import java.sql.SQLException;
 
 @Module(library = true, complete = false)
-public class DataModule
+final public class DataModule
 {
     @Provides EventRepository provideRepository(
         Application context,

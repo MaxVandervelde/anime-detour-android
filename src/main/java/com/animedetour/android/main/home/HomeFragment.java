@@ -22,7 +22,7 @@ import prism.framework.Scope;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Scope(MainModule.class)
-public class HomeFragment extends Fragment
+final public class HomeFragment extends Fragment
 {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

@@ -17,7 +17,7 @@ import prism.framework.GraphContext;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Application extends android.app.Application implements GraphContext
+final public class Application extends android.app.Application implements GraphContext
 {
     private ObjectGraph applicationGraph;
 

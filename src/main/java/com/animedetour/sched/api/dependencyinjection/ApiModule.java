@@ -19,7 +19,7 @@ import retrofit.converter.JacksonConverter;
 import javax.inject.Singleton;
 
 @Module(complete = false, library = true)
-public class ApiModule
+final public class ApiModule
 {
     @Provides @Singleton ScheduleEndpoint provideScheduleEndpoint(
         OkHttpClient client
