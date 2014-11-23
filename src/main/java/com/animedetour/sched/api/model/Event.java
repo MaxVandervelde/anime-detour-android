@@ -22,76 +22,82 @@ import java.io.Serializable;
 public class Event implements Serializable
 {
     /**
-     * Globally Unique ID for the panel
+     * Globally Unique ID for the panel.
      */
     @DatabaseField(id = true)
     private String id;
 
     /**
-     * A key specific to this panel
+     * A key specific to this panel.
      */
     @DatabaseField
     private String eventKey;
 
     /**
-     * The Name of the panel
+     * The Name of the panel.
      */
     @DatabaseField
     private String name;
 
     /**
-     * The start time of the panel
+     * The start time of the panel.
      */
     @DatabaseField(index = true, dataType = DataType.DATE_TIME)
     private DateTime start;
 
     /**
-     * End time of the panel
+     * End time of the panel.
      */
     @DatabaseField(dataType = DataType.DATE_TIME)
     private DateTime end;
 
     /**
-     * The Type specified for the event. E.g. 'Programming' or 'Room Parties'
+     * The Type specified for the event. E.g. 'Programming' or 'Room Parties'.
      */
     @DatabaseField(index = true)
     private String eventType;
 
     /**
-     * An optional subtype for the event. E.g. 'Panel' or 'Game'
+     * An optional subtype for the event. E.g. 'Panel' or 'Game'.
      */
     @DatabaseField
     private String eventSubType;
 
     /**
-     * The detailed description of the event panel
+     * The detailed description of the event panel.
      */
     @DatabaseField
     private String description;
 
     /**
-     * The name of the venue location where the panel is located
+     * The name of the venue location where the panel is located.
      */
     @DatabaseField
     private String venue;
 
     /**
-     * A unique Identifier for the venue location where the panel is located
+     * A unique Identifier for the venue location where the panel is located.
      */
     @DatabaseField(index = true)
     private String venueId;
 
     /**
-     * A list of official speakers running the event
+     * A list of official speakers running the event.
      */
     @DatabaseField
     private String speakers;
 
     /**
-     * A URL to a relevant banner image to the event
+     * A URL to a relevant banner image to the event.
      */
     @DatabaseField
     private String mediaUrl;
+
+    /**
+     * A timestamp of when the object created locally / was fetched from the API.
+     */
+    @DatabaseField(dataType = DataType.DATE_TIME, index = true)
+    private DateTime fetched = new DateTime();
 
     /**
      * @return Globally Unique ID for the panel
@@ -306,5 +312,15 @@ public class Event implements Serializable
     {
         url = url.replaceAll(" ", "%20");
         this.mediaUrl = url;
+    }
+
+    final public DateTime getFetched()
+    {
+        return this.fetched;
+    }
+
+    public void setFetched(DateTime fetched)
+    {
+        this.fetched = fetched;
     }
 }

@@ -62,7 +62,7 @@ final public class ScheduleFragment extends Fragment
      */
     final protected List<DateTime> getDays()
     {
-        ArrayList<DateTime> days = new ArrayList<DateTime>();
+        ArrayList<DateTime> days = new ArrayList<>();
         days.add(new DateTime("2014-04-04"));
         days.add(new DateTime("2014-04-05"));
         days.add(new DateTime("2014-04-06"));

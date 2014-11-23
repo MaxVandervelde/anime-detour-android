@@ -71,7 +71,7 @@ public class SimpleRecyclerView<VIEW extends View, TYPE> extends RecyclerView
             this.setLayoutManager(new LinearLayoutManager(this.getContext()));
         }
         if (null == this.getAdapter()) {
-            ItemAdapter<VIEW, TYPE> adapter = new ItemAdapter<VIEW, TYPE>(items, binder);
+            ItemAdapter<VIEW, TYPE> adapter = new ItemAdapter<>(items, binder);
             this.setItemAdapter(adapter);
         }
     }

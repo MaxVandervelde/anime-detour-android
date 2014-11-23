@@ -41,7 +41,7 @@ final public class Application extends android.app.Application implements GraphC
     @Override
     public Map<Class, Object> getScopeModules(Activity activity)
     {
-        LinkedHashMap<Class, Object> definitions = new LinkedHashMap<Class, Object>();
+        LinkedHashMap<Class, Object> definitions = new LinkedHashMap<>();
         definitions.put(MainModule.class, new MainModule());
         definitions.put(EventModule.class, new EventModule());
 

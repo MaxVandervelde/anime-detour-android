@@ -48,6 +48,6 @@ class EventViewBinder implements ItemViewBinder<PanelView,Event>
     public void bindView(final Event event, final PanelView view)
     {
         view.bind(event);
-        view.setOnClickListener(new ItemBoundClickListener<PanelView, Event>(event, this.clickListener));
+        view.setOnClickListener(new ItemBoundClickListener<>(event, this.clickListener));
     }
 }

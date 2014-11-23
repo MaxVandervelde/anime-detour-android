@@ -5,52 +5,56 @@
  */
 package com.animedetour.android.database.event;
 
+import com.inkapplications.prism.SubscriptionManager;
 import com.animedetour.sched.api.ScheduleEndpoint;
 import com.animedetour.sched.api.model.Event;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
+import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
-import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Event Data Repository
+ * Provides an API for querying Event objects.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 public class EventRepository
 {
-    /**
-     *  A local DAO for storing events
-     */
+    /** Used for tracing. */
+    final private Log logger;
+
+    /** A local DAO for storing events. */
     final private Dao<Event, String> localAccess;
 
-    /**
-     * A remote endpoint for updating the local storage
-     */
+    /** A remote endpoint for updating the local storage. */
     final private ScheduleEndpoint remoteAccess;
 
-    private LinkedHashMap<String, Observable<List<Event>>> eventsRequests = new LinkedHashMap<String, Observable<List<Event>>>();
+    /** Manage in-flight requests to async repos. */
+    final private SubscriptionManager<Event> subscriptionManager;
 
     /**
      * @param localAccess A local DAO for storing events
      * @param remoteAccess A remote endpoint for updating the local storage
      */
-    public EventRepository(Dao<Event, String> localAccess, ScheduleEndpoint remoteAccess)
-    {
+    public EventRepository(
+        Dao<Event, String> localAccess,
+        ScheduleEndpoint remoteAccess,
+        SubscriptionManager<Event> subscriptionManager,
+        Log logger
+    ) {
         this.localAccess = localAccess;
         this.remoteAccess = remoteAccess;
+        this.logger = logger;
+        this.subscriptionManager = subscriptionManager;
     }
 
     /**
@@ -58,17 +62,20 @@ public class EventRepository
      *
      * @return an observable that will update with events data
      */
-    public Observable<List<Event>> findAll()
+    public Subscription findAll(Observer<List<Event>> observer)
     {
-        Observable<List<Event>> callback = Observable.create(new OnSubscribe<List<Event>>() {
+        OnSubscribe<List<Event>> onSubscribe = new OnSubscribe<List<Event>>() {
             @Override public void call(final Subscriber<? super List<Event>> subscriber) {
-                EventRepository.this.updateAll(subscriber);
+                EventRepository.this.loadAll(subscriber);
             }
-        });
-        callback = callback.subscribeOn(Schedulers.io());
-        callback = callback.observeOn(AndroidSchedulers.mainThread());
+        };
+        String key = "findAll";
 
-        return callback;
+        return this.subscriptionManager.createCollectionSubscription(
+            onSubscribe,
+            observer,
+            key
+        );
     }
 
     /**
@@ -81,25 +88,18 @@ public class EventRepository
      */
     public Subscription findAllOnDay(final DateTime day, Observer<List<Event>> observer)
     {
-        Observable<List<Event>> callback = Observable.create(new OnSubscribe<List<Event>>() {
+        OnSubscribe<List<Event>> onSubscribe = new OnSubscribe<List<Event>>() {
             @Override public void call(final Subscriber<? super List<Event>> subscriber) {
-                EventRepository.this.updateAllOnDay(subscriber, day);
+                EventRepository.this.loadAllOnDay(subscriber, day);
             }
-        });
-        callback = callback.subscribeOn(Schedulers.io());
-        callback = callback.observeOn(AndroidSchedulers.mainThread());
-
+        };
         String key = "findAllOnDay:" + day.getDayOfYear();
-        Observable<List<Event>> requests = this.eventsRequests.get(key);
 
-        Subscription subscription = null;
-        if (null == requests) {
-            callback.subscribe(observer);
-        } else {
-            requests.subscribe(observer);
-        }
-
-        return subscription;
+        return this.subscriptionManager.createCollectionSubscription(
+            onSubscribe,
+            observer,
+            key
+        );
     }
 
     /**
@@ -116,33 +116,6 @@ public class EventRepository
         List<Event> result = this.localAccess.query(query);
 
         return result;
-    }
-
-    /**
-     * Updates the local data store for a specific day
-     *
-     * @see #updateAll(rx.Subscriber)
-     * @param subscriber For listening to the event list updates
-     * @param day The day to lookup events for
-     */
-    public void updateAllOnDay(final Subscriber<? super List<Event>> subscriber, DateTime day)
-    {
-        try {
-            List<Event> currentEvents = this.getAllOnDay(day);
-            subscriber.onNext(currentEvents);
-
-            if (currentEvents.size() != 0) {
-                return;
-            }
-            List<Event> events = this.remoteAccess.getSchedule();
-            this.dropLocal();
-            this.saveLocal(events);
-
-            List<Event> newEvents = this.getAllOnDay(day);
-            subscriber.onNext(newEvents);
-        } catch (SQLException e) {
-            subscriber.onError(e);
-        }
     }
 
     /**
@@ -165,33 +138,18 @@ public class EventRepository
     }
 
     /**
-     * Updates the local data store
-     *
-     * Updates a subscriber with changes in local data.
-     * Will return existing data, then attempt to fetch data from the remote
-     * and update the subscriber again.
-     *
-     * @param subscriber For listening to the event list updates
+     * Fetches the most recently updated event according to fetch time.
      */
-    protected void updateAll(final Subscriber<? super List<Event>> subscriber)
+    public Event getMostRecentUpdated() throws SQLException
     {
-        try {
-            List<Event> currentEvents = this.getAll();
-            subscriber.onNext(currentEvents);
+        QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
+        builder.orderBy("fetched", false);
 
-            if (currentEvents.size() != 0) {
-                return;
-            }
 
-            List<Event> events = this.remoteAccess.getSchedule();
-            this.dropLocal();
-            this.saveLocal(events);
+        PreparedQuery<Event> query = builder.prepare();
+        Event result = this.localAccess.queryForFirst(query);
 
-            List<Event> newEvents = this.getAll();
-            subscriber.onNext(newEvents);
-        } catch (SQLException e) {
-            subscriber.onError(e);
-        }
+        return result;
     }
 
     /**
@@ -199,6 +157,7 @@ public class EventRepository
      */
     public void dropLocal() throws SQLException
     {
+        this.logger.trace("Dropping Local access");
         TableUtils.dropTable(this.localAccess.getConnectionSource(), Event.class, true);
         TableUtils.createTable(this.localAccess.getConnectionSource(), Event.class);
     }
@@ -208,6 +167,7 @@ public class EventRepository
      */
     public void saveLocal(List<Event> events) throws SQLException
     {
+        this.logger.trace("Saving " + events.size() + " Events");
         for (Event event : events) {
             this.saveLocal(event);
         }
@@ -218,6 +178,170 @@ public class EventRepository
      */
     public void saveLocal(Event event) throws SQLException
     {
-        this.localAccess.create(event);
+        this.localAccess.createOrUpdate(event);
+    }
+
+    /**
+     * Updates the local data store
+     *
+     * Updates a subscriber with changes in local data.
+     * Will return existing data, then attempt to fetch data from the remote
+     * and update the subscriber again.
+     *
+     * @param subscriber For listening to the event list updates
+     */
+    protected void loadAll(final Subscriber<? super List<Event>> subscriber)
+    {
+        try {
+            List<Event> currentEvents = this.getAll();
+            subscriber.onNext(currentEvents);
+
+            Event mostRecent = this.getMostRecentUpdated();
+
+            if (false == this.dataIsStale()) {
+                return;
+            }
+
+            List<Event> events = this.remoteAccess.getSchedule(mostRecent.getFetched().getMillis());
+            this.saveLocal(events);
+
+            List<Event> newEvents = this.getAll();
+            subscriber.onNext(newEvents);
+        } catch (SQLException e) {
+            subscriber.onError(e);
+        }
+    }
+
+    /**
+     * Updates the local data store for a specific day
+     *
+     * @see #loadAll(rx.Subscriber)
+     * @param subscriber For listening to the event list updates
+     * @param day The day to lookup events for
+     */
+    protected void loadAllOnDay(final Subscriber<? super List<Event>> subscriber, final DateTime day)
+    {
+        try {
+            List<Event> currentEvents = this.getAllOnDay(day);
+            subscriber.onNext(currentEvents);
+
+            if (false == this.dataIsStale()) {
+                this.logger.debug("Most recent event within 10 minutes, not checking for update.");
+                return;
+            }
+
+            this.logger.trace("Checking for update.");
+            this.updateAll(new Observer<List<Event>>(){
+                @Override public void onCompleted(){
+                    try {
+                        logger.trace("Update Complete");
+                        List<Event> newEvents = EventRepository.this.getAllOnDay(day);
+                        subscriber.onNext(newEvents);
+                    } catch (SQLException e) {
+                        subscriber.onError(e);
+                    }
+                }
+                @Override public void onError(Throwable e) {
+                    subscriber.onError(e);
+                }
+                @Override public void onNext(List<Event> events) { }
+            });
+        } catch (SQLException e) {
+            subscriber.onError(e);
+        }
+    }
+
+    /**
+     * Checks if the most recent record is before a threshold.
+     *
+     * Current threshold is set to an hour.
+     *
+     * @return true the data is considered too old.
+     */
+    final protected boolean dataIsStale() throws SQLException
+    {
+        Event mostRecent = this.getMostRecentUpdated();
+
+        if (null == mostRecent) {
+            return true;
+        }
+
+        DateTime earliest = new DateTime().minusHours(1);
+        if (mostRecent.getFetched().isBefore(earliest)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Update all event records to be in sync with the API.
+     *
+     * This method will use the subscription manager to ensure that only one
+     * update request is run at once.
+     *
+     * @param observer The observer to invoke on event list updates.
+     * @return A subscription for the request that may be cancelled.
+     */
+    protected Subscription updateAll(Observer<List<Event>> observer)
+    {
+        OnSubscribe<List<Event>> onSubscribe = new OnSubscribe<List<Event>>() {
+            @Override public void call(final Subscriber<? super List<Event>> subscriber) {
+                EventRepository.this.updateAll(subscriber);
+            }
+        };
+        String key = "updateAll";
+
+        return this.subscriptionManager.createCollectionSubscription(
+            onSubscribe,
+            observer,
+            key
+        );
+    }
+
+    /**
+     * Update all event records to be in sync with the API.
+     *
+     * This method will run the sql update and inform a subscriber of progress.
+     * will check for updates since the most recently fetched record.
+     *
+     * @param subscriber The subscriber to keep informed on updates.
+     */
+    protected void updateAll(final Subscriber<? super List<Event>> subscriber)
+    {
+        this.logger.trace("Updating all");
+        try {
+            Event mostRecent = this.getMostRecentUpdated();
+            long since;
+            if (null == mostRecent) {
+                since = 0;
+            } else {
+                since = mostRecent.getFetched().getMillis();
+            }
+            List<Event> events = this.updateAll(since);
+            subscriber.onNext(events);
+        } catch (SQLException e) {
+            subscriber.onError(e);
+        }
+
+        subscriber.onCompleted();
+    }
+
+    /**
+     * Update all event records to be in sync with the API.
+     *
+     * This method makes a direct call to the remote and saves the updates
+     * to the local database.
+     *
+     * @todo this does not check for removed events currently.
+     * @param since The timestamp to find changes since.
+     * @return The list of updated events.
+     */
+    protected List<Event> updateAll(long since) throws SQLException
+    {
+        this.logger.trace("Updating all from remote");
+        List<Event> schedule = this.remoteAccess.getSchedule(since);
+        this.saveLocal(schedule);
+        return schedule;
     }
 }
