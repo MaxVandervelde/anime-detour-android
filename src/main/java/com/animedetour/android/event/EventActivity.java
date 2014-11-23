@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
@@ -109,6 +111,17 @@ final public class EventActivity extends ActionBarActivity
     {
         super.finish();
         this.overridePendingTransition(0, R.anim.slide_out_right);
+    }
+
+    /**
+     * Add This event to the user's favorites/schedule.
+     *
+     * @todo implement favorites here
+     */
+    @OnClick(R.id.event_add)
+    public void addFavoriteEvent()
+    {
+        Toast.makeText(this, "Soon", Toast.LENGTH_LONG).show();
     }
 
     /**

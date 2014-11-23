@@ -12,12 +12,14 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_double_scrim"
     />
+    <!-- (Margin right/end leaves space for a FAB) -->
     <TextView
         style="@style/headline"
         android:textColor="@color/foreground_inverse"
         android:id="@+id/title"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginRight="88dp"
         android:gravity="bottom|start"
         android:text="Image Title"
         android:layout_width="match_parent"

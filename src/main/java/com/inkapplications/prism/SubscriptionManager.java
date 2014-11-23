@@ -23,17 +23,17 @@ import java.util.List;
  * This is intended to be used in a repository when looking up remote data.
  * Observers are run on Android's main thread, and background is run on IO.
  *
- * @param <TYPE> The entity that this repository represents.
+ * @param <ENTITY> The entity that this repository represents.
  */
-public class SubscriptionManager<TYPE>
+public class SubscriptionManager<ENTITY>
 {
     final private Log logger;
 
     /** Stores in-flight requests for events. */
-    final private HashMap<String, Observable<TYPE>> requests = new HashMap<>();
+    final private HashMap<String, Observable<ENTITY>> requests = new HashMap<>();
 
     /** Stores in-flight requests for events when fetching a collection. */
-    final private HashMap<String, Observable<List<TYPE>>> collectionRequests = new HashMap<>();
+    final private HashMap<String, Observable<List<ENTITY>>> collectionRequests = new HashMap<>();
 
     public SubscriptionManager(Log logger)
     {
@@ -53,17 +53,17 @@ public class SubscriptionManager<TYPE>
      * @return A subscription for the observer that may be unsubscribed if necessary.
      */
     final public Subscription createCollectionSubscription(
-        OnSubscribe<List<TYPE>> onSubscribe,
-        Observer<List<TYPE>> observer,
+        OnSubscribe<List<ENTITY>> onSubscribe,
+        Observer<List<ENTITY>> observer,
         String key
     ) {
         this.logger.trace("Creating collection subscription.");
-        Observable<List<TYPE>> callback = Observable.create(onSubscribe);
+        Observable<List<ENTITY>> callback = Observable.create(onSubscribe);
         callback = callback.subscribeOn(Schedulers.io());
         callback = callback.observeOn(AndroidSchedulers.mainThread());
         callback = callback.cache();
 
-        Observable<List<TYPE>> previousRequest = this.collectionRequests.get(key);
+        Observable<List<ENTITY>> previousRequest = this.collectionRequests.get(key);
         Subscription subscription;
         if (null == previousRequest) {
             this.logger.debug("No previous request to join.");
@@ -90,17 +90,17 @@ public class SubscriptionManager<TYPE>
      * @return A subscription for the observer that may be unsubscribed if necessary.
      */
     final public Subscription createSubscription(
-        OnSubscribe<TYPE> onSubscribe,
-        Observer<TYPE> observer,
+        OnSubscribe<ENTITY> onSubscribe,
+        Observer<ENTITY> observer,
         String key
     ) {
         this.logger.trace("Creating subscription.");
-        Observable<TYPE> callback = Observable.create(onSubscribe);
+        Observable<ENTITY> callback = Observable.create(onSubscribe);
         callback = callback.subscribeOn(Schedulers.io());
         callback = callback.observeOn(AndroidSchedulers.mainThread());
         callback = callback.cache();
 
-        Observable<TYPE> previousRequest = this.requests.get(key);
+        Observable<ENTITY> previousRequest = this.requests.get(key);
         Subscription subscription;
         if (null == previousRequest) {
             this.logger.debug("No previous request to join.");
