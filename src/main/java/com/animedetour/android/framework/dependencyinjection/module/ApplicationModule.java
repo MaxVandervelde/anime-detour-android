@@ -5,17 +5,19 @@
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
+import android.app.Application;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.animedetour.android.BuildConfig;
+import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.sched.api.dependencyinjection.ApiModule;
-import com.inkapplications.android.logger.ConsoleLogger;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import dagger.Module;
 import dagger.Provides;
-import org.apache.commons.logging.Log;
 
 import javax.inject.Singleton;
 
@@ -23,6 +25,7 @@ import javax.inject.Singleton;
     includes = {
         DataModule.class,
         ApiModule.class,
+        LogModule.class,
     },
     complete = false,
     library = true
@@ -41,18 +44,21 @@ final public class ApplicationModule
         return this.application;
     }
 
-    @Provides @Singleton Log provideLogger()
-    {
-        return new ConsoleLogger(BuildConfig.DEBUG, "AnimeDetour:Application");
-    }
-
-    @Provides @Singleton
-    ImageLoader provideImageLoader(android.app.Application context)
+    @Provides @Singleton ImageLoader provideImageLoader(Application context)
     {
         RequestQueue queue = Volley.newRequestQueue(context);
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
 
         return new ImageLoader(queue, new LongImageCache(cacheSize));
+    }
+
+    @Provides @Singleton Tracker provideAnalytics(Application context)
+    {
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
+        Tracker tracker = analytics.newTracker(R.xml.google_analytics);
+        tracker.setAppVersion(BuildConfig.VERSION_NAME + "." + BuildConfig.VERSION_CODE);
+
+        return tracker;
     }
 }

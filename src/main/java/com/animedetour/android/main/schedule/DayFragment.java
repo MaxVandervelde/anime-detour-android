@@ -19,6 +19,8 @@ import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.MainModule;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.sched.api.model.Event;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
@@ -46,6 +48,9 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
 
     @Inject
     Log logger;
+
+    @Inject
+    Tracker tracker;
 
     @InjectView(R.id.panel_list)
     SimpleRecyclerView<PanelView, Event> panelList;
@@ -108,9 +113,15 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     @Override
     public void onViewClicked(Event selected, PanelView view)
     {
+        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+        event.setCategory("Event");
+        event.setAction("View Details");
+        event.setLabel(selected.getName());
+        this.tracker.send(event.build());
+
         Intent intent = new Intent(getActivity(), EventActivity.class);
         intent.putExtra(EventActivity.EXTRA_EVENT, selected);
-        startActivity(intent);
+        this.startActivity(intent);
     }
 
     /**

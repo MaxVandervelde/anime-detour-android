@@ -1,5 +1,6 @@
 package com.animedetour.android.main;
 
+import com.animedetour.android.main.guest.GuestIndexFragment;
 import com.animedetour.android.main.home.HomeFragment;
 import com.animedetour.android.main.schedule.DayFragment;
 import com.animedetour.android.main.schedule.ScheduleFragment;
@@ -12,6 +13,7 @@ import dagger.Module;
         HomeFragment.class,
         DayFragment.class,
         ScheduleFragment.class,
+        GuestIndexFragment.class,
     },
     library = true,
     complete = false

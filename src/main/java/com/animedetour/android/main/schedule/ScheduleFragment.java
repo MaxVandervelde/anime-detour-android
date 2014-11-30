@@ -14,9 +14,12 @@ import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.MainModule;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import org.joda.time.DateTime;
 import prism.framework.Scope;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,9 @@ final public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)
     ViewPager pager;
+
+    @Inject
+    Tracker tracker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,6 +58,8 @@ final public class ScheduleFragment extends Fragment
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
+        this.tracker.setScreenName("Schedule");
+        this.tracker.send(new HitBuilders.AppViewBuilder().build());
     }
 
     /**

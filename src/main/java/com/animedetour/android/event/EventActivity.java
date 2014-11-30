@@ -19,6 +19,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.sched.api.model.Event;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
 import prism.framework.Scope;
@@ -76,6 +78,9 @@ final public class EventActivity extends ActionBarActivity
     @Inject
     Log logger;
 
+    @Inject
+    Tracker tracker;
+
     /**
      * The event we are currently displaying
      */
@@ -104,6 +109,9 @@ final public class EventActivity extends ActionBarActivity
         this.eventDetails.setText(this.getEventDetailsString());
 
         this.setupNavigation();
+
+        this.tracker.setScreenName("Event");
+        this.tracker.send(new HitBuilders.AppViewBuilder().build());
     }
 
     @Override
@@ -121,6 +129,12 @@ final public class EventActivity extends ActionBarActivity
     @OnClick(R.id.event_add)
     public void addFavoriteEvent()
     {
+        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+        event.setCategory("Event");
+        event.setAction("Favorite");
+        event.setLabel(this.event.getName());
+        this.tracker.send(event.build());
+
         Toast.makeText(this, "Soon", Toast.LENGTH_LONG).show();
     }
 
