@@ -2,14 +2,16 @@
 <resources>
     <string name="app_name">AnimeDetour</string>
     <string name="hello_world">Hello world!</string>
+    <string name="home_title">Home</string>
+    <string name="schedule_title">Schedule</string>
+    <string name="maps_title">Hotel Map</string>
+
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
     <string name="drawer_home_label">Home</string>
-    <string name="home_title">Home</string>
-    <string name="schedule_title">Schedule</string>
     <string name="drawer_guests_label">Guests</string>
     <string name="drawer_programming_label">Programming</string>
-    <string name="drawer_maps_label">Maps</string>
+    <string name="drawer_maps_label">Hotel Map</string>
 
     <string name="panel_details">%1$ta, %1$tl:%1$tM - %2$tl:%2$tM%2$tp in %3$s</string>
     <string name="schedule_day_headline">%tA</string>

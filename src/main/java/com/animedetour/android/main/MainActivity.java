@@ -7,6 +7,7 @@ package com.animedetour.android.main;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -19,8 +20,8 @@ import android.view.WindowManager;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
-import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.home.HomeFragment;
+import com.animedetour.android.main.map.HotelMapFragment;
 import com.animedetour.android.main.schedule.ScheduleFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
@@ -149,6 +150,17 @@ final public class MainActivity extends ActionBarActivity
         this.setPageTitle(R.string.schedule_title);
         this.drawer.closeDrawer(Gravity.START);
         this.contentFragmentTransaction(new ScheduleFragment());
+    }
+
+    @OnClick(R.id.drawer_maps)
+    protected void openMaps()
+    {
+        this.setPageTitle(R.string.maps_title);
+        this.drawer.closeDrawer(Gravity.START);
+        this.getFragmentManager().beginTransaction().replace(
+            R.id.content_frame,
+            new HotelMapFragment()
+        ).setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom).commit();
     }
 
     /**

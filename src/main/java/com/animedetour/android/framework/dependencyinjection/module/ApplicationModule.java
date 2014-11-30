@@ -43,7 +43,7 @@ final public class ApplicationModule
 
     @Provides @Singleton Log provideLogger()
     {
-        return new ConsoleLogger(BuildConfig.DEBUG, "application");
+        return new ConsoleLogger(BuildConfig.DEBUG, "AnimeDetour:Application");
     }
 
     @Provides @Singleton

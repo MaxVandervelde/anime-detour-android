@@ -1,0 +1,210 @@
+# This is a configuration file for ProGuard.
+# http://proguard.sourceforge.net/index.html#manual/usage.html
+
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+-ignorewarnings
+
+# Optimization is turned off by default. Dex does not like code run
+# through the ProGuard optimize and preverify steps (and performs some
+# of these optimizations on its own).
+-dontoptimize
+-dontpreverify
+# Note that if you want to enable optimization, you cannot just
+# include optimization flags in your own project configuration file;
+# instead you will need to point to the
+# "proguard-android-optimize.txt" file instead of this one from your
+# project.properties file.
+
+-dontobfuscate
+-dontskipnonpubliclibraryclasses
+-ignorewarnings
+
+-keepattributes *Annotation*,EnclosingMethod
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# The support library contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version.  We know about them, and they are safe.
+-dontwarn android.support.**
+
+-renamesourcefileattribute SourceFile
+
+-keepattributes SourceFile,LineNumberTable,*Annotation*
+
+-keepclassmembers enum * { public static **[] values(); public static ** valueOf(java.lang.String); }
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.view.View { public <init>(android.content.Context); public <init>(android.content.Context, android.util.AttributeSet); public <init>(android.content.Context, android.util.AttributeSet, int); public void set*(...); }
+
+-keepclassmembers class * extends android.app.Activity { public void *(android.view.View); }
+-keepclassmembers class android.support.v4.app.Fragment { *** getActivity(); public *** onCreate(); public *** onCreateOptionsMenu(...); }
+
+## Hockey ##
+-keepclassmembers class net.hockeyapp.android.UpdateFragment {
+  *;
+}
+
+## Google Play Services ##
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-dontwarn com.google.android.gms.**
+
+## Guava ##
+# Guava exclusions (http://code.google.com/p/guava-libraries/wiki/UsingProGuardWithGuava)
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+
+# Guava depends on the annotation and inject packages for its annotations, keep them both
+-keep public class javax.annotation.**
+-keep public class javax.inject
+## Google Play Services ##
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-dontwarn com.google.android.gms.**.**
+
+
+## Google Analytics ##
+-keep class com.google.android.gms.analytics.**
+-keep class com.google.analytics.tracking.**
+-dontwarn com.google.android.gms.analytics.**
+-dontwarn com.google.analytics.tracking.**
+
+## Ice Pick ##
+-dontwarn icepick.**
+-keep class **$$Icicle { *; }
+-keepnames class * { @icepick.Icicle *;}
+
+## Dagger ##
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
+
+## Butter Knife ##
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
+
+## Retrofit ##
+-keep class com.google.gson.** { *; }
+-keep class com.google.inject.** { *; }
+-keep class org.apache.http.** { *; }
+-keep class org.apache.james.mime4j.** { *; }
+-keep class javax.inject.** { *; }
+-keep class retrofit.** { *; }
+-dontwarn com.squareup.javawriter.**
+
+-dontwarn retrofit.appengine.**
+
+## Okttp ##
+-keep class com.levelup.http.okhttp.** { *; }
+-keep interface com.levelup.http.okhttp.** { *; }
+
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.internal.**
+-keep class okio.**
+-dontwarn okio.**
+
+# OkHttp oddities
+-dontwarn com.squareup.okhttp.internal.http.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+## ORMLite ##
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
+
+-keep class org.joda.** { *; }
+-keep interface org.joda.** { *; }
+-keep enum org.joda.** { *; }
+-dontwarn org.joda.time.**
+
+## Jackson ##
+-keepnames class org.codehaus.jackson.** { *; }
+-dontwarn javax.xml.**
+-dontwarn javax.xml.stream.events.**
+-dontwarn com.fasterxml.jackson.databind.**
+-dontwarn com.cedarsoft.serialization.**
