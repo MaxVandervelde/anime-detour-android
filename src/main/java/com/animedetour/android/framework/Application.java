@@ -11,15 +11,18 @@ import com.animedetour.android.framework.dependencyinjection.module.ActivityModu
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
 import com.animedetour.android.main.MainModule;
 import dagger.ObjectGraph;
-import prism.framework.ActivityInjector;
 import prism.framework.GraphContext;
+import prism.framework.KernelContext;
+import prism.framework.LifecycleSubscriber;
+import prism.framework.PrismKernel;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-final public class Application extends android.app.Application implements GraphContext
+final public class Application extends android.app.Application implements GraphContext, KernelContext
 {
     private ObjectGraph applicationGraph;
+    private PrismKernel kernel;
 
     @Override
     public void onCreate()
@@ -27,8 +30,9 @@ final public class Application extends android.app.Application implements GraphC
         super.onCreate();
 
         this.applicationGraph = ObjectGraph.create(this.getApplicationModules());
+        this.kernel = new PrismKernel(this);
 
-        this.registerActivityLifecycleCallbacks(new ActivityInjector(this));
+        this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
         this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
     }
 
@@ -61,5 +65,11 @@ final public class Application extends android.app.Application implements GraphC
         return new Object[] {
             new ApplicationModule(this),
         };
+    }
+
+    @Override
+    public PrismKernel getKernel()
+    {
+        return this.kernel;
     }
 }

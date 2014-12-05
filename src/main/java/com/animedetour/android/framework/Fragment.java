@@ -8,8 +8,7 @@ package com.animedetour.android.framework;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import icepick.Icepick;
-import prism.framework.GraphContext;
-import prism.framework.InjectionFacade;
+import prism.framework.PrismFacade;
 
 public class Fragment extends android.support.v4.app.Fragment
 {
@@ -18,9 +17,7 @@ public class Fragment extends android.support.v4.app.Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        GraphContext context = (GraphContext) this.getActivity().getApplication();
-        InjectionFacade.inject(context, this.getActivity(), this);
-
+        PrismFacade.bootstrap(this);
         ButterKnife.inject(this, this.getView());
     }
 

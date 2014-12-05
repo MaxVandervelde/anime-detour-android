@@ -26,7 +26,7 @@ import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
-import prism.framework.Scope;
+import prism.framework.ModuleScope;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@Scope(MainModule.class)
+@ModuleScope(MainModule.class)
 final public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
