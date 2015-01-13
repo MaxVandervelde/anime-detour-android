@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
@@ -11,12 +11,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 'android-21'
-    buildToolsVersion '21.0.2'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "org.animetwincities.animedetour"
         minSdkVersion 16
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 204
         versionName "2.0.0"
     }
@@ -57,12 +57,13 @@ android {
             applicationIdSuffix '.dev'
             versionNameSuffix '+dev'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            runProguard true
+            minifyEnabled true
+            debuggable true
         }
         release {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            runProguard true
+            minifyEnabled true
         }
     }
 }

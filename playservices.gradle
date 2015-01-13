@@ -1,4 +1,3 @@
-
 def toCamelCase(String string) {
     String result = ""
     string.findAll("[^\\W]+") { String word ->
@@ -11,7 +10,9 @@ afterEvaluate { project ->
     Configuration runtimeConfiguration = project.configurations.getByName('compile')
     ResolutionResult resolution = runtimeConfiguration.incoming.resolutionResult
     // Forces resolve of configuration
-    ModuleVersionIdentifier module = resolution.getAllComponents().find { it.moduleVersion.name.equals("play-services") }.moduleVersion
+    ModuleVersionIdentifier module = resolution.getAllComponents().find {
+        it.moduleVersion.name.equals("play-services")
+    }.moduleVersion
 
     String prepareTaskName = "prepare${toCamelCase("${module.group} ${module.name} ${module.version}")}Library"
     File playServiceRootFolder = project.tasks.find { it.name.equals(prepareTaskName) }.explodedDir
@@ -46,13 +47,13 @@ afterEvaluate { project ->
                     exclude "com/google/android/gms/tagmanager/**"
                 }
             }.execute()
-            delete {
-                delete (file(new File(playServiceRootFolder, "classes_orig.jar")))
-            }
+            delete file(new File(playServiceRootFolder, "classes_orig.jar"))
         }
     }
 
-    project.tasks.findAll { it.name.startsWith('prepare') && it.name.endsWith('Dependencies') }.each { Task task ->
+    project.tasks.findAll {
+        it.name.startsWith('prepare') && it.name.endsWith('Dependencies')
+    }.each { Task task ->
         task.dependsOn stripPlayServices
     }
 }
