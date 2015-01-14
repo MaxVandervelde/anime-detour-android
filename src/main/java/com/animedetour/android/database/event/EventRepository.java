@@ -6,8 +6,8 @@
 package com.animedetour.android.database.event;
 
 import com.inkapplications.prism.SubscriptionManager;
-import com.animedetour.sched.api.ScheduleEndpoint;
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.ScheduleEndpoint;
+import com.animedetour.api.sched.api.model.Event;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;

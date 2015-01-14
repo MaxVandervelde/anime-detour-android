@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.view.ImageScrim;
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.model.Event;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;

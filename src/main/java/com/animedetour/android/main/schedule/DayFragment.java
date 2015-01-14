@@ -18,7 +18,7 @@ import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.MainModule;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.model.Event;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;

@@ -6,7 +6,7 @@
 package com.animedetour.android.main.schedule;
 
 import android.view.View;
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.model.Event;
 import org.apache.commons.logging.Log;
 import rx.Subscriber;
 

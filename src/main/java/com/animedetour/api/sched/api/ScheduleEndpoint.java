@@ -3,9 +3,9 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.sched.api;
+package com.animedetour.api.sched.api;
 
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.model.Event;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;

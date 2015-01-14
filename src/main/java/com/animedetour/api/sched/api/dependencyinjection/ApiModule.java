@@ -3,9 +3,9 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.sched.api.dependencyinjection;
+package com.animedetour.api.sched.api.dependencyinjection;
 
-import com.animedetour.sched.api.ScheduleEndpoint;
+import com.animedetour.api.sched.api.ScheduleEndpoint;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;

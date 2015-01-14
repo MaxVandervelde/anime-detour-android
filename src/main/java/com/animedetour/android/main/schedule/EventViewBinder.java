@@ -6,7 +6,7 @@
 package com.animedetour.android.main.schedule;
 
 import android.content.Context;
-import com.animedetour.sched.api.model.Event;
+import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.prism.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.prism.widget.recyclerview.ItemViewBinder;
 import com.inkapplications.prism.widget.recyclerview.ViewClickListener;

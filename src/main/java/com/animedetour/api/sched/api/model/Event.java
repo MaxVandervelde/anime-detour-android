@@ -3,9 +3,9 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.sched.api.model;
+package com.animedetour.api.sched.api.model;
 
-import com.animedetour.sched.api.deserialization.PanelDateDeserializer;
+import com.animedetour.api.sched.api.deserialization.PanelDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.j256.ormlite.field.DataType;
