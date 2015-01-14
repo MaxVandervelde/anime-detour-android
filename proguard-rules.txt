@@ -208,3 +208,7 @@
 -dontwarn javax.xml.stream.events.**
 -dontwarn com.fasterxml.jackson.databind.**
 -dontwarn com.cedarsoft.serialization.**
+
+## Internal ##
+-keep class com.animedetour.** { *; }
+-keepclassmembers class com.animedetour.** { *; }

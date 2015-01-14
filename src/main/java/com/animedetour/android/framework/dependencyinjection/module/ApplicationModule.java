@@ -13,7 +13,7 @@ import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
 import com.animedetour.android.volley.cache.LongImageCache;
-import com.animedetour.api.sched.api.dependencyinjection.ApiModule;
+import com.animedetour.api.ApiModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import dagger.Module;
