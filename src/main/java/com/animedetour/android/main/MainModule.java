@@ -1,9 +1,9 @@
 package com.animedetour.android.main;
 
-import com.animedetour.android.main.guest.GuestIndexFragment;
-import com.animedetour.android.main.home.HomeFragment;
-import com.animedetour.android.main.schedule.DayFragment;
-import com.animedetour.android.main.schedule.ScheduleFragment;
+import com.animedetour.android.guest.GuestIndexFragment;
+import com.animedetour.android.home.HomeFragment;
+import com.animedetour.android.schedule.DayFragment;
+import com.animedetour.android.schedule.ScheduleFragment;
 import dagger.Module;
 
 @Module(

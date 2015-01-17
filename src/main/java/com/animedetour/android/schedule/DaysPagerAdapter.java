@@ -1,4 +1,4 @@
-package com.animedetour.android.main.schedule;
+package com.animedetour.android.schedule;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

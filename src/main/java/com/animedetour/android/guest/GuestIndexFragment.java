@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2015 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.main.guest;
+package com.animedetour.android.guest;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

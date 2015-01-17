@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.main.map;
+package com.animedetour.android.map;
 
 import com.google.android.gms.maps.model.LatLng;
 

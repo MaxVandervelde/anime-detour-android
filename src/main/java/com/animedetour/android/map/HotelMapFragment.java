@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.main.map;
+package com.animedetour.android.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
 
-import static com.animedetour.android.main.map.HotelMapPoints.*;
+import static com.animedetour.android.map.HotelMapPoints.*;
 
 /**
  * Google Maps display with Hotel points overlayed.
