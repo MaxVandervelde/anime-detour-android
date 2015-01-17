@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc. All rights Reserved.
  */
 package com.animedetour.android.main;
 
@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
+import com.animedetour.android.main.guest.GuestIndexFragment;
 import com.animedetour.android.main.home.HomeFragment;
 import com.animedetour.android.main.map.HotelMapFragment;
 import com.animedetour.android.main.schedule.ScheduleFragment;
@@ -150,6 +151,13 @@ final public class MainActivity extends ActionBarActivity
         this.setPageTitle(R.string.schedule_title);
         this.drawer.closeDrawer(Gravity.START);
         this.contentFragmentTransaction(new ScheduleFragment());
+    }
+
+    @OnClick(R.id.drawer_guests)
+    protected void openGuests()
+    {
+        this.drawer.closeDrawer(Gravity.START);
+        this.contentFragmentTransaction(new GuestIndexFragment());
     }
 
     @OnClick(R.id.drawer_maps)

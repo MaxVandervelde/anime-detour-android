@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
-import com.animedetour.android.database.event.EventRepository;
+import com.animedetour.android.database.EventRepository;
 import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.MainModule;

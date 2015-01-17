@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
  */
-package com.animedetour.android.database.event;
+package com.animedetour.android.database;
 
 import com.inkapplications.prism.SubscriptionManager;
 import com.animedetour.api.sched.api.ScheduleEndpoint;
