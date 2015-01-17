@@ -16,7 +16,6 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.EventRepository;
 import com.animedetour.android.event.EventActivity;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.main.MainModule;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
 import com.google.android.gms.analytics.HitBuilders;
@@ -26,7 +25,6 @@ import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
-import prism.framework.ModuleScope;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -40,7 +38,6 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(MainModule.class)
 final public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject

@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.main.MainModule;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import prism.framework.ModuleScope;
 
 import javax.inject.Inject;
 
@@ -25,7 +23,6 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(MainModule.class)
 final public class HomeFragment extends Fragment
 {
     @Inject

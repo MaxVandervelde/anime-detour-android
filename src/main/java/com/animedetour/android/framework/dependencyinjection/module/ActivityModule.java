@@ -6,6 +6,12 @@
 package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.app.Activity;
+import com.animedetour.android.event.EventActivity;
+import com.animedetour.android.guest.GuestIndexFragment;
+import com.animedetour.android.home.HomeFragment;
+import com.animedetour.android.main.MainActivity;
+import com.animedetour.android.schedule.DayFragment;
+import com.animedetour.android.schedule.ScheduleFragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +19,15 @@ import javax.inject.Singleton;
 
 @Module(
     includes = {
+    },
+    injects = {
+        MainActivity.class,
+        EventActivity.class,
 
+        HomeFragment.class,
+        DayFragment.class,
+        ScheduleFragment.class,
+        GuestIndexFragment.class,
     },
     complete = false,
     library = true

@@ -15,11 +15,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.database.GuestRepository;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.main.MainModule;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
-import prism.framework.ModuleScope;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(MainModule.class)
 public class GuestIndexFragment extends Fragment
 {
     @Inject

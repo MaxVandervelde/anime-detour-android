@@ -23,7 +23,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
-import prism.framework.ModuleScope;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -37,7 +36,6 @@ import java.util.Date;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(EventModule.class)
 @Layout(R.layout.event)
 final public class EventActivity extends ActionBarActivity
 {

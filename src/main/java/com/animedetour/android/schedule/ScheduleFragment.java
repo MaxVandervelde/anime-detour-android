@@ -13,11 +13,9 @@ import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.main.MainModule;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.joda.time.DateTime;
-import prism.framework.ModuleScope;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -30,7 +28,6 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(MainModule.class)
 final public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)

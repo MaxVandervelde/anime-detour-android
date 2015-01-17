@@ -6,10 +6,8 @@
 package com.animedetour.android.framework;
 
 import android.app.Activity;
-import com.animedetour.android.event.EventModule;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
-import com.animedetour.android.main.MainModule;
 import dagger.ObjectGraph;
 import prism.framework.GraphContext;
 import prism.framework.KernelContext;
@@ -46,8 +44,6 @@ final public class Application extends android.app.Application implements GraphC
     public Map<Class, Object> getScopeModules(Activity activity)
     {
         LinkedHashMap<Class, Object> definitions = new LinkedHashMap<>();
-        definitions.put(MainModule.class, new MainModule());
-        definitions.put(EventModule.class, new EventModule());
 
         return definitions;
     }

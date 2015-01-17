@@ -26,7 +26,6 @@ import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
-import prism.framework.ModuleScope;
 
 /**
  * Main containing Activity
@@ -35,7 +34,6 @@ import prism.framework.ModuleScope;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ModuleScope(MainModule.class)
 @Layout(R.layout.main)
 final public class MainActivity extends ActionBarActivity
 {
