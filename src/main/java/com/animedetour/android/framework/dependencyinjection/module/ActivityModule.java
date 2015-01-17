@@ -6,7 +6,7 @@
 package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.app.Activity;
-import com.animedetour.android.event.EventActivity;
+import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.main.MainActivity;
