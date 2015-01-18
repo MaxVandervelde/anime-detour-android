@@ -6,6 +6,7 @@
 package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.app.Activity;
+import com.animedetour.android.guest.GuestDetailActivity;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
@@ -23,6 +24,7 @@ import javax.inject.Singleton;
     injects = {
         MainActivity.class,
         EventActivity.class,
+        GuestDetailActivity.class,
 
         HomeFragment.class,
         DayFragment.class,

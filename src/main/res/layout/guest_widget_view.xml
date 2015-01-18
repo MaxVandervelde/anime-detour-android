@@ -17,7 +17,7 @@
         app:border_width="0dp"
     />
     <TextView
-        style="@style/title"
+        style="@style/caption"
         android:id="@+id/guest_widget_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

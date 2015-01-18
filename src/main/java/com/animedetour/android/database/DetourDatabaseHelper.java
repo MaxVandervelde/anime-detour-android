@@ -27,7 +27,7 @@ import java.sql.SQLException;
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public DetourDatabaseHelper(Context context)
     {

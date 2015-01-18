@@ -55,6 +55,13 @@ public class Guest implements Serializable
     private String photo;
 
     /**
+     * An HTTP URI for a full resolution avatar of the guest.
+     */
+    @DatabaseField
+    @JsonProperty("HiResPhotoPath")
+    private String fullPhoto;
+
+    /**
      * The group of guests this person is in.
      */
     @DatabaseField(foreign = true)
@@ -109,6 +116,15 @@ public class Guest implements Serializable
     }
 
     /**
+     * @return The guest's first + last name combined.
+     * @todo This should be replaced with an actual property, not concatenation.
+     */
+    final public String getFullName()
+    {
+        return this.firstName + " " + this.lastName;
+    }
+
+    /**
      * @return A detailed html encoded biography describing the guest.
      */
     final public String getBio()
@@ -138,6 +154,22 @@ public class Guest implements Serializable
     public void setPhoto(String photo)
     {
         this.photo = photo;
+    }
+
+    /**
+     * @return An HTTP URI for a full, high-resolution, version of the user's photo.
+     */
+    final public String getFullPhoto()
+    {
+        return fullPhoto;
+    }
+
+    /**
+     * @param fullPhoto HTTP URI for a full, high-resolution, version of the user's photo.
+     */
+    public void setFullPhoto(String fullPhoto)
+    {
+        this.fullPhoto = fullPhoto;
     }
 
     /**

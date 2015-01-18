@@ -6,6 +6,8 @@
 package com.animedetour.android.guest;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.prism.widget.recyclerview.ItemViewBinder;
@@ -37,13 +39,20 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     }
 
     @Override
-    public void bindView(Guest guest, GuestWidgetView view)
+    public void bindView(final Guest guest, GuestWidgetView view)
     {
-        view.setName(guest.getFirstName());
+        view.setName(guest.getFullName());
         view.showDefaultImage();
         this.imageLoader.get(
             guest.getPhoto(),
-            new GuestImageLoader(view, this.log)
+            new GuestWidgetImageLoader(view, this.log)
         );
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Intent intent = new Intent(context, GuestDetailActivity.class);
+                intent.putExtra(GuestDetailActivity.ARG_GUEST, guest);
+                context.startActivity(intent);
+            }
+        });
     }
 }

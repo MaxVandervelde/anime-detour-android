@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/default_content"
+    >
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        >
+            <com.animedetour.android.view.ImageScrim
+                android:id="@+id/guest_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_height="250dp"
+                android:background="@color/primary"
+                app:image_title="Guest"
+                app:image_textPaddingTop="72dp"
+                app:image_height="250dp"
+            />
+            <TextView
+                android:id="@+id/guest_category"
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent"
+                android:textColor="@color/foreground_inverse"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/guest_avatar"
+                android:padding="8dp"
+                tools:text="Guest of Honor"
+            />
+            <TextView
+                style="@style/body1"
+                android:id="@+id/guest_bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/foreground"
+                android:layout_below="@id/guest_category"
+                android:padding="16dp"
+                tools:text="Lorem ipsum"
+            />
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/guest_action_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false"
+    />
+</FrameLayout>

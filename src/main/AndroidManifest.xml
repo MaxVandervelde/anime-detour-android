@@ -28,5 +28,9 @@
             android:theme="@style/Theme.AnimeDetour.TransparentHeader"
             android:name=".schedule.EventActivity"
         />
+        <activity
+            android:theme="@style/Theme.AnimeDetour.TransparentHeader"
+            android:name=".guest.GuestDetailActivity"
+        />
     </application>
 </manifest>
