@@ -91,7 +91,7 @@ final public class GuestDetailActivity extends ActionBarActivity
         GuestDetailsImageLoader loaderCallback = new GuestDetailsImageLoader(this.avatar, this.log);
         this.imageLoader.get(this.guest.getPhoto(), loaderCallback);
         if (null != this.guest.getFullPhoto()) {
-            this.imageLoader.get(this.guest.getPhoto(), loaderCallback);
+            this.imageLoader.get(this.guest.getFullPhoto(), loaderCallback);
         }
     }
 }
