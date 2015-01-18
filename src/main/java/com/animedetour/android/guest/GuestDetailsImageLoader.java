@@ -37,6 +37,9 @@ final class GuestDetailsImageLoader implements ImageLoader.ImageListener
     @Override
     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b)
     {
+        if (null == imageContainer.getBitmap()) {
+            return;
+        }
         this.view.setImage(imageContainer.getBitmap());
     }
 
