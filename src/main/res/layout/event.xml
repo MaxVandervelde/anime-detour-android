@@ -24,11 +24,11 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                 />
-                <com.getbase.floatingactionbutton.AddFloatingActionButton
+                <com.animedetour.android.view.StarFloatingActionButton
                     android:id="@+id/event_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    fab:fab_plusIconColor="@color/foreground_inverse"
+                    app:iconColor="@color/foreground_inverse"
                     fab:fab_colorNormal="@color/accent"
                     fab:fab_colorPressed="@color/accent_highlight"
                     android:layout_centerHorizontal="true"

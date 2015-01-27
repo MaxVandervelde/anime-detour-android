@@ -7,6 +7,7 @@ package com.animedetour.android.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
 import com.animedetour.api.sched.api.model.Event;
@@ -27,7 +28,7 @@ import java.sql.SQLException;
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public DetourDatabaseHelper(Context context)
     {
@@ -39,6 +40,7 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     {
         try {
             TableUtils.createTable(connectionSource, Event.class);
+            TableUtils.createTable(connectionSource, Favorite.class);
             TableUtils.createTable(connectionSource, Category.class);
             TableUtils.createTable(connectionSource, Guest.class);
         } catch (SQLException e) {
@@ -51,6 +53,7 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     {
         try {
             TableUtils.dropTable(connectionSource, Event.class, true);
+            TableUtils.dropTable(connectionSource, Favorite.class, true);
             TableUtils.dropTable(connectionSource, Guest.class, true);
             TableUtils.dropTable(connectionSource, Category.class, true);
             onCreate(db, connectionSource);

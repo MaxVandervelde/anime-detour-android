@@ -85,7 +85,7 @@ dependencies {
     compile('com.google.maps.android:android-maps-utils:0.3.3') {
         exclude group: "com.google.android.gms"
     }
-    compile 'com.getbase:floatingactionbutton:1.5.1'
+    compile 'com.getbase:floatingactionbutton:1.6.0'
     compile 'de.hdodenhof:circleimageview:1.2.1'
 
     compile 'com.github.frankiesardo:icepick:2.3.6'

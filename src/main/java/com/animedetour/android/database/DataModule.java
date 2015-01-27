@@ -6,6 +6,7 @@
 package com.animedetour.android.database;
 
 import android.app.Application;
+import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
@@ -24,6 +25,7 @@ import javax.inject.Singleton;
 import java.sql.SQLException;
 
 @Module(library = true, complete = false)
+@SuppressWarnings("UnusedDeclaration")
 final public class DataModule
 {
     @Provides @Singleton EventRepository provideEventRepository(
@@ -61,6 +63,19 @@ final public class DataModule
                 subscriptionManager,
                 logger
             );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Provides @Singleton FavoriteRepository provideGuestRepository(
+        DetourDatabaseHelper helper
+    ) {
+        ConnectionSource connectionSource = new AndroidConnectionSource(helper);
+
+        try {
+            Dao<Favorite, Integer> local = DaoManager.createDao(connectionSource, Favorite.class);
+            return new FavoriteRepository(local);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

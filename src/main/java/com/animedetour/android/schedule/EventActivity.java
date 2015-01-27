@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc. All rights Reserved.
  */
 package com.animedetour.android.schedule;
 
@@ -11,20 +11,23 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
+import com.animedetour.android.database.FavoriteRepository;
 import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.api.sched.api.model.Event;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
 
 import javax.inject.Inject;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -62,6 +65,9 @@ final public class EventActivity extends ActionBarActivity
     @InjectView(R.id.event_action_bar)
     Toolbar actionBar;
 
+    @InjectView(R.id.event_add)
+    StarFloatingActionButton addButton;
+
     /**
      * Service used for loading the banner image
      */
@@ -78,6 +84,9 @@ final public class EventActivity extends ActionBarActivity
 
     @Inject
     Tracker tracker;
+
+    @Inject
+    FavoriteRepository favoriteRepository;
 
     /**
      * The event we are currently displaying
@@ -110,6 +119,17 @@ final public class EventActivity extends ActionBarActivity
 
         this.tracker.setScreenName("Event");
         this.tracker.send(new HitBuilders.AppViewBuilder().build());
+
+        try {
+            boolean favorited = this.favoriteRepository.isFavorited(this.event);
+            if (favorited) {
+                this.addButton.setStarred(true);
+            } else {
+                this.addButton.setStarred(false);
+            }
+        } catch (SQLException e) {
+            this.logger.error("Error when checking if event is a favorite", e);
+        }
     }
 
     @Override
@@ -127,13 +147,29 @@ final public class EventActivity extends ActionBarActivity
     @OnClick(R.id.event_add)
     public void addFavoriteEvent()
     {
-        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
-        event.setCategory("Event");
-        event.setAction("Favorite");
-        event.setLabel(this.event.getName());
-        this.tracker.send(event.build());
+        if (this.addButton.isStarred()) {
+            try {
+                this.favoriteRepository.remove(this.event);
+                this.addButton.setStarred(false);
+            } catch (SQLException e) {
+                this.logger.error("Error when removing Favorite", e);
+            }
+        } else {
+            HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+            event.setCategory("Event");
+            event.setAction("Favorite");
+            event.setLabel(this.event.getName());
+            this.tracker.send(event.build());
 
-        Toast.makeText(this, "Soon", Toast.LENGTH_LONG).show();
+            try {
+                Favorite favorite = new Favorite();
+                favorite.setEvent(this.event);
+                this.favoriteRepository.save(favorite);
+                this.addButton.setStarred(true);
+            } catch (SQLException e) {
+                this.logger.error("Error when saving Favorite", e);
+            }
+        }
     }
 
     /**
