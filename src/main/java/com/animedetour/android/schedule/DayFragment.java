@@ -126,16 +126,15 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
      */
     protected void setupPanelList()
     {
-        if (null == this.getDay()) {
-            return;
-        }
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
 
         this.panelList.init(new ArrayList<Event>(), new EventViewBinder(this.getActivity(), this));
         this.panelList.setLayoutManager(layoutManager);
         this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
 
+        if (null == this.day) {
+            return;
+        }
         this.eventUpdateSubscription = this.eventData.findAllOnDay(
             this.day,
             new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
