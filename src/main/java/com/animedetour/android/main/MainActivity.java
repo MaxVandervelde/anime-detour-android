@@ -23,6 +23,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.map.HotelMapFragment;
+import com.animedetour.android.schedule.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
@@ -149,6 +150,14 @@ final public class MainActivity extends ActionBarActivity
         this.setPageTitle(R.string.schedule_title);
         this.drawer.closeDrawer(Gravity.START);
         this.contentFragmentTransaction(new ScheduleFragment());
+    }
+
+    @OnClick(R.id.drawer_favorites)
+    protected void openFavorites()
+    {
+        this.setPageTitle(R.string.schedule_title);
+        this.drawer.closeDrawer(Gravity.START);
+        this.contentFragmentTransaction(new FavoritesFragment());
     }
 
     @OnClick(R.id.drawer_guests)

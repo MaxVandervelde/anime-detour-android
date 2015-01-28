@@ -27,7 +27,7 @@ public class Favorite
     /**
      * The event that was favorited.
      */
-    @DatabaseField(foreign = true, unique = true, index = true)
+    @DatabaseField(foreign = true, unique = true, index = true, foreignAutoRefresh = true)
     private Event event;
 
     /**

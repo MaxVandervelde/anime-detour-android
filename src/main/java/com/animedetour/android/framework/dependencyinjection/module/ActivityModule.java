@@ -12,6 +12,7 @@ import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.main.MainActivity;
 import com.animedetour.android.schedule.DayFragment;
+import com.animedetour.android.schedule.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import dagger.Module;
 import dagger.Provides;
@@ -30,6 +31,7 @@ import javax.inject.Singleton;
         DayFragment.class,
         ScheduleFragment.class,
         GuestIndexFragment.class,
+        FavoritesFragment.class,
     },
     complete = false,
     library = true

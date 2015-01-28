@@ -53,6 +53,13 @@
                 android:text="@string/drawer_guests_label"
             />
             <TextView
+                android:id="@+id/drawer_favorites"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_favorites_label"
+                />
+            <TextView
                 android:id="@+id/drawer_programming"
                 style="@style/drawer_row"
                 android:layout_width="match_parent"

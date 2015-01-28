@@ -40,13 +40,13 @@ public class FavoriteRepository
     /**
      * Asynchronously find all of the Events that were favorited by the user.
      */
-    public Subscription findAll(final Observer<List<Favorite>> observer)
+    public Subscription findAll(Observer<List<Favorite>> observer)
     {
         Observable<List<Favorite>> callback = Observable.create(new Observable.OnSubscribe<List<Favorite>>() {
             @Override public void call(Subscriber<? super List<Favorite>> subscriber) {
                 try {
                     List<Favorite> favorites = FavoriteRepository.this.getAll();
-                    observer.onNext(favorites);
+                    subscriber.onNext(favorites);
                 } catch (SQLException e) {
                     subscriber.onError(e);
                 }
