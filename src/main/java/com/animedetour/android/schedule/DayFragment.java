@@ -52,6 +52,9 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     SimpleRecyclerView<PanelView, Event> panelList;
 
     @Icicle
+    DateTime day;
+
+    @Icicle
     int scrollPosition = 0;
 
     @InjectView(R.id.panel_empty_view)
@@ -68,9 +71,7 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     {
         super();
 
-        Bundle arguments = new Bundle();
-        arguments.putSerializable("day", day);
-        super.setArguments(arguments);
+        this.day = day;
     }
 
     @Override
@@ -136,7 +137,7 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
         this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
 
         this.eventUpdateSubscription = this.eventData.findAllOnDay(
-            this.getDay(),
+            this.day,
             new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
         );
     }
@@ -166,20 +167,5 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
             return;
         }
         this.scrollPosition = this.panelList.getVerticalScrollbarPosition();
-    }
-
-    /**
-     * Get the day of the schedule to display as set by the fragment arguments.
-     *
-     * @return The day this fragment is supposed to display
-     */
-    public DateTime getDay()
-    {
-        Bundle arguments = this.getArguments();
-        if (null == arguments) {
-            return null;
-        }
-
-        return (DateTime) arguments.getSerializable("day");
     }
 }
