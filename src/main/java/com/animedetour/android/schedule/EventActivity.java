@@ -16,11 +16,11 @@ import butterknife.OnClick;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
+import com.animedetour.android.database.EventRepository;
 import com.animedetour.android.database.FavoriteRepository;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.api.sched.api.model.Event;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;
@@ -88,6 +88,12 @@ final public class EventActivity extends ActionBarActivity
     @Inject
     FavoriteRepository favoriteRepository;
 
+    @Inject
+    EventNotificationManager notificationManager;
+
+    @Inject
+    EventRepository eventData;
+
     /**
      * The event we are currently displaying
      */
@@ -106,6 +112,12 @@ final public class EventActivity extends ActionBarActivity
     {
         super.onPostCreate(savedInstanceState);
         this.updateBannerImage();
+
+        try {
+            this.event = this.eventData.get(this.event.getId());
+        } catch (SQLException e) {
+            this.logger.error("Error when loading event details", e);
+        }
 
         if (null != this.event.getDescription()) {
             this.descriptionView.setText(Html.fromHtml(this.event.getDescription()));
@@ -141,8 +153,6 @@ final public class EventActivity extends ActionBarActivity
 
     /**
      * Add This event to the user's favorites/schedule.
-     *
-     * @todo implement favorites here
      */
     @OnClick(R.id.event_add)
     public void addFavoriteEvent()
@@ -169,6 +179,8 @@ final public class EventActivity extends ActionBarActivity
             } catch (SQLException e) {
                 this.logger.error("Error when saving Favorite", e);
             }
+
+            this.notificationManager.scheduleNotification(this.event);
         }
     }
 

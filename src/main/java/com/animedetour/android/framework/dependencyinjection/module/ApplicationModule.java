@@ -1,17 +1,21 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc. All rights Reserved.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc. All rights Reserved.
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
+import com.animedetour.android.schedule.EventNotificationManager;
+import com.animedetour.android.schedule.NotificationScheduler;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.api.ApiModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -26,6 +30,9 @@ import javax.inject.Singleton;
         DataModule.class,
         ApiModule.class,
         LogModule.class,
+    },
+    injects = {
+        NotificationScheduler.class,
     },
     complete = false,
     library = true
@@ -60,5 +67,14 @@ final public class ApplicationModule
         tracker.setAppVersion(BuildConfig.VERSION_NAME + "." + BuildConfig.VERSION_CODE);
 
         return tracker;
+    }
+
+    @Provides @Singleton EventNotificationManager provideNotificationManager(
+        Application context
+    ) {
+        return new EventNotificationManager(
+            (AlarmManager) context.getSystemService(Context.ALARM_SERVICE),
+            context
+        );
     }
 }
