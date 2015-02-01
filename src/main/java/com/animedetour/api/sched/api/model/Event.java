@@ -13,6 +13,8 @@ import com.j256.ormlite.field.DatabaseField;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Panel / Event
@@ -107,6 +109,13 @@ public class Event implements Serializable
     @DatabaseField
     @JsonProperty("media_url")
     private String mediaUrl;
+
+    /**
+     * A Comma Separated list of meta-tags for the event.
+     */
+    @DatabaseField
+    @JsonProperty("tags")
+    private String tags;
 
     /**
      * A timestamp of when the object created locally / was fetched from the API.
@@ -313,6 +322,43 @@ public class Event implements Serializable
     {
         url = url.replaceAll(" ", "%20");
         this.mediaUrl = url;
+    }
+
+    /**
+     * @return A list of meta-informational tags about the event.
+     */
+    public List<String> getTags()
+    {
+        return Arrays.asList(this.tags.split(","));
+    }
+
+    /**
+     * @param tags A Comma Separated list of meta-tags for the event.
+     */
+    public void setTags(String tags)
+    {
+        this.tags = tags;
+    }
+
+    /**
+     * @param tags A collection of informational meta-tags for the event.
+     */
+    public void setTagsList(List<String> tags)
+    {
+        if (tags.isEmpty()) {
+            this.tags = "";
+            return;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(tags.remove(0));
+
+        for (String tag : tags) {
+            builder.append(",");
+            builder.append(tag);
+        }
+
+        this.tags = builder.toString();
     }
 
     final public DateTime getFetched()
