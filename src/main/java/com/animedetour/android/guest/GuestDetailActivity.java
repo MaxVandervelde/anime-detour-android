@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.api.guest.model.Guest;
+import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
 
@@ -32,6 +33,7 @@ import javax.inject.Inject;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.guest_detail)
+@ScreenName("Guest Detail")
 final public class GuestDetailActivity extends ActionBarActivity
 {
     @InjectView(R.id.guest_avatar)

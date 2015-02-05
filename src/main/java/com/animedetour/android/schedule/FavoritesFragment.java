@@ -13,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
+import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.FavoriteRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.inkapplications.prism.analytics.ScreenName;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
 import icepick.Icicle;
@@ -35,6 +35,7 @@ import java.util.List;
  * @todo We can probably extract some logic between this and the DayFragment.
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@ScreenName("Favorites")
 final public class FavoritesFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
@@ -42,9 +43,6 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
 
     @Inject
     Log logger;
-
-    @Inject
-    Tracker tracker;
 
     @InjectView(R.id.panel_list)
     SimpleRecyclerView<PanelView, Favorite> panelList;
@@ -93,11 +91,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     @Override
     public void onViewClicked(Event selected, PanelView view)
     {
-        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
-        event.setCategory("Event");
-        event.setAction("View Details");
-        event.setLabel(selected.getName());
-        this.tracker.send(event.build());
+        this.logger.trace(EventFactory.eventDetails(selected));
 
         Intent intent = new Intent(getActivity(), EventActivity.class);
         intent.putExtra(EventActivity.EXTRA_EVENT, selected);

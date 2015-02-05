@@ -1,4 +1,8 @@
-package com.animedetour.android.framework;
+/*
+ * Copyright (c) 2015 Ink Applications, LLC.
+ * Distributed under the MIT License (http://opensource.org/licenses/MIT)
+ */
+package com.inkapplications.prism.analytics;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -40,7 +44,7 @@ public class AnalyticsLogger implements Log
     @Override
     public boolean isTraceEnabled()
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -88,7 +92,63 @@ public class AnalyticsLogger implements Log
         this.analyticsTracker.send(builder.build());
     }
 
-    @Override public void trace(Object o) {}
+    @Override
+    public void trace(Object o)
+    {
+        if (o.getClass().isAnnotationPresent(ScreenName.class)) {
+            this.logScreen(o);
+            return;
+        }
+        if (o instanceof TrackedScreen) {
+            this.logScreen((TrackedScreen) o);
+            return;
+        }
+        if (o instanceof TrackedEvent) {
+            this.logEvent((TrackedEvent) o);
+            return;
+        }
+    }
+
+    /**
+     * Adds an event hit with Google Analytics.
+     */
+    protected void logEvent(TrackedEvent event)
+    {
+        HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder();
+        builder.setCategory(event.getCategory());
+        builder.setAction(event.getAction());
+        builder.setLabel(event.getLabel());
+        builder.setValue(event.getValue());
+        this.analyticsTracker.send(builder.build());
+    }
+
+    /**
+     * Adds a screen hit with Google Analytics.
+     */
+    protected void logScreen(TrackedScreen screen)
+    {
+        this.analyticsTracker.setScreenName(screen.getName());
+        this.analyticsTracker.send(new HitBuilders.AppViewBuilder().build());
+    }
+
+    /**
+     * Adds a screen hit with Google Analyics based off of an object's
+     * ScreenName annotation.
+     *
+     * @param o The object containing a ScreenName annotation to be logged.
+     * @see ScreenName
+     */
+    protected void logScreen(Object o)
+    {
+        ScreenName annotation = o.getClass().getAnnotation(ScreenName.class);
+        if (null == annotation) {
+            return;
+        }
+
+        this.analyticsTracker.setScreenName(annotation.value());
+        this.analyticsTracker.send(new HitBuilders.AppViewBuilder().build());
+    }
+
     @Override public void trace(Object o, Throwable throwable) {}
     @Override public void debug(Object o) {}
     @Override public void debug(Object o, Throwable throwable) {}
@@ -96,8 +156,4 @@ public class AnalyticsLogger implements Log
     @Override public void info(Object o, Throwable throwable) {}
     @Override public void warn(Object o) {}
     @Override public void warn(Object o, Throwable throwable) {}
-
-    protected void foo(Object o)
-    {
-    }
 }

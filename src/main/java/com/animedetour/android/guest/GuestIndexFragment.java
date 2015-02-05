@@ -16,6 +16,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.GuestRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
+import com.inkapplications.prism.analytics.ScreenName;
 import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@ScreenName("Guests")
 public class GuestIndexFragment extends Fragment
 {
     @Inject

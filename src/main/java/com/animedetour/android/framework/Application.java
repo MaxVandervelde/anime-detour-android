@@ -8,12 +8,15 @@ package com.animedetour.android.framework;
 import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
+import com.inkapplications.prism.analytics.AutoLogger;
 import dagger.ObjectGraph;
+import org.apache.commons.logging.Log;
 import prism.framework.GraphContext;
 import prism.framework.KernelContext;
 import prism.framework.LifecycleSubscriber;
 import prism.framework.PrismKernel;
 
+import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,6 +25,9 @@ final public class Application extends android.app.Application implements GraphC
     private ObjectGraph applicationGraph;
     private PrismKernel kernel;
 
+    @Inject
+    Log logger;
+
     @Override
     public void onCreate()
     {
@@ -29,9 +35,11 @@ final public class Application extends android.app.Application implements GraphC
 
         this.applicationGraph = ObjectGraph.create(this.getApplicationModules());
         this.kernel = new PrismKernel(this);
+        this.kernel.bootstrap(this);
 
         this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
         this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
+        this.registerActivityLifecycleCallbacks(new AutoLogger(this.logger));
     }
 
     @Override

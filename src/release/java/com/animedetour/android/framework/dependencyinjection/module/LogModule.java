@@ -5,9 +5,8 @@
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
-import com.animedetour.android.framework.AnalyticsLogger;
+import com.inkapplications.prism.analytics.AnalyticsLogger;
 import com.google.android.gms.analytics.Tracker;
-import com.inkapplications.android.logger.ConsoleLogger;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;
