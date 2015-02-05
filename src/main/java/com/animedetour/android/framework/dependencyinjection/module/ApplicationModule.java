@@ -32,6 +32,7 @@ import javax.inject.Singleton;
         LogModule.class,
     },
     injects = {
+        com.animedetour.android.framework.Application.class,
         NotificationScheduler.class,
     },
     complete = false,

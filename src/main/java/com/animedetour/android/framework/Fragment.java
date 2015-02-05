@@ -8,10 +8,16 @@ package com.animedetour.android.framework;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import org.apache.commons.logging.Log;
 import prism.framework.PrismFacade;
+
+import javax.inject.Inject;
 
 public class Fragment extends android.support.v4.app.Fragment
 {
+    @Inject
+    Log logger;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -19,6 +25,7 @@ public class Fragment extends android.support.v4.app.Fragment
 
         PrismFacade.bootstrap(this);
         ButterKnife.inject(this, this.getView());
+        this.logger.trace(this);
     }
 
     @Override public void onCreate(Bundle savedInstanceState)

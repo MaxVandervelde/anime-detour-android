@@ -16,13 +16,13 @@ import butterknife.OnClick;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
+import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.EventRepository;
 import com.animedetour.android.database.FavoriteRepository;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.api.sched.api.model.Event;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
 import prism.framework.Layout;
 
@@ -40,6 +40,7 @@ import java.util.Date;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.event)
+@ScreenName("Event")
 final public class EventActivity extends ActionBarActivity
 {
     /**
@@ -81,9 +82,6 @@ final public class EventActivity extends ActionBarActivity
      */
     @Inject
     Log logger;
-
-    @Inject
-    Tracker tracker;
 
     @Inject
     FavoriteRepository favoriteRepository;
@@ -129,9 +127,6 @@ final public class EventActivity extends ActionBarActivity
 
         this.setupNavigation();
 
-        this.tracker.setScreenName("Event");
-        this.tracker.send(new HitBuilders.AppViewBuilder().build());
-
         try {
             boolean favorited = this.favoriteRepository.isFavorited(this.event);
             if (favorited) {
@@ -165,11 +160,7 @@ final public class EventActivity extends ActionBarActivity
                 this.logger.error("Error when removing Favorite", e);
             }
         } else {
-            HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
-            event.setCategory("Event");
-            event.setAction("Favorite");
-            event.setLabel(this.event.getName());
-            this.tracker.send(event.build());
+            this.logger.trace(EventFactory.favoriteEvent(this.event));
 
             try {
                 Favorite favorite = new Favorite();

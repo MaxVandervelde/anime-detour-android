@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import javax.inject.Inject;
+import com.inkapplications.prism.analytics.ScreenName;
 
 /**
  * Landing / Home fragment.
@@ -23,11 +20,9 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@ScreenName("Home")
 final public class HomeFragment extends Fragment
 {
-    @Inject
-    Tracker tracker;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -40,7 +35,5 @@ final public class HomeFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        this.tracker.setScreenName("Home");
-        this.tracker.send(new HitBuilders.AppViewBuilder().build());
     }
 }
