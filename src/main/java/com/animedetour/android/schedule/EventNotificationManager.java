@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.animedetour.api.sched.api.model.Event;
+import org.joda.time.DateTime;
 
 /**
  * Schedules a notification alarm for the start-time of an event.
@@ -35,6 +36,11 @@ public class EventNotificationManager
      */
     public void scheduleNotification(Event event)
     {
+        DateTime notificationTime = event.getStartDateTime().minusMinutes(15);
+        if (notificationTime.isBeforeNow()) {
+            return;
+        }
+
         Intent alarmIntent = new Intent(this.context, UpcomingEventReciever.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(UpcomingEventReciever.EXTRA_EVENT, event);
@@ -45,7 +51,7 @@ public class EventNotificationManager
             alarmIntent,
             PendingIntent.FLAG_CANCEL_CURRENT
         );
-        long futureInMillis = event.getStartDateTime().minusMinutes(15).getMillis();
-        alarmManager.set(AlarmManager.RTC, futureInMillis, pendingIntent);
+
+        alarmManager.set(AlarmManager.RTC, notificationTime.getMillis(), pendingIntent);
     }
 }
