@@ -23,6 +23,7 @@ import java.sql.SQLException;
  *
  * This is used by ORMlite for creating the initial database connections.
  *
+ * @todo BEFORE ANY MORE UPGRADES TO FAVORITES - a migration setup must be made.
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
@@ -53,7 +54,6 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     {
         try {
             TableUtils.dropTable(connectionSource, Event.class, true);
-            TableUtils.dropTable(connectionSource, Favorite.class, true);
             TableUtils.dropTable(connectionSource, Guest.class, true);
             TableUtils.dropTable(connectionSource, Category.class, true);
             onCreate(db, connectionSource);
