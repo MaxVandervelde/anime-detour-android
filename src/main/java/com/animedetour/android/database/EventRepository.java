@@ -11,6 +11,7 @@ import com.animedetour.api.sched.api.model.Event;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.TableUtils;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
@@ -96,6 +97,39 @@ public class EventRepository
         String key = "findAllOnDay:" + day.getDayOfYear();
 
         return this.subscriptionManager.createCollectionSubscription(
+            onSubscribe,
+            observer,
+            key
+        );
+    }
+
+    /**
+     * Find all of the "featured" events to suggest to the user.
+     */
+    public Subscription findFeatured(Observer<Event> observer, long ordinal)
+    {
+        return this.findUpcomingByTag(
+            "detour sponsored event",
+            observer,
+            ordinal
+        );
+    }
+
+    /**
+     * Finds all of the events containing a specific tag.
+     *
+     * @param tag The tag to search for events containing.
+     */
+    public Subscription findUpcomingByTag(final String tag, Observer<Event> observer, final long ordinal)
+    {
+        OnSubscribe<Event> onSubscribe = new OnSubscribe<Event>() {
+            @Override public void call(final Subscriber<? super Event> subscriber) {
+                EventRepository.this.loadUpcomingByTag(subscriber, tag, ordinal);
+            }
+        };
+
+        String key = "findUpcomingByTag:" + tag + ":" + ordinal;
+        return this.subscriptionManager.createSubscription(
             onSubscribe,
             observer,
             key
@@ -257,6 +291,71 @@ public class EventRepository
         } catch (SQLException e) {
             subscriber.onError(e);
         }
+    }
+
+    public void loadUpcomingByTag(
+        final Subscriber<? super Event> subscriber,
+        final String tag,
+        final long ordinal
+    ) {
+        try {
+            Event currentEvents = this.getUpcomingByTag(tag, ordinal);
+            subscriber.onNext(currentEvents);
+
+
+            if (false == this.dataIsStale()) {
+                this.logger.debug("Most recent event within 10 minutes, not checking for update.");
+                return;
+            }
+
+            this.logger.trace("Checking for update.");
+            this.updateAll(new Observer<List<Event>>(){
+                @Override public void onCompleted() {
+                    try {
+                        logger.trace("Update Complete");
+                        Event newEvents = EventRepository.this.getUpcomingByTag(tag, ordinal);
+                        subscriber.onNext(newEvents);
+                    } catch (SQLException e) {
+                        subscriber.onError(e);
+                    }
+                }
+                @Override public void onError(Throwable e) {
+                    subscriber.onError(e);
+                }
+                @Override public void onNext(List<Event> events) { }
+            });
+        } catch (SQLException e) {
+            subscriber.onError(e);
+        }
+    }
+
+    /**
+     * Get an upcoming event by tag and position.
+     *
+     * Searches for events containing the specified tag, orders them by their
+     * start time excluding events that have already started, and returns a
+     * single event of the specified position.
+     *
+     * @todo Re-Enable the start exclusion when we have future events in the database.
+     * @param tag The tag to search for events containing.
+     * @param ordinal The event's position in the upcoming list.
+     * @return The upcoming event
+     */
+    public Event getUpcomingByTag(String tag, long ordinal) throws SQLException
+    {
+        QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
+        Where<Event, String> where = builder.where();
+        where.like("tags","%" + tag + "%");
+//        where.and();
+//        where.gt("start", new DateTime());
+        builder.orderBy("start", true);
+        builder.offset(ordinal - 1);
+        builder.limit(1l);
+        PreparedQuery<Event> prepared = builder.prepare();
+
+        Event result = this.localAccess.queryForFirst(prepared);
+
+        return result;
     }
 
     /**
