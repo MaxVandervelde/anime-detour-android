@@ -18,4 +18,5 @@
     <string name="schedule_day_headline">%tA</string>
 
     <string name="notification_description">Event is starting soon</string>
+    <string name="landing_upcoming_events">Upcoming Events</string>
 </resources>
