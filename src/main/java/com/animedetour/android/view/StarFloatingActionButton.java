@@ -52,8 +52,11 @@ final public class StarFloatingActionButton extends FloatingActionButton
 
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.StarFloatingActionButton, 0, 0);
         int defaultColor = this.resources.getColor(android.R.color.white);
+
         this.iconColor = attr.getColor(R.styleable.StarFloatingActionButton_iconColor, defaultColor);
         this.setIcon(R.drawable.unstarred);
+
+        attr.recycle();
     }
 
     @Override

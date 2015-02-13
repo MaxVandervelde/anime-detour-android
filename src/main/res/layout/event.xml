@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
 >
@@ -46,7 +47,7 @@
                     android:id="@+id/event_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wed, 11:00AM-1:45PM in Room B"
+                    tools:text="Wed, 11:00AM-1:45PM in Room B"
                 />
                 <TextView
                     android:layout_below="@id/event_details"
@@ -55,7 +56,7 @@
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
                 />
             </RelativeLayout>
     </ScrollView>

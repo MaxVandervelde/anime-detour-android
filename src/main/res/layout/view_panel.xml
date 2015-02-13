@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:colored_image="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
@@ -26,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32dp"
-                android:text="Panel Name"
+                tools:text="Panel Name"
             />
 
             <TextView
@@ -34,7 +36,7 @@
                 android:id="@+id/view_panel_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1:00 - 4:00 in Room B"
+                tools:text="1:00 - 4:00 in Room B"
             />
         </LinearLayout>
         <com.animedetour.android.view.ColoredImageView

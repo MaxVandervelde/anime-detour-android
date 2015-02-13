@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         style="@style/headline"
         android:textColor="@color/foreground_inverse"
-        android:text="Nothing to see."
+        android:text="@string/schedule_empty_title"
     />
     <TextView
         android:layout_marginLeft="8dp"
@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         style="@style/subhead"
         android:textColor="@color/foreground_inverse"
-        android:text="Events and panels will show here."
+        android:text="@string/shcedule_empty_subhead"
     />
 </RelativeLayout>

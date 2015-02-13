@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+>
     <ImageView
         android:id="@+id/banner"
         android:scaleType="centerCrop"
@@ -21,7 +24,7 @@
         android:layout_marginEnd="88dp"
         android:layout_marginRight="88dp"
         android:gravity="bottom|start"
-        android:text="Image Title"
+        tools:text="Image Title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     />

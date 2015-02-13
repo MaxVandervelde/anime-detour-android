@@ -5,6 +5,7 @@
  */
 package com.animedetour.android.main;
 
+import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -65,9 +66,7 @@ final public class MainActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
 
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
-            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        }
+        this.showSystemBarBackround();
     }
 
     @Override
@@ -200,5 +199,13 @@ final public class MainActivity extends ActionBarActivity
     {
         this.pageTitle = this.getString(resourceId);
         this.actionBar.setTitle(resourceId);
+    }
+
+    @TargetApi(21)
+    private void showSystemBarBackround()
+    {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
     }
 }

@@ -28,7 +28,7 @@
             />
             <TextView
                 android:id="@+id/guest_category"
-                android:gravity="right"
+                android:gravity="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/accent"
