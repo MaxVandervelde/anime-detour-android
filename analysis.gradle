@@ -1,0 +1,48 @@
+/*
+ * Gradle configuration for Static analysis and other checking tools.
+ */
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+check.dependsOn 'checkstyle', 'findbugs', 'pmd'
+task checkstyle(type: Checkstyle) {
+    ignoreFailures = true
+    configFile = rootProject.file('checkstyle.xml')
+    source 'src/main/java'
+    include '**/*.java'
+
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "high"
+    classes = files("$project.buildDir/intermediates/classes/")
+
+    source 'src/main/java'
+    include '**/*.java'
+
+    reports {
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            xml.withMessages true
+        }
+    }
+
+    classpath = files()
+}
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+    ruleSets = ["java-basic", "java-braces", "java-strings"]
+
+    source 'src/main/java'
+    include '**/*.java'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
+}

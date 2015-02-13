@@ -111,3 +111,4 @@ dependencies {
 }
 
 apply from: 'playservices.gradle'
+apply from: 'analysis.gradle'
