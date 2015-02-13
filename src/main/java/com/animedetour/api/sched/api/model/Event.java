@@ -374,20 +374,20 @@ public class Event implements Serializable
     @Override
     public String toString()
     {
-        return "Event{" +
-            "id='" + id + '\'' +
-            ", eventKey='" + eventKey + '\'' +
-            ", name='" + name + '\'' +
-            ", start=" + start +
-            ", end=" + end +
-            ", eventType='" + eventType + '\'' +
-            ", eventSubType='" + eventSubType + '\'' +
-            ", description='" + description + '\'' +
-            ", venue='" + venue + '\'' +
-            ", venueId='" + venueId + '\'' +
-            ", speakers='" + speakers + '\'' +
-            ", mediaUrl='" + mediaUrl + '\'' +
-            ", fetched=" + fetched +
-            '}';
+        return "Event{"
+            + "id='" + id + '\''
+            + ", eventKey='" + eventKey + '\''
+            + ", name='" + name + '\''
+            + ", start=" + start
+            + ", end=" + end
+            + ", eventType='" + eventType + '\''
+            + ", eventSubType='" + eventSubType + '\''
+            + ", description='" + description + '\''
+            + ", venue='" + venue + '\''
+            + ", venueId='" + venueId + '\''
+            + ", speakers='" + speakers + '\''
+            + ", mediaUrl='" + mediaUrl + '\''
+            + ", fetched=" + fetched
+            + '}';
     }
 }

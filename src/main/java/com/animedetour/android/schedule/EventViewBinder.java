@@ -16,7 +16,7 @@ import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class EventViewBinder implements ItemViewBinder<PanelView,Event>
+class EventViewBinder implements ItemViewBinder<PanelView, Event>
 {
     /**
      * Context to be used when creating new panel views.

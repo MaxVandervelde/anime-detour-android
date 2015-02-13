@@ -52,7 +52,7 @@ public class PanelView extends RelativeLayout
     /**
      * The time format to use for the panel start and end time
      */
-    final private static DateTimeFormatter timeFormat = DateTimeFormat.forPattern("hh:mma");
+    final private static DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("hh:mma");
 
     public PanelView(Context context, AttributeSet attrs)
     {
@@ -135,6 +135,6 @@ public class PanelView extends RelativeLayout
      */
     protected String getTimeRangeString(DateTime start, DateTime end)
     {
-        return this.timeFormat.print(start) + " - " + this.timeFormat.print(end);
+        return PanelView.TIME_FORMAT.print(start) + " - " + PanelView.TIME_FORMAT.print(end);
     }
 }

@@ -59,7 +59,7 @@ public class EventRepository
     }
 
     /**
-     * Find All Events
+     * Find All Events.
      *
      * @return an observable that will update with events data
      */
@@ -80,7 +80,7 @@ public class EventRepository
     }
 
     /**
-     * Find All events for a specified day
+     * Find All events for a specified day.
      *
      * This is run by the START time of the event
      *
@@ -137,7 +137,7 @@ public class EventRepository
     }
 
     /**
-     * Get All local events
+     * Get All local events.
      *
      * @return A list of every event in the local data store
      */
@@ -153,7 +153,7 @@ public class EventRepository
     }
 
     /**
-     * Get All Events on a specific day
+     * Get All Events on a specific day.
      *
      * @return Events that occur on that day (by start time)
      */
@@ -205,7 +205,7 @@ public class EventRepository
     }
 
     /**
-     * Save a list of events into the local data store
+     * Save a list of events into the local data store.
      */
     public void saveLocal(List<Event> events) throws SQLException
     {
@@ -216,7 +216,7 @@ public class EventRepository
     }
 
     /**
-     * Save a Single event into the local data store
+     * Save a Single event into the local data store.
      */
     public void saveLocal(Event event) throws SQLException
     {
@@ -224,7 +224,7 @@ public class EventRepository
     }
 
     /**
-     * Updates the local data store
+     * Updates the local data store.
      *
      * Updates a subscriber with changes in local data.
      * Will return existing data, then attempt to fetch data from the remote
@@ -255,7 +255,7 @@ public class EventRepository
     }
 
     /**
-     * Updates the local data store for a specific day
+     * Updates the local data store for a specific day.
      *
      * @see #loadAll(rx.Subscriber)
      * @param subscriber For listening to the event list updates
@@ -273,8 +273,8 @@ public class EventRepository
             }
 
             this.logger.trace("Checking for update.");
-            this.updateAll(new Observer<List<Event>>(){
-                @Override public void onCompleted(){
+            this.updateAll(new Observer<List<Event>>() {
+                @Override public void onCompleted() {
                     try {
                         logger.trace("Update Complete");
                         List<Event> newEvents = EventRepository.this.getAllOnDay(day);
@@ -345,12 +345,12 @@ public class EventRepository
     {
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         Where<Event, String> where = builder.where();
-        where.like("tags","%" + tag + "%");
+        where.like("tags", "%" + tag + "%");
 //        where.and();
 //        where.gt("start", new DateTime());
         builder.orderBy("start", true);
         builder.offset(ordinal - 1);
-        builder.limit(1l);
+        builder.limit(1L);
         PreparedQuery<Event> prepared = builder.prepare();
 
         Event result = this.localAccess.queryForFirst(prepared);

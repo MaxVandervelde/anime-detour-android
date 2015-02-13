@@ -218,7 +218,7 @@ final public class EventActivity extends ActionBarActivity
     protected void setupNavigation()
     {
         this.actionBar.setNavigationIcon(R.drawable.ic_action_arrow_left);
-        this.actionBar.setNavigationOnClickListener(new View.OnClickListener(){
+        this.actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 EventActivity.this.finish();
             }

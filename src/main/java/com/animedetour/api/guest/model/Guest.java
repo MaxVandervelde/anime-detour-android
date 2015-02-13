@@ -191,12 +191,12 @@ public class Guest implements Serializable
     @Override
     public String toString()
     {
-        return "Guest{" +
-            "id='" + id + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", bio='" + bio + '\'' +
-            ", photo='" + photo + '\'' +
-            '}';
+        return "Guest{"
+            + "id='" + id + '\''
+            + ", firstName='" + firstName + '\''
+            + ", lastName='" + lastName + '\''
+            + ", bio='" + bio + '\''
+            + ", photo='" + photo + '\''
+            + '}';
     }
 }
