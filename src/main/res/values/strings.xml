@@ -4,6 +4,7 @@
     <string name="home_title">Home</string>
     <string name="schedule_title">Schedule</string>
     <string name="maps_title">Hotel Map</string>
+    <string name="settings_title">Application Settings</string>
 
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
@@ -12,6 +13,7 @@
     <string name="drawer_favorites_label">My Events</string>
     <string name="drawer_programming_label">Programming</string>
     <string name="drawer_maps_label">Hotel Map</string>
+    <string name="drawer_settings_label">Settings</string>
 
     <string name="panel_details">%1$ta, %1$tl:%1$tM - %2$tl:%2$tM%2$tp in %3$s</string>
     <string name="schedule_day_headline">%tA</string>

@@ -73,6 +73,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/drawer_maps_label"
             />
+            <TextView
+                android:id="@+id/drawer_settings"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_settings_label"
+            />
         </LinearLayout>
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
