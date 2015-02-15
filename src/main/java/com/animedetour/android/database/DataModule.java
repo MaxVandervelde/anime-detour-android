@@ -9,13 +9,22 @@
 package com.animedetour.android.database;
 
 import android.app.Application;
+import com.animedetour.android.database.event.EventRepository;
+import com.animedetour.android.database.event.AllEventsByDayFactory;
+import com.animedetour.android.database.event.AllEventsWorker;
+import com.animedetour.android.database.event.FetchedEventMetrics;
+import com.animedetour.android.database.event.UpcomingEventsByTagFactory;
+import com.animedetour.android.database.favorite.FavoriteRepository;
+import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
+import com.animedetour.android.database.guest.GuestRepository;
+import com.animedetour.android.database.guest.AllCategoriesWorker;
 import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
 import com.animedetour.api.sched.api.ScheduleEndpoint;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.prism.SubscriptionManager;
+import com.inkapplications.groundcontrol.SubscriptionFactory;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -31,40 +40,46 @@ import java.sql.SQLException;
 @SuppressWarnings("UnusedDeclaration")
 final public class DataModule
 {
-    @Provides @Singleton EventRepository provideEventRepository(
+    @Provides @Singleton
+    EventRepository provideEventRepository(
         DetourDatabaseHelper helper,
         ScheduleEndpoint remote,
         Log logger
     ) {
         ConnectionSource connectionSource = new AndroidConnectionSource(helper);
-        SubscriptionManager<Event> subscriptionManager = new SubscriptionManager<>(logger);
+        SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(logger);
 
         try {
             Dao<Event, String> local = DaoManager.createDao(connectionSource, Event.class);
-            return new EventRepository(local, remote, subscriptionManager, logger);
+            FetchedEventMetrics metrics = new FetchedEventMetrics(local);
+
+            return new EventRepository(
+                subscriptionFactory,
+                local,
+                new AllEventsWorker(local, remote, metrics),
+                new AllEventsByDayFactory(local, remote, metrics),
+                new UpcomingEventsByTagFactory(local, remote, metrics)
+            );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Provides @Singleton GuestRepository provideGuestRepository(
+    @Provides @Singleton
+    GuestRepository provideGuestRepository(
         DetourDatabaseHelper helper,
         GuestEndpoint remote,
         Log logger
     ) {
         ConnectionSource connectionSource = new AndroidConnectionSource(helper);
-        SubscriptionManager<Category> subscriptionManager = new SubscriptionManager<>(logger);
+        SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(logger);
 
         try {
             Dao<Category, Integer> localCategory = DaoManager.createDao(connectionSource, Category.class);
             Dao<Guest, String> localGuest = DaoManager.createDao(connectionSource, Guest.class);
             return new GuestRepository(
-                connectionSource,
-                localCategory,
-                localGuest,
-                remote,
-                subscriptionManager,
-                logger
+                subscriptionFactory,
+                new AllCategoriesWorker(connectionSource, localCategory, localGuest, remote)
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -78,7 +93,9 @@ final public class DataModule
 
         try {
             Dao<Favorite, Integer> local = DaoManager.createDao(connectionSource, Favorite.class);
-            return new FavoriteRepository(local);
+            GetAllFavoritesWorker collectionWorker = new GetAllFavoritesWorker(local);
+
+            return new FavoriteRepository(local, collectionWorker);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
-import com.animedetour.android.database.EventRepository;
+import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;

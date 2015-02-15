@@ -11,7 +11,7 @@ package com.animedetour.android.schedule;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.animedetour.android.database.FavoriteRepository;
+import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Application;
 import org.apache.commons.logging.Log;
 import prism.framework.PrismKernel;
