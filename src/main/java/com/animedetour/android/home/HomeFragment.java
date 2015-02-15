@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
-import com.animedetour.android.database.EventRepository;
+import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.inkapplications.prism.analytics.ScreenName;
 import com.animedetour.android.view.ImageScrim;

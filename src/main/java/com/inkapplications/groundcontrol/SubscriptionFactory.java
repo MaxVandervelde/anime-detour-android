@@ -2,7 +2,7 @@
  * Copyright (c) 2014 Ink Applications, LLC.
  * Distributed under the MIT License (http://opensource.org/licenses/MIT)
  */
-package com.inkapplications.prism;
+package com.inkapplications.groundcontrol;
 
 import org.apache.commons.logging.Log;
 import rx.Observable;
@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @param <ENTITY> The entity that this repository represents.
  */
-public class SubscriptionManager<ENTITY>
+public class SubscriptionFactory<ENTITY>
 {
     final private Log logger;
 
@@ -35,7 +35,7 @@ public class SubscriptionManager<ENTITY>
     /** Stores in-flight requests for events when fetching a collection. */
     final private HashMap<String, Observable<List<ENTITY>>> collectionRequests = new HashMap<>();
 
-    public SubscriptionManager(Log logger)
+    public SubscriptionFactory(Log logger)
     {
         this.logger = logger;
     }

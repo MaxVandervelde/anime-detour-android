@@ -6,18 +6,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.database;
+package com.animedetour.android.database.favorite;
 
+import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.sched.api.model.Event;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedDelete;
-import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,12 +34,19 @@ public class FavoriteRepository
     /** Local favorite storage. */
     final private Dao<Favorite, Integer> localAccess;
 
+    /** Worker for looking up a list of all favorited events. */
+    final private SingleYieldWorker<List<Favorite>> getAllFavoritesWorker;
+
     /**
      * @param localAccess Local favorite storage.
+     * @param getAllFavoritesWorker Worker for looking up a list of all favorited events.
      */
-    public FavoriteRepository(Dao<Favorite, Integer> localAccess)
-    {
+    public FavoriteRepository(
+        Dao<Favorite, Integer> localAccess,
+        SingleYieldWorker<List<Favorite>> getAllFavoritesWorker
+    ) {
         this.localAccess = localAccess;
+        this.getAllFavoritesWorker = getAllFavoritesWorker;
     }
 
     /**
@@ -48,16 +54,7 @@ public class FavoriteRepository
      */
     public Subscription findAll(Observer<List<Favorite>> observer)
     {
-        Observable<List<Favorite>> callback = Observable.create(new Observable.OnSubscribe<List<Favorite>>() {
-            @Override public void call(Subscriber<? super List<Favorite>> subscriber) {
-                try {
-                    List<Favorite> favorites = FavoriteRepository.this.getAll();
-                    subscriber.onNext(favorites);
-                } catch (SQLException e) {
-                    subscriber.onError(e);
-                }
-            }
-        });
+        Observable<List<Favorite>> callback = Observable.create(this.getAllFavoritesWorker);
         callback = callback.subscribeOn(Schedulers.io());
         callback = callback.observeOn(AndroidSchedulers.mainThread());
         callback = callback.cache();
@@ -86,12 +83,7 @@ public class FavoriteRepository
      */
     public List<Favorite> getAll() throws SQLException
     {
-        QueryBuilder<Favorite, Integer> builder = this.localAccess.queryBuilder();
-
-        PreparedQuery<Favorite> query = builder.prepare();
-        List<Favorite> result = this.localAccess.query(query);
-
-        return result;
+        return this.getAllFavoritesWorker.lookupLocal();
     }
 
     /**
