@@ -169,4 +169,9 @@ public class EventRepository
 
         return result;
     }
+
+    public void persist(Event event) throws SQLException
+    {
+        this.localAccess.createOrUpdate(event);
+    }
 }

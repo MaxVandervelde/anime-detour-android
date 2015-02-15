@@ -52,6 +52,9 @@ final public class SettingsFragment extends Fragment
     @Inject
     PreferenceManager preferences;
 
+    @Inject
+    DeveloperShims developerShims;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -102,7 +105,8 @@ final public class SettingsFragment extends Fragment
     @OnClick(R.id.settings_event_generate_button)
     public void generateEvent()
     {
-        Toast.makeText(this.getActivity(), "Generate Event", Toast.LENGTH_SHORT).show();
+        this.developerShims.addFakeUpcomingEvent();
+        Toast.makeText(this.getActivity(), "Event scheduled!", Toast.LENGTH_SHORT).show();
     }
 
     /**

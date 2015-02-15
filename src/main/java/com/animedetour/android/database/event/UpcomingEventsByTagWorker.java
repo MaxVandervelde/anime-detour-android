@@ -15,6 +15,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import org.joda.time.DateTime;
 import rx.Subscriber;
 
 import java.sql.SQLException;
@@ -76,7 +77,6 @@ public class UpcomingEventsByTagWorker implements Worker<Event>
      * start time excluding events that have already started, and returns a
      * single event of the specified position.
      *
-     * @todo Re-Enable the start exclusion when we have future events in the database.
      * @return The upcoming event
      */
     @Override
@@ -85,8 +85,8 @@ public class UpcomingEventsByTagWorker implements Worker<Event>
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         Where<Event, String> where = builder.where();
         where.like("tags", "%" + this.criteria.getSearch() + "%");
-//        where.and();
-//        where.gt("start", new DateTime());
+        where.and();
+        where.gt("start", new DateTime());
         builder.orderBy("start", true);
         builder.offset(this.criteria.getOrdinal() - 1);
         builder.limit(1L);
