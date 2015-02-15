@@ -11,9 +11,10 @@ package com.animedetour.android.guest;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.prism.widget.recyclerview.ItemViewBinder;
+import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 import org.apache.commons.logging.Log;
 
 /**
@@ -36,7 +37,7 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     }
 
     @Override
-    public GuestWidgetView createView()
+    public GuestWidgetView createView(ViewGroup viewGroup, int i)
     {
         return new GuestWidgetView(context);
     }

@@ -20,7 +20,7 @@ import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.prism.analytics.ScreenName;
-import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
+import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;

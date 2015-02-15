@@ -8,7 +8,8 @@
  */
 package com.animedetour.android.schedule;
 
-import com.inkapplications.prism.widget.recyclerview.ItemViewBinder;
+import android.view.ViewGroup;
+import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 
 /**
  * Binds the events tied to a list of favorites into views.
@@ -28,9 +29,9 @@ class FavoriteViewBinder implements ItemViewBinder<PanelView, Favorite>
     }
 
     @Override
-    public PanelView createView()
+    public PanelView createView(ViewGroup viewGroup, int i)
     {
-        return this.eventViewBinder.createView();
+        return this.eventViewBinder.createView(viewGroup, i);
     }
 
     @Override

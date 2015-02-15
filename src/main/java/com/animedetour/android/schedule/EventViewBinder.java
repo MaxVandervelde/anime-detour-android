@@ -9,10 +9,11 @@
 package com.animedetour.android.schedule;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.prism.widget.recyclerview.ItemBoundClickListener;
-import com.inkapplications.prism.widget.recyclerview.ItemViewBinder;
-import com.inkapplications.prism.widget.recyclerview.ViewClickListener;
+import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
+import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
+import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 
 /**
  * Binds Events to the displayed Panel View
@@ -42,7 +43,7 @@ class EventViewBinder implements ItemViewBinder<PanelView, Event>
     }
 
     @Override
-    public PanelView createView()
+    public PanelView createView(ViewGroup viewGroup, int i)
     {
         return new PanelView(this.context);
     }

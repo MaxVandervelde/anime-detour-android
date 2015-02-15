@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView
+<com.inkapplications.android.widget.recyclerview.SimpleRecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/guest_category_index"
     android:orientation="vertical"

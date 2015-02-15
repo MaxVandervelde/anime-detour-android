@@ -10,7 +10,7 @@ package com.animedetour.android.guest;
 
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView;
+import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
 import rx.Observer;
 

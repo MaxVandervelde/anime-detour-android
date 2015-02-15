@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_dim"
 >
-    <com.inkapplications.prism.widget.recyclerview.SimpleRecyclerView
+    <com.inkapplications.android.widget.recyclerview.SimpleRecyclerView
         android:id="@+id/panel_list"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
