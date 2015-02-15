@@ -21,6 +21,7 @@ import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
@@ -56,7 +57,8 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     @InjectView(R.id.panel_empty_view)
     View panelEmptyView;
 
-    private Subscription eventUpdateSubscription;
+    @Inject
+    SubscriptionManager subscriptionManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -67,9 +69,9 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onStart()
     {
-        super.onActivityCreated(savedInstanceState);
+        super.onStart();
 
         this.setupPanelList();
     }
@@ -79,9 +81,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     {
         super.onPause();
 
-        if (null != this.eventUpdateSubscription) {
-            this.eventUpdateSubscription.unsubscribe();
-        }
+        this.subscriptionManager.unsubscribeAll();
     }
 
     @Override
@@ -113,9 +113,10 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
         this.panelList.setLayoutManager(layoutManager);
         this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
 
-        this.eventUpdateSubscription = this.favoriteData.findAll(
+        Subscription favoriteSubscription = this.favoriteData.findAll(
             new FavoriteUpdateSubscriber(this, this.panelEmptyView, this.logger)
         );
+        this.subscriptionManager.add(favoriteSubscription);
     }
 
     /**

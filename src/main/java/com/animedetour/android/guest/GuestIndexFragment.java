@@ -19,9 +19,11 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
+import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
+import rx.Subscription;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -46,6 +48,9 @@ public class GuestIndexFragment extends Fragment
     @Inject
     ImageLoader imageLoader;
 
+    @Inject
+    SubscriptionManager subscriptionManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -59,15 +64,27 @@ public class GuestIndexFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
         this.categoryList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        CategoryUpdateSubscriber categoryUpdateSubscriber = new CategoryUpdateSubscriber(
-            this.log,
-            this.categoryList
-        );
         this.categoryList.init(
             new ArrayList<Guest>(),
             new GuestIndexBinder(this.imageLoader, this.log, this.getActivity())
         );
-        this.repository.findAllCategories(categoryUpdateSubscriber);
+    }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        CategoryUpdateSubscriber subscriber = new CategoryUpdateSubscriber(this.log, this.categoryList);
+        Subscription subscription = this.repository.findAllCategories(subscriber);
+        this.subscriptionManager.add(subscription);
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        this.subscriptionManager.unsubscribeAll();
     }
 }

@@ -17,11 +17,13 @@ import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
+import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
 import com.animedetour.android.view.ImageScrim;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import org.apache.commons.logging.Log;
+import rx.Subscription;
 
 import javax.inject.Inject;
 
@@ -54,6 +56,9 @@ final public class HomeFragment extends Fragment
     @InjectView(R.id.event_banner2)
     ImageScrim scrim2;
 
+    @Inject
+    SubscriptionManager subscriptionManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -68,13 +73,32 @@ final public class HomeFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         this.tracker.setScreenName("Home");
         this.tracker.send(new HitBuilders.AppViewBuilder().build());
-        this.eventData.findFeatured(
-            new FeaturedEventUpdater(this.logger, this.imageLoader, this.scrim),
-            1
-        );
-        this.eventData.findFeatured(
-            new FeaturedEventUpdater(this.logger, this.imageLoader, this.scrim2),
-            2
-        );
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        this.loadBannerData(this.scrim, 1);
+        this.loadBannerData(this.scrim2, 2);
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        this.subscriptionManager.unsubscribeAll();
+    }
+
+    /**
+     * Lookup a featured event and load the data into a specified banner.
+     */
+    private void loadBannerData(ImageScrim banner, int ordinal)
+    {
+        FeaturedEventUpdater updater = new FeaturedEventUpdater(this.logger, this.imageLoader, banner);
+        Subscription subscription = this.eventData.findFeatured(updater, ordinal);
+        this.subscriptionManager.add(subscription);
     }
 }

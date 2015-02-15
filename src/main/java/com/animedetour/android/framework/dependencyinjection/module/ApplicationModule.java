@@ -23,6 +23,7 @@ import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.api.ApiModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.inkapplications.groundcontrol.SubscriptionManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -80,5 +81,10 @@ final public class ApplicationModule
             (AlarmManager) context.getSystemService(Context.ALARM_SERVICE),
             context
         );
+    }
+
+    @Provides @Singleton SubscriptionManager provideSubscriptionManager()
+    {
+        return new SubscriptionManager();
     }
 }

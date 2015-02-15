@@ -23,6 +23,7 @@ import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
+import com.inkapplications.groundcontrol.SubscriptionManager;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
@@ -59,7 +60,8 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     @InjectView(R.id.panel_empty_view)
     View panelEmptyView;
 
-    private Subscription eventUpdateSubscription;
+    @Inject
+    SubscriptionManager subscriptionManager;
 
     public DayFragment()
     {
@@ -94,9 +96,7 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     {
         super.onPause();
 
-        if (null != this.eventUpdateSubscription) {
-            this.eventUpdateSubscription.unsubscribe();
-        }
+        this.subscriptionManager.unsubscribeAll();
     }
 
     @Override
@@ -130,10 +130,11 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
         if (null == this.day) {
             return;
         }
-        this.eventUpdateSubscription = this.eventData.findAllOnDay(
+        Subscription eventSubscription = this.eventData.findAllOnDay(
             this.day,
             new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
         );
+        this.subscriptionManager.add(eventSubscription);
     }
 
     /**
