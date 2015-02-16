@@ -75,8 +75,9 @@ final public class SettingsFragment extends Fragment
 
         this.eventNotifications.setChecked(this.preferences.receiveEventNotifications());
 
-        String versionString = this.getString(R.string.settings_application_version);
-        this.versionLabel.setText(String.format(versionString, BuildConfig.VERSION_NAME));
+        String versionFormat = this.getString(R.string.settings_application_version);
+        String versionString = String.format(versionFormat, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
+        this.versionLabel.setText(versionString);
 
         if (this.preferences.isDeveloper()) {
             this.showDeveloperSettings();

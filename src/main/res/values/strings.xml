@@ -27,5 +27,5 @@
     <string name="settings_event_notifications">Event Notifications</string>
     <string name="settings_event_generate_button">Generate</string>
     <string name="settings_event_generate">New upcoming event</string>
-    <string name="settings_application_version">Application version %s</string>
+    <string name="settings_application_version">Application version %1$s build %2$s</string>
 </resources>
