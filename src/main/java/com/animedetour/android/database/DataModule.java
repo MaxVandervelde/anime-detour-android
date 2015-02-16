@@ -13,6 +13,7 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.event.AllEventsByDayFactory;
 import com.animedetour.android.database.event.AllEventsWorker;
 import com.animedetour.android.database.event.FetchedEventMetrics;
+import com.animedetour.android.database.event.UpcomingEventByTypeFactory;
 import com.animedetour.android.database.event.UpcomingEventsByTagFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
@@ -58,7 +59,8 @@ final public class DataModule
                 local,
                 new AllEventsWorker(local, remote, metrics),
                 new AllEventsByDayFactory(local, remote, metrics),
-                new UpcomingEventsByTagFactory(local, remote, metrics)
+                new UpcomingEventsByTagFactory(local, remote, metrics),
+                new UpcomingEventByTypeFactory(local, remote, metrics)
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -47,25 +47,31 @@ public class EventRepository
     /** Worker for looking up a single event with a tag. */
     final private CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory;
 
+    /** Worker for looking up a single event of a type. */
+    final private CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory;
+
     /**
      * @param subscriptionFactory Manage in-flight requests to async repos.
      * @param localAccess A local DAO for storing events.
      * @param allEventsWorker Worker for looking up a list of all events.
      * @param allByDayFactory Worker for looking up a list of events by their start time.
      * @param upcomingByTagFactory Worker for looking up a single event with a tag.
+     * @param upcomingByTypeFactory Worker for looking up a single event of a type.
      */
     public EventRepository(
         SubscriptionFactory<Event> subscriptionFactory,
         Dao<Event, String> localAccess,
         AllEventsWorker allEventsWorker,
         CriteriaWorkerFactory<List<Event>, DateTime> allByDayFactory,
-        CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory
+        CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory,
+        CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory
     ) {
         this.localAccess = localAccess;
         this.allEventsWorker = allEventsWorker;
         this.subscriptionFactory = subscriptionFactory;
         this.allByDayFactory = allByDayFactory;
         this.upcomingByTagFactory = upcomingByTagFactory;
+        this.upcomingByTypeFactory = upcomingByTypeFactory;
     }
 
     /**
@@ -105,15 +111,28 @@ public class EventRepository
      */
     public Subscription findFeatured(Observer<Event> observer, long ordinal)
     {
-        return this.findUpcomingByTag(
-            "detour sponsored event",
+        return this.findUpcomingByType(
+            "Anime Detour Panel",
             ordinal,
             observer
         );
     }
 
     /**
-     * Finds all of the events containing a specific tag.
+     * Finds a single event of a given type.
+     */
+    public Subscription findUpcomingByType(String type, long ordinal, Observer<Event> observer)
+    {
+        String key = "findUpcomingByType:" + type + ":" + ordinal;
+        return this.subscriptionFactory.createSubscription(
+            this.upcomingByTypeFactory.createWorker(new TypeCriteria(type, ordinal)),
+            observer,
+            key
+        );
+    }
+
+    /**
+     * Finds a single event containing a specific tag.
      *
      * @param tag The tag to search for events containing.
      */
