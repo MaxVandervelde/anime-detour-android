@@ -29,6 +29,7 @@ import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
+import com.animedetour.android.settings.SettingsFragment;
 import icepick.Icicle;
 import prism.framework.Layout;
 
@@ -178,6 +179,14 @@ final public class MainActivity extends ActionBarActivity
             R.id.content_frame,
             new HotelMapFragment()
         ).setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom).commit();
+    }
+
+    @OnClick(R.id.drawer_settings)
+    protected void openSettings()
+    {
+        this.setPageTitle(R.string.settings_title);
+        this.drawer.closeDrawer(Gravity.START);
+        this.contentFragmentTransaction(new SettingsFragment());
     }
 
     /**

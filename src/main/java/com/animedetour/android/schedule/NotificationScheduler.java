@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Application;
+import com.animedetour.android.settings.PreferenceManager;
 import org.apache.commons.logging.Log;
 import prism.framework.PrismKernel;
 
@@ -36,6 +37,9 @@ public class NotificationScheduler extends BroadcastReceiver
     EventNotificationManager notificationManager;
 
     @Inject
+    PreferenceManager preferences;
+
+    @Inject
     Log logger;
 
     @Override
@@ -44,6 +48,10 @@ public class NotificationScheduler extends BroadcastReceiver
         Application application = (Application) context.getApplicationContext();
         PrismKernel prismKernel = new PrismKernel(application);
         prismKernel.bootstrap(this);
+
+        if (false == this.preferences.receiveEventNotifications()) {
+            return;
+        }
 
         try {
             for (Favorite favorite : this.favoriteData.getAll()) {

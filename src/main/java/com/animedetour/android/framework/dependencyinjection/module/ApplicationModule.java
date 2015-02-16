@@ -11,6 +11,7 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -86,5 +87,11 @@ final public class ApplicationModule
     @Provides @Singleton SubscriptionManager provideSubscriptionManager()
     {
         return new SubscriptionManager();
+    }
+
+    @Provides @Singleton SharedPreferences provideSharedPreferences(
+        android.app.Application context
+    ) {
+        return context.getSharedPreferences("anime_detour", Context.MODE_PRIVATE);
     }
 }
