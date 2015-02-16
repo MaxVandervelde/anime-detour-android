@@ -34,6 +34,7 @@ public class DeveloperShims
     final private EventRepository eventData;
     final private FavoriteRepository favoriteData;
     final private LocalDatabase database;
+    final private PreferenceManager preferences;
     final private Log logger;
     final private Random random = new Random();
 
@@ -42,11 +43,12 @@ public class DeveloperShims
         EventRepository eventData,
         FavoriteRepository favoriteData,
         LocalDatabase database,
-        Log logger
+        PreferenceManager preferences, Log logger
     ) {
         this.eventData = eventData;
         this.favoriteData = favoriteData;
         this.database = database;
+        this.preferences = preferences;
         this.logger = logger;
     }
 
@@ -84,5 +86,13 @@ public class DeveloperShims
         } catch (SQLException e) {
             this.logger.error("Could not drop database", e);
         }
+    }
+
+    /**
+     * Reset/clear all shared preferences.
+     */
+    public void dropPreferences()
+    {
+        this.preferences.truncate();
     }
 }

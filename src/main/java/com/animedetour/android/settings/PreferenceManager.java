@@ -68,4 +68,14 @@ final public class PreferenceManager
     {
         return this.preferences.getBoolean("developer", false);
     }
+
+    /**
+     * Clear all stored shared preference data.
+     */
+    public void truncate()
+    {
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

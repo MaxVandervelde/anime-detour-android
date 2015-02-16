@@ -19,6 +19,8 @@ import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import butterknife.OnItemLongClick;
+import butterknife.OnLongClick;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
@@ -126,6 +128,19 @@ final public class SettingsFragment extends Fragment
     {
         this.developerShims.dropData();
         Toast.makeText(this.getActivity(), "Local Data dropped!", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Developer setting: Drop all local data and preferences.
+     */
+    @OnLongClick(R.id.settings_drop_data_button)
+    public boolean dropAllData()
+    {
+        this.developerShims.dropData();
+        this.developerShims.dropPreferences();
+        Toast.makeText(this.getActivity(), "ALL Data and preferences dropped!", Toast.LENGTH_SHORT).show();
+
+        return true;
     }
 
     /**
