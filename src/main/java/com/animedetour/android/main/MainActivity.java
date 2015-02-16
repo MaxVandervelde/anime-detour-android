@@ -175,10 +175,7 @@ final public class MainActivity extends ActionBarActivity
     {
         this.setPageTitle(R.string.maps_title);
         this.drawer.closeDrawer(Gravity.START);
-        this.getFragmentManager().beginTransaction().replace(
-            R.id.content_frame,
-            new HotelMapFragment()
-        ).setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom).commit();
+        this.contentFragmentTransaction(new HotelMapFragment());
     }
 
     @OnClick(R.id.drawer_settings)
