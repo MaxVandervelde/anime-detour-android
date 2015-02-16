@@ -56,7 +56,7 @@ public class DeveloperShims
         Event event = new Event();
         event.setId("fake-event-" + this.random.nextInt());
         event.setName("Fake Upcoming Event");
-        event.setTags("Anime Detour Panel");
+        event.setEventType("Anime Detour Panel");
         event.setDescription("A fake event generated from the developer settings!");
         event.setStartDateTime(new DateTime().plusMinutes(16));
         event.setEndDateTime(new DateTime().plusMinutes(17));

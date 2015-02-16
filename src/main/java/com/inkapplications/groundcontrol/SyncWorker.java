@@ -27,23 +27,35 @@ abstract public class SyncWorker<YIELD> implements Worker<YIELD>
     public void call(Subscriber<? super YIELD> subscriber)
     {
         try {
-            YIELD currentEvents = this.lookupLocal();
-            subscriber.onNext(currentEvents);
-
-            if (false == this.dataIsStale()) {
-                return;
-            }
-
-            YIELD events = lookupRemote();
-            this.saveLocal(events);
-
-            YIELD newEvents = this.lookupLocal();
-            subscriber.onNext(newEvents);
+            this.lookup(subscriber);
         } catch (Exception e) {
             subscriber.onError(e);
         }
 
         subscriber.onCompleted();
+    }
+
+    /**
+     * Look up local data and sync remote data if needed.
+     *
+     * This will first lookup the local data and inform the subscriber.
+     * If the local data is stale, it will look up the remote data and save it.
+     * After saving remote data, it will do another local lookup.
+     */
+    private void lookup(Subscriber<? super YIELD> subscriber) throws Exception
+    {
+        YIELD currentEvents = this.lookupLocal();
+        subscriber.onNext(currentEvents);
+
+        if (false == this.dataIsStale()) {
+            return;
+        }
+
+        YIELD events = lookupRemote();
+        this.saveLocal(events);
+
+        YIELD newEvents = this.lookupLocal();
+        subscriber.onNext(newEvents);
     }
 
     abstract public boolean dataIsStale() throws SQLException;

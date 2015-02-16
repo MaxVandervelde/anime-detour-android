@@ -76,9 +76,9 @@ final public class HomeFragment extends Fragment
     }
 
     @Override
-    public void onStart()
+    public void onResume()
     {
-        super.onStart();
+        super.onResume();
 
         this.loadBannerData(this.scrim, 1);
         this.loadBannerData(this.scrim2, 2);

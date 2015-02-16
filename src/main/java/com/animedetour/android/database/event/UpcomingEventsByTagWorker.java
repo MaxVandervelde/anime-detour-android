@@ -50,24 +50,34 @@ public class UpcomingEventsByTagWorker implements Worker<Event>
     public void call(Subscriber<? super Event> subscriber)
     {
         try {
-            Event currentEvents = this.lookupLocal();
-            subscriber.onNext(currentEvents);
-
-            if (false == this.fetchedEventMetrics.dataIsStale()) {
-                return;
-            }
-
-            Event mostRecent = this.fetchedEventMetrics.getMostRecentUpdated();
-            long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
-
-            List<Event> events = this.remoteAccess.getSchedule(since);
-            this.saveLocal(events);
-
-            Event newEvent = this.lookupLocal();
-            subscriber.onNext(newEvent);
+            this.lookup(subscriber);
         } catch (Exception e) {
             subscriber.onError(e);
         }
+
+        subscriber.onCompleted();
+    }
+
+    /**
+     * Looks up local data, syncs the repository, then does a new lookup.
+     */
+    private void lookup(Subscriber<? super Event> subscriber) throws SQLException
+    {
+        Event currentEvents = this.lookupLocal();
+        subscriber.onNext(currentEvents);
+
+        if (false == this.fetchedEventMetrics.dataIsStale()) {
+            return;
+        }
+
+        Event mostRecent = this.fetchedEventMetrics.getMostRecentUpdated();
+        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
+
+        List<Event> events = this.remoteAccess.getSchedule(since);
+        this.saveLocal(events);
+
+        Event newEvent = this.lookupLocal();
+        subscriber.onNext(newEvent);
     }
 
     /**

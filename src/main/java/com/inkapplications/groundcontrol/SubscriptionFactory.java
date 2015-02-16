@@ -11,6 +11,7 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,10 +30,10 @@ public class SubscriptionFactory<ENTITY>
 {
     final private Log logger;
 
-    /** Stores in-flight requests for events. */
+    /** Stores in-flight requests. */
     final private HashMap<String, Observable<ENTITY>> requests = new HashMap<>();
 
-    /** Stores in-flight requests for events when fetching a collection. */
+    /** Stores in-flight requests when fetching a collection. */
     final private HashMap<String, Observable<List<ENTITY>>> collectionRequests = new HashMap<>();
 
     public SubscriptionFactory(Log logger)
@@ -61,14 +62,16 @@ public class SubscriptionFactory<ENTITY>
         Observable<List<ENTITY>> callback = Observable.create(onSubscribe);
         callback = callback.subscribeOn(Schedulers.io());
         callback = callback.observeOn(AndroidSchedulers.mainThread());
-        callback = callback.cache();
 
         Observable<List<ENTITY>> previousRequest = this.collectionRequests.get(key);
         Subscription subscription;
         if (null == previousRequest) {
             this.logger.debug("No previous request to join.");
             this.collectionRequests.put(key, callback);
-            subscription = callback.subscribe(observer);
+            PublishSubject<List<ENTITY>> composite = PublishSubject.create();
+            composite.subscribe(observer);
+            composite.subscribe(new CleanupObserver<>(this.collectionRequests, key));
+            subscription = callback.subscribe(composite);
         } else {
             this.logger.debug("Joining with previous request.");
             subscription = previousRequest.subscribe(observer);
@@ -105,7 +108,10 @@ public class SubscriptionFactory<ENTITY>
         if (null == previousRequest) {
             this.logger.debug("No previous request to join.");
             this.requests.put(key, callback);
-            subscription = callback.subscribe(observer);
+            PublishSubject<ENTITY> composite = PublishSubject.create();
+            composite.subscribe(observer);
+            composite.subscribe(new CleanupObserver<>(this.requests, key));
+            subscription = callback.subscribe(composite);
         } else {
             this.logger.debug("Joining with previous request.");
             subscription = previousRequest.subscribe(observer);
