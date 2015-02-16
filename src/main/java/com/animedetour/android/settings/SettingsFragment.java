@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
 
@@ -49,6 +51,9 @@ final public class SettingsFragment extends Fragment
     @InjectView(R.id.settings_event_notification_switch)
     Switch eventNotifications;
 
+    @InjectView(R.id.settings_version_label)
+    TextView versionLabel;
+
     @Inject
     PreferenceManager preferences;
 
@@ -69,6 +74,9 @@ final public class SettingsFragment extends Fragment
         super.onStart();
 
         this.eventNotifications.setChecked(this.preferences.receiveEventNotifications());
+
+        String versionString = this.getString(R.string.settings_application_version);
+        this.versionLabel.setText(String.format(versionString, BuildConfig.VERSION_NAME));
 
         if (this.preferences.isDeveloper()) {
             this.showDeveloperSettings();

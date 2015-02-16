@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
 >
     <RelativeLayout
         android:id="@+id/settings_event_notification"
@@ -21,7 +23,7 @@
             android:layout_centerVertical="true"
         />
         <TextView
-            style="@style/title"
+            style="@style/body1"
             android:id="@+id/settings_event_notification_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +33,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/settings_event_notification_switch"
             android:layout_toLeftOf="@id/settings_event_notification_switch"
-            android:text="Event Notifications"
+            android:text="@string/settings_event_notifications"
         />
     </RelativeLayout>
     <RelativeLayout
@@ -39,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        tools:visibility="visible"
         android:background="@color/background"
         android:padding="8dp"
     >
@@ -49,10 +52,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="Generate"
+            android:text="@string/settings_event_generate_button"
         />
         <TextView
-            style="@style/title"
+            style="@style/body1"
             android:id="@+id/settings_event_generate_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +65,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/settings_event_generate_button"
             android:layout_toLeftOf="@id/settings_event_generate_button"
-            android:text="New upcoming event"
+            android:text="@string/settings_event_generate"
         />
     </RelativeLayout>
     <RelativeLayout
@@ -82,7 +85,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="Application version 2.0.0"
+            android:text="@string/settings_application_version"
         />
     </RelativeLayout>
 </LinearLayout>

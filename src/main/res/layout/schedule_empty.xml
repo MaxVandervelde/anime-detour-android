@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         style="@style/subhead"
         android:textColor="@color/foreground_inverse"
-        android:text="@string/shcedule_empty_subhead"
+        android:text="@string/schedule_empty_subhead"
     />
 </RelativeLayout>
