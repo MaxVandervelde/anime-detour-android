@@ -136,7 +136,7 @@ public class TrackedEvent
      */
     final public Long getValue()
     {
-        return value;
+        return this.value;
     }
 
     /**

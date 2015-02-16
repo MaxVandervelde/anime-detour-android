@@ -118,7 +118,9 @@ public class AnalyticsLogger implements Log
         builder.setCategory(event.getCategory());
         builder.setAction(event.getAction());
         builder.setLabel(event.getLabel());
-        builder.setValue(event.getValue());
+        if (null != event.getValue()) {
+            builder.setValue(event.getValue());
+        }
         this.analyticsTracker.send(builder.build());
     }
 
