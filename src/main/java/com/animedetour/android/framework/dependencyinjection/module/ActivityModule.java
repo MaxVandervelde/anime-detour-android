@@ -10,11 +10,11 @@ package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.app.Activity;
 import com.animedetour.android.guest.GuestDetailActivity;
-import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.main.MainActivity;
 import com.animedetour.android.schedule.DayFragment;
+import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;

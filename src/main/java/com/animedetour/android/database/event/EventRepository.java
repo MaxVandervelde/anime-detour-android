@@ -8,10 +8,10 @@
  */
 package com.animedetour.android.database.event;
 
-import com.inkapplications.groundcontrol.Worker;
+import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
 import com.inkapplications.groundcontrol.SubscriptionFactory;
-import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;

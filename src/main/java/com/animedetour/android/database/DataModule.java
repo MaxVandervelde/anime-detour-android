@@ -9,16 +9,16 @@
 package com.animedetour.android.database;
 
 import android.app.Application;
-import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.event.AllEventsByDayFactory;
 import com.animedetour.android.database.event.AllEventsWorker;
+import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.event.FetchedEventMetrics;
 import com.animedetour.android.database.event.UpcomingEventByTypeFactory;
 import com.animedetour.android.database.event.UpcomingEventsByTagFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
-import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.database.guest.AllCategoriesWorker;
+import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;

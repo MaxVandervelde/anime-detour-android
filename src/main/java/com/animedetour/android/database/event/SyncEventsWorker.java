@@ -9,8 +9,8 @@
 package com.animedetour.android.database.event;
 
 import com.animedetour.api.sched.api.ScheduleEndpoint;
-import com.inkapplications.groundcontrol.SyncWorker;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.groundcontrol.SyncWorker;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;

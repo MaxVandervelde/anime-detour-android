@@ -17,11 +17,11 @@ import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
-import com.inkapplications.groundcontrol.SubscriptionManager;
-import com.inkapplications.prism.analytics.ScreenName;
 import com.animedetour.android.view.ImageScrim;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.inkapplications.groundcontrol.SubscriptionManager;
+import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
 import rx.Subscription;
 

@@ -19,7 +19,6 @@ import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import butterknife.OnItemLongClick;
 import butterknife.OnLongClick;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;

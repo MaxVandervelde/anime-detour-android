@@ -8,8 +8,8 @@
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
-import com.inkapplications.prism.analytics.AnalyticsLogger;
 import com.google.android.gms.analytics.Tracker;
+import com.inkapplications.prism.analytics.AnalyticsLogger;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;

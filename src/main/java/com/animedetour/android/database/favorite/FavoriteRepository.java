@@ -8,9 +8,9 @@
  */
 package com.animedetour.android.database.favorite;
 
-import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.animedetour.android.schedule.Favorite;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedDelete;

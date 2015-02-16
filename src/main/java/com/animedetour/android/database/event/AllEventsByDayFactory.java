@@ -8,10 +8,10 @@
  */
 package com.animedetour.android.database.event;
 
-import com.inkapplications.groundcontrol.Worker;
-import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
 import com.animedetour.api.sched.api.ScheduleEndpoint;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
+import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
 import org.joda.time.DateTime;
 
