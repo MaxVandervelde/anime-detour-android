@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -22,7 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 
-import static com.animedetour.android.map.HotelMapPoints.*;
+import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
 
 /**
  * Google Maps display with Hotel floor plans overlayed.
@@ -31,6 +33,15 @@ import static com.animedetour.android.map.HotelMapPoints.*;
  */
 final public class HotelMapFragment extends SupportMapFragment
 {
+    @InjectView(R.id.map_control_first_floor)
+    Button switchFirstFloor;
+
+    @InjectView(R.id.map_control_second_floor)
+    Button switchSecondFloor;
+
+    @InjectView(R.id.map_control_22nd_floor)
+    Button switch22ndFloor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -86,6 +97,10 @@ final public class HotelMapFragment extends SupportMapFragment
         map.getUiSettings().setRotateGesturesEnabled(false);
         map.getUiSettings().setCompassEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(false);
+
+        this.switchFirstFloor.setEnabled(true);
+        this.switchSecondFloor.setEnabled(true);
+        this.switch22ndFloor.setEnabled(true);
     }
 
     /**
@@ -95,6 +110,7 @@ final public class HotelMapFragment extends SupportMapFragment
     public void showFirstFloor()
     {
         this.resetMap();
+        this.switchFirstFloor.setEnabled(false);
         this.getMap().addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
     }
 
@@ -105,6 +121,7 @@ final public class HotelMapFragment extends SupportMapFragment
     public void showSecondFloor()
     {
         this.resetMap();
+        this.switchSecondFloor.setEnabled(false);
         this.getMap().addGroundOverlay(HotelMapPoints.getSecondFloorOverlay());
     }
 
@@ -115,6 +132,7 @@ final public class HotelMapFragment extends SupportMapFragment
     public void show22ndFloor()
     {
         this.resetMap();
+        this.switch22ndFloor.setEnabled(false);
         this.getMap().addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
     }
 }
