@@ -13,15 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.ImageScrim;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
+import com.inkapplications.prism.analytics.TrackedScreen;
 import org.apache.commons.logging.Log;
 import rx.Subscription;
 
@@ -39,13 +37,7 @@ import javax.inject.Inject;
 final public class HomeFragment extends Fragment
 {
     @Inject
-    Tracker tracker;
-
-    @Inject
     EventRepository eventData;
-
-    @Inject
-    ImageLoader imageLoader;
 
     @Inject
     Log logger;
@@ -59,6 +51,9 @@ final public class HomeFragment extends Fragment
     @Inject
     SubscriptionManager subscriptionManager;
 
+    @Inject
+    FeaturedUpdaterFactory updaterFactory;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -71,8 +66,7 @@ final public class HomeFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        this.tracker.setScreenName("Home");
-        this.tracker.send(new HitBuilders.AppViewBuilder().build());
+        this.logger.trace(new TrackedScreen("Home"));
     }
 
     @Override
@@ -97,7 +91,7 @@ final public class HomeFragment extends Fragment
      */
     private void loadBannerData(ImageScrim banner, int ordinal)
     {
-        FeaturedEventUpdater updater = new FeaturedEventUpdater(this.logger, this.imageLoader, banner);
+        FeaturedUpdater updater = this.updaterFactory.create(banner);
         Subscription subscription = this.eventData.findFeatured(updater, ordinal);
         this.subscriptionManager.add(subscription);
     }
