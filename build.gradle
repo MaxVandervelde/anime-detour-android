@@ -88,6 +88,7 @@ dependencies {
     }
     compile 'com.getbase:floatingactionbutton:1.6.0'
     compile 'de.hdodenhof:circleimageview:1.2.1'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
 
     compile 'com.github.frankiesardo:icepick:2.3.6'
     provided 'com.github.frankiesardo:icepick-processor:2.3.6'

@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -26,6 +27,8 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
+import com.animedetour.android.view.fader.ToolbarFader;
+import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
@@ -74,6 +77,9 @@ final public class EventActivity extends ActionBarActivity
     @InjectView(R.id.event_add)
     StarFloatingActionButton addButton;
 
+    @InjectView(R.id.event_container)
+    ScrollView detailsContainer;
+
     /**
      * Service used for loading the banner image.
      */
@@ -91,6 +97,9 @@ final public class EventActivity extends ActionBarActivity
 
     @Inject
     EventRepository eventData;
+
+    @Inject
+    ToolbarFaderFactory faderFactory;
 
     /**
      * The event we are currently displaying
@@ -150,6 +159,9 @@ final public class EventActivity extends ActionBarActivity
         } catch (SQLException e) {
             this.logger.error("Error when checking if event is a favorite", e);
         }
+
+        ToolbarFader fader = this.faderFactory.create(this.bannerView, this.detailsContainer, this.actionBar);
+        this.detailsContainer.getViewTreeObserver().addOnScrollChangedListener(fader);
     }
 
     @Override

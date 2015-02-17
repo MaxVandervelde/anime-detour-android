@@ -16,11 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.InjectView;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.fader.ToolbarFader;
+import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
@@ -52,6 +55,12 @@ final public class GuestDetailActivity extends ActionBarActivity
 
     @InjectView(R.id.guest_action_bar)
     Toolbar actionBar;
+
+    @InjectView(R.id.guest_scroll)
+    ScrollView detailsContainer;
+
+    @Inject
+    ToolbarFaderFactory faderFactory;
 
     @Inject
     ImageLoader imageLoader;
@@ -113,5 +122,8 @@ final public class GuestDetailActivity extends ActionBarActivity
         if (null != this.guest.getFullPhoto()) {
             this.imageLoader.get(this.guest.getFullPhoto(), loaderCallback);
         }
+
+        ToolbarFader fader = this.faderFactory.create(this.avatar, this.detailsContainer, this.actionBar);
+        this.detailsContainer.getViewTreeObserver().addOnScrollChangedListener(fader);
     }
 }

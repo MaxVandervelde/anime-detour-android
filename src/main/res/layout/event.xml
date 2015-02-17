@@ -6,8 +6,10 @@
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
 >
-    <ScrollView
+    <com.nirhart.parallaxscroll.views.ParallaxScrollView
+        android:id="@+id/event_container"
         style="@style/default_content"
+        app:parallax_factor="1.9"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,6 +27,32 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                 />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_below="@id/event_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                >
+                    <TextView
+                        android:layout_marginEnd="88dp"
+                        android:layout_marginRight="88dp"
+                        android:padding="16dp"
+                        style="@style/subhead"
+                        android:id="@+id/event_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Wed, 11:00AM-1:45PM in Room B"
+                    />
+                    <TextView
+                        android:id="@+id/event_text"
+                        style="@style/body1"
+                        android:padding="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
+                    />
+                </LinearLayout>
                 <com.animedetour.android.view.StarFloatingActionButton
                     android:id="@+id/event_add"
                     android:layout_width="wrap_content"
@@ -38,28 +66,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignBottom="@+id/event_banner"
                 />
-                <TextView
-                    android:layout_below="@id/event_banner"
-                    android:layout_marginEnd="88dp"
-                    android:layout_marginRight="88dp"
-                    android:padding="16dp"
-                    style="@style/subhead"
-                    android:id="@+id/event_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Wed, 11:00AM-1:45PM in Room B"
-                />
-                <TextView
-                    android:layout_below="@id/event_details"
-                    android:id="@+id/event_text"
-                    style="@style/body1"
-                    android:padding="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
-                />
             </RelativeLayout>
-    </ScrollView>
+    </com.nirhart.parallaxscroll.views.ParallaxScrollView>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/event_action_bar"

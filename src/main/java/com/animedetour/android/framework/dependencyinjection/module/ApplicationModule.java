@@ -12,6 +12,7 @@ import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -93,5 +94,10 @@ final public class ApplicationModule
         android.app.Application context
     ) {
         return context.getSharedPreferences("anime_detour", Context.MODE_PRIVATE);
+    }
+
+    @Provides @Singleton Resources provideResources(Application context)
+    {
+        return context.getResources();
     }
 }
