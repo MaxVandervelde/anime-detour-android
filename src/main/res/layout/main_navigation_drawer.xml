@@ -15,6 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drawer_home_label"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_nav_home"
+        android:drawableStart="@drawable/ic_nav_home"
     />
     <TextView
         android:id="@+id/drawer_guests"
@@ -22,6 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drawer_guests_label"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_nav_guests"
+        android:drawableStart="@drawable/ic_nav_guests"
     />
     <TextView
         android:id="@+id/drawer_favorites"
@@ -29,6 +37,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drawer_favorites_label"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_nav_favorites"
+        android:drawableStart="@drawable/ic_nav_favorites"
     />
     <TextView
         android:id="@+id/drawer_programming"
@@ -36,6 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drawer_programming_label"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_nav_programming"
+        android:drawableStart="@drawable/ic_nav_programming"
     />
     <TextView
         android:id="@+id/drawer_maps"
@@ -43,6 +59,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drawer_maps_label"
+        android:gravity="center_vertical"
+        android:drawablePadding="16dp"
+        android:drawableLeft="@drawable/ic_nav_map"
+        android:drawableStart="@drawable/ic_nav_map"
     />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,8 +77,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:drawablePadding="16dp"
-            android:drawableLeft="@drawable/ic_settings_black_24dp"
-            android:drawableStart="@drawable/ic_settings_black_24dp"
+            android:drawableLeft="@drawable/ic_nav_settings"
+            android:drawableStart="@drawable/ic_nav_settings"
             android:text="@string/drawer_settings_label"
         />
     </RelativeLayout>
