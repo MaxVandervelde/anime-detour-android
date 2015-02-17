@@ -9,12 +9,10 @@
         <item name="android:textSize">45sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
-    <style name="drawer_row">
+    <style name="drawer_row" parent="body2">
         <item name="android:clickable">true</item>
         <item name="android:background">@drawable/drawer_row_background</item>
         <item name="android:textColor">@color/foreground</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:padding">16dp</item>
     </style>
     <style name="display1" parent="Base.TextAppearance.AppCompat.Display1">
@@ -34,6 +32,9 @@
         <item name="android:layout_marginBottom">4dp</item>
     </style>
     <style name="body1" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/foreground</item>
+    </style>
+    <style name="body2" parent="Base.TextAppearance.AppCompat.Body2">
         <item name="android:textColor">@color/foreground</item>
     </style>
     <style name="caption" parent="Base.TextAppearance.AppCompat.Caption">
