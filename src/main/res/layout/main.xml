@@ -30,56 +30,6 @@
         />
 
         <!-- The navigation drawer -->
-        <LinearLayout
-            style="@style/default_content"
-            android:id="@+id/left_drawer"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:orientation="vertical"
-        >
-            <TextView
-                android:id="@+id/drawer_home"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_home_label"
-            />
-            <TextView
-                android:id="@+id/drawer_guests"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_guests_label"
-            />
-            <TextView
-                android:id="@+id/drawer_favorites"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_favorites_label"
-                />
-            <TextView
-                android:id="@+id/drawer_programming"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_programming_label"
-            />
-            <TextView
-                android:id="@+id/drawer_maps"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_maps_label"
-            />
-            <TextView
-                android:id="@+id/drawer_settings"
-                style="@style/drawer_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/drawer_settings_label"
-            />
-        </LinearLayout>
+        <include layout="@layout/main_navigation_drawer" />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
