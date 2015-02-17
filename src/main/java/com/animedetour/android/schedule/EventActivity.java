@@ -8,6 +8,8 @@
  */
 package com.animedetour.android.schedule;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,18 +49,18 @@ import java.util.Date;
 final public class EventActivity extends ActionBarActivity
 {
     /**
-     * Name of the intent-extra that the event is serialized into
+     * Name of the intent-extra that the event is serialized into.
      */
-    final public static String EXTRA_EVENT = "event";
+    final private static String EXTRA_EVENT = "event";
 
     /**
-     * View for the top banner on the page that can display an image & title
+     * View for the top banner on the page that can display an image & title.
      */
     @InjectView(R.id.event_banner)
     ImageScrim bannerView;
 
     /**
-     * Main content section of the event
+     * Main content section of the event.
      */
     @InjectView(R.id.event_text)
     TextView descriptionView;
@@ -73,16 +75,11 @@ final public class EventActivity extends ActionBarActivity
     StarFloatingActionButton addButton;
 
     /**
-     * Service used for loading the banner image
+     * Service used for loading the banner image.
      */
     @Inject
     ImageLoader loader;
 
-    /**
-     * Application error logger
-     *
-     * Used for logging issues with network issues on image lookup
-     */
     @Inject
     Log logger;
 
@@ -99,6 +96,19 @@ final public class EventActivity extends ActionBarActivity
      * The event we are currently displaying
      */
     private Event event;
+
+    /**
+     * Properly constructs the activity event, basically a constructor for the event.
+     *
+     * @param event The event to display details of.
+     */
+    public static Intent createIntent(Context context, Event event)
+    {
+        Intent intent = new Intent(context, EventActivity.class);
+        intent.putExtra(EXTRA_EVENT, event);
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

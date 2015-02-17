@@ -96,8 +96,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     {
         this.logger.trace(EventFactory.eventDetails(selected));
 
-        Intent intent = new Intent(getActivity(), EventActivity.class);
-        intent.putExtra(EventActivity.EXTRA_EVENT, selected);
+        Intent intent = EventActivity.createIntent(this.getActivity(), selected);
         this.startActivity(intent);
     }
 

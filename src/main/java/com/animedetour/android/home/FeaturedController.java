@@ -70,8 +70,7 @@ public class FeaturedController implements ImageListener, OnClickListener
     @Override
     public void onClick(View view)
     {
-        Intent intent = new Intent(this.context, EventActivity.class);
-        intent.putExtra(EventActivity.EXTRA_EVENT, this.event);
+        Intent intent = EventActivity.createIntent(this.context, this.event);
         this.context.startActivity(intent);
     }
 }

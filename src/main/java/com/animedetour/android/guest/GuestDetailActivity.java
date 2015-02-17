@@ -8,6 +8,8 @@
  */
 package com.animedetour.android.guest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -61,12 +63,25 @@ final public class GuestDetailActivity extends ActionBarActivity
      * Argument flag for the serialized guest object extra to be passed into the
      * intent starting this activity.
      */
-    final public static String ARG_GUEST = "guest";
+    final private static String ARG_GUEST = "guest";
 
     /**
      * The guest object being displayed on the activity.
      */
     private Guest guest;
+
+    /**
+     * Properly constructs the guest details event, basically a constructor for the activity.
+     *
+     * @param guest The guest to display on the activity page.
+     */
+    public static Intent createIntent(Context context, Guest guest)
+    {
+        Intent intent = new Intent(context, GuestDetailActivity.class);
+        intent.putExtra(ARG_GUEST, guest);
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

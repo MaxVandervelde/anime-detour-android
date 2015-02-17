@@ -53,8 +53,7 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
         );
         view.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent intent = new Intent(context, GuestDetailActivity.class);
-                intent.putExtra(GuestDetailActivity.ARG_GUEST, guest);
+                Intent intent = GuestDetailActivity.createIntent(context, guest);
                 context.startActivity(intent);
             }
         });

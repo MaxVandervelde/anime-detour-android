@@ -43,8 +43,7 @@ public class UpcomingEventReciever extends BroadcastReceiver
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle(event.getName());
         builder.setContentText(context.getString(R.string.notification_description));
-        Intent eventActivityIntent = new Intent(context, EventActivity.class);
-        eventActivityIntent.putExtra(EventActivity.EXTRA_EVENT, event);
+        Intent eventActivityIntent = EventActivity.createIntent(context, event);
         PendingIntent contentIntent = PendingIntent.getActivity(context, event.getId().hashCode(), eventActivityIntent, 0);
         builder.setAutoCancel(true);
         builder.setContentIntent(contentIntent);
