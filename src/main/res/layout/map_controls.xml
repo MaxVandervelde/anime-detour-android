@@ -7,7 +7,7 @@
 >
     <Button
         android:id="@+id/map_control_first_floor"
-        android:layout_width="40dp"
+        android:layout_width="40sp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -15,7 +15,7 @@
     />
     <Button
         android:id="@+id/map_control_second_floor"
-        android:layout_width="40dp"
+        android:layout_width="40sp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -24,7 +24,7 @@
     />
     <Button
         android:id="@+id/map_control_22nd_floor"
-        android:layout_width="40dp"
+        android:layout_width="40sp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
