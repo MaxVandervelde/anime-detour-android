@@ -19,14 +19,14 @@ public class ExtraActivityInjections implements Application.ActivityLifecycleCal
     @Override
     public void onActivityCreated(Activity activity, Bundle bundle)
     {
-        Icepick.restoreInstanceState(this, bundle);
+        Icepick.restoreInstanceState(activity, bundle);
         ButterKnife.inject(activity);
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle bundle)
     {
-        Icepick.saveInstanceState(this, bundle);
+        Icepick.saveInstanceState(activity, bundle);
     }
 
     @Override
