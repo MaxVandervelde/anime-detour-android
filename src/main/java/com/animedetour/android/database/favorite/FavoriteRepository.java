@@ -79,6 +79,19 @@ public class FavoriteRepository
     }
 
     /**
+     * Look up if the user has any favorite events.
+     *
+     * @return whether there was 1 or more favorited events.
+     */
+    public boolean hasFavorites() throws SQLException
+    {
+        QueryBuilder<Favorite, Integer> builder = this.localAccess.queryBuilder();
+        long favorites = builder.countOf();
+
+        return favorites > 0;
+    }
+
+    /**
      * @return All of the events that the user has marked as a favorite.
      */
     public List<Favorite> getAll() throws SQLException

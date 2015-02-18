@@ -11,6 +11,9 @@ package com.animedetour.android.main;
 import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import com.animedetour.android.database.favorite.FavoriteRepository;
+import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,11 +27,18 @@ import javax.inject.Singleton;
 public class DrawerControllerFactory
 {
     final private Activity context;
+    final private FavoriteRepository favoriteData;
+    final private Log logger;
 
     @Inject
-    public DrawerControllerFactory(Activity context)
-    {
+    public DrawerControllerFactory(
+        Activity context,
+        FavoriteRepository favoriteData,
+        Log logger
+    ) {
         this.context = context;
+        this.favoriteData = favoriteData;
+        this.logger = logger;
     }
 
     /**
@@ -46,14 +56,18 @@ public class DrawerControllerFactory
         Toolbar toolbar,
         int openContent,
         int closeContent,
-        String pageTitle
+        String pageTitle,
+        View favoritesOption
     ) {
         DrawerController controller = new DrawerController(
             this.context,
+            this.logger,
+            this.favoriteData,
             drawerLayout,
             toolbar,
             openContent,
-            closeContent
+            closeContent,
+            favoritesOption
         );
 
         drawerLayout.setDrawerListener(controller);

@@ -17,6 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import com.animedetour.android.R;
+import com.animedetour.android.database.favorite.FavoriteRepository;
+import org.apache.commons.logging.Log;
+
+import java.sql.SQLException;
 
 /**
  * Manages actions on the application drawer.
@@ -30,21 +34,30 @@ import com.animedetour.android.R;
 public class DrawerController extends ActionBarDrawerToggle
 {
     final private Resources resources;
+    final private Log logger;
+    final private FavoriteRepository favoriteData;
+    final private View favoritesOption;
     final private Toolbar toolbar;
     final private DrawerLayout layout;
     private String title;
 
     public DrawerController(
         Activity activity,
+        Log logger,
+        FavoriteRepository favoriteData,
         DrawerLayout drawerLayout,
         Toolbar toolbar,
         int openDrawerContentDescRes,
-        int closeDrawerContentDescRes
+        int closeDrawerContentDescRes,
+        View favoritesOption
     ) {
         super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
 
         this.toolbar = toolbar;
+        this.logger = logger;
         this.layout = drawerLayout;
+        this.favoriteData = favoriteData;
+        this.favoritesOption = favoritesOption;
         this.resources = activity.getResources();
     }
 
@@ -54,6 +67,7 @@ public class DrawerController extends ActionBarDrawerToggle
         super.onDrawerClosed(view);
 
         this.toolbar.setTitle(title);
+        this.updateFavoritesVisibility();
     }
 
     @Override
@@ -62,6 +76,7 @@ public class DrawerController extends ActionBarDrawerToggle
         super.onDrawerOpened(drawerView);
 
         this.toolbar.setTitle(R.string.app_name);
+        this.updateFavoritesVisibility();
     }
 
     @Override
@@ -73,6 +88,21 @@ public class DrawerController extends ActionBarDrawerToggle
             this.toolbar.setTitle(R.string.app_name);
         } else {
             this.toolbar.setTitle(this.title);
+        }
+
+        this.updateFavoritesVisibility();
+    }
+
+    private void updateFavoritesVisibility()
+    {
+        try {
+            if (this.favoriteData.hasFavorites()) {
+                this.favoritesOption.setVisibility(View.VISIBLE);
+            } else {
+                this.favoritesOption.setVisibility(View.GONE);
+            }
+        } catch (SQLException e) {
+            this.logger.error("Error when checking if the user has favorites", e);
         }
     }
 

@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.WindowManager;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -57,6 +58,9 @@ final public class MainActivity extends ActionBarActivity
     @InjectView(R.id.main_action_bar)
     Toolbar actionBar;
 
+    @InjectView(R.id.drawer_favorites)
+    View favoritesOption;
+
     @Inject
     DrawerControllerFactory drawerControllerFactory;
 
@@ -80,7 +84,8 @@ final public class MainActivity extends ActionBarActivity
             this.actionBar,
             R.string.drawer_open,
             R.string.drawer_close,
-            this.pageTitle
+            this.pageTitle,
+            this.favoritesOption
         );
 
 
