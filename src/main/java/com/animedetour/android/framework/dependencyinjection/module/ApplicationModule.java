@@ -19,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
-import com.animedetour.android.schedule.notification.EventNotificationManager;
 import com.animedetour.android.schedule.notification.NotificationScheduler;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.api.ApiModule;
@@ -58,6 +57,11 @@ final public class ApplicationModule
         return this.application;
     }
 
+    @Provides @Singleton Context provideAppContext()
+    {
+        return this.application;
+    }
+
     @Provides @Singleton ImageLoader provideImageLoader(Application context)
     {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -76,13 +80,10 @@ final public class ApplicationModule
         return tracker;
     }
 
-    @Provides @Singleton EventNotificationManager provideNotificationManager(
+    @Provides @Singleton AlarmManager provideAlarmManager(
         Application context
     ) {
-        return new EventNotificationManager(
-            (AlarmManager) context.getSystemService(Context.ALARM_SERVICE),
-            context
-        );
+        return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
     @Provides @Singleton SubscriptionManager provideSubscriptionManager()

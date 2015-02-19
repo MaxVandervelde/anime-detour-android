@@ -13,21 +13,32 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.animedetour.android.settings.PreferenceManager;
 import com.animedetour.api.sched.api.model.Event;
 import org.joda.time.DateTime;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Schedules a notification alarm for the start-time of an event.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Singleton
 public class EventNotificationManager
 {
+    final private PreferenceManager preferenceManager;
     final private AlarmManager alarmManager;
     final private Context context;
 
-    public EventNotificationManager(AlarmManager alarmManager, Context context)
-    {
+    @Inject
+    public EventNotificationManager(
+        PreferenceManager preferenceManager,
+        AlarmManager alarmManager,
+        Context context
+    ) {
+        this.preferenceManager = preferenceManager;
         this.alarmManager = alarmManager;
         this.context = context;
     }
@@ -35,10 +46,17 @@ public class EventNotificationManager
     /**
      * Schedules an alarm 15 minutes before the specified event.
      *
+     * This will NOT schedule an alarm if the user has the notification
+     * preference turned off.
+     *
      * @param event The event to schedule an alarm for.
      */
     public void scheduleNotification(Event event)
     {
+        if (false == this.preferenceManager.receiveEventNotifications()) {
+            return;
+        }
+
         DateTime notificationTime = event.getStartDateTime().minusMinutes(15);
         if (notificationTime.isBeforeNow()) {
             return;
