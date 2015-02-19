@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class DaysPagerAdapter extends FragmentPagerAdapter
+public class DaysPagerAdapter extends FragmentPagerAdapter
 {
     /** List of days to display in the pager */
     private List<DateTime> days;

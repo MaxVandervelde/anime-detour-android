@@ -10,7 +10,6 @@ package com.animedetour.android.schedule;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
@@ -31,7 +29,6 @@ import rx.Subscription;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Day schedule fragment
@@ -63,6 +60,11 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     @Inject
     SubscriptionManager subscriptionManager;
 
+    @Inject
+    EventSubscriberFactory subscriberFactory;
+
+    private EventUpdateSubscriber eventUpdateSubscriber;
+
     public DayFragment()
     {
         super();
@@ -88,7 +90,19 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     {
         super.onActivityCreated(savedInstanceState);
 
-        this.setupPanelList();
+        this.panelList.init(
+            new ArrayList<Event>(),
+            new EventViewBinder(this.getActivity(), this)
+        );
+        this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, this.panelEmptyView);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        this.updateEvents();
     }
 
     @Override
@@ -97,13 +111,14 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
         super.onPause();
 
         this.subscriptionManager.unsubscribeAll();
+        this.scrollPosition = this.eventUpdateSubscriber.getScrollPosition();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
+    public void onViewStateRestored(Bundle savedInstanceState)
     {
-        this.syncScrollPosition();
-        super.onSaveInstanceState(outState);
+        super.onViewStateRestored(savedInstanceState);
+        this.eventUpdateSubscriber.setScrollPosition(this.scrollPosition);
     }
 
     @Override
@@ -115,51 +130,9 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
         this.startActivity(intent);
     }
 
-    /**
-     * Setup the panel list view handlers and data request/subscriptions.
-     */
-    protected void setupPanelList()
+    protected void updateEvents()
     {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-
-        this.panelList.init(new ArrayList<Event>(), new EventViewBinder(this.getActivity(), this));
-        this.panelList.setLayoutManager(layoutManager);
-        this.panelList.setItemAnimator(new SlideInLeftAnimator(layoutManager));
-
-        if (null == this.day) {
-            return;
-        }
-        Subscription eventSubscription = this.eventData.findAllOnDay(
-            this.day,
-            new EventUpdateSubscriber(this, this.panelEmptyView, this.logger)
-        );
+        Subscription eventSubscription = this.eventData.findAllOnDay(this.day, this.eventUpdateSubscriber);
         this.subscriptionManager.add(eventSubscription);
-    }
-
-    /**
-     * Update the list of events that is displayed.
-     *
-     * @param events The new event list to display.
-     */
-    public void updateEvents(List<Event> events)
-    {
-        if (this.panelList.getAdapter().getItemCount() != 0) {
-            this.syncScrollPosition();
-        }
-
-        this.panelList.getItemAdapter().setItems(events);
-        this.panelList.setVerticalScrollbarPosition(this.scrollPosition);
-    }
-
-    /**
-     * Save the scroll position to memory so that it may be recalled later.
-     */
-    public void syncScrollPosition()
-    {
-        if (null == this.panelList) {
-            this.scrollPosition = 0;
-            return;
-        }
-        this.scrollPosition = this.panelList.getVerticalScrollbarPosition();
     }
 }

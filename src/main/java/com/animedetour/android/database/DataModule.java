@@ -19,7 +19,7 @@ import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
 import com.animedetour.android.database.guest.AllCategoriesWorker;
 import com.animedetour.android.database.guest.GuestRepository;
-import com.animedetour.android.schedule.Favorite;
+import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;

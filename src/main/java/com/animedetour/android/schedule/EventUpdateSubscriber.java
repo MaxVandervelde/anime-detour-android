@@ -8,8 +8,10 @@
  */
 package com.animedetour.android.schedule;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
 import rx.Subscriber;
 
@@ -23,15 +25,42 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class EventUpdateSubscriber extends Subscriber<List<Event>>
+public class EventUpdateSubscriber extends Subscriber<List<Event>>
 {
-    private DayFragment fragment;
-    private View emptyView;
-    private Log logger;
+    final private Log logger;
 
-    public EventUpdateSubscriber(DayFragment fragment, View emptyView, Log logger)
-    {
-        this.fragment = fragment;
+    /** View to display when there are no items in the list */
+    final private View emptyView;
+
+    /** The list view we're to put events into. */
+    final private SimpleRecyclerView<PanelView, Event> panelList;
+
+    /**
+     * Scroll position state.
+     *
+     * This is a temporary storage of the scroll position state for when the
+     * scroll position is restored - since the list will likely  not yet have
+     * data in it. Once data is updated, this should be the position to scroll
+     * to.
+     */
+    private int scrollPosition = 0;
+
+    /**
+     * Whether the scroll position has been restored already.
+     *
+     * This allows us to check if we've already changed the scroll position
+     * after receiving a data update. This way, if multiple data updates come
+     * in, we won't move the list multiple times; which could be annoying to the
+     * user.
+     */
+    private boolean restored = false;
+
+    public EventUpdateSubscriber(
+        SimpleRecyclerView<PanelView, Event> panelList,
+        View emptyView,
+        Log logger
+    ) {
+        this.panelList = panelList;
         this.emptyView = emptyView;
         this.logger = logger;
     }
@@ -50,12 +79,63 @@ class EventUpdateSubscriber extends Subscriber<List<Event>>
     @Override
     public void onNext(List<Event> events)
     {
-        if (events.size() == 0) {
+        this.toggleEmptyView(events.isEmpty());
+        this.panelList.getItemAdapter().setItems(events);
+
+        if (false == events.isEmpty()) {
+            this.restoreState();
+        }
+    }
+
+    /**
+     * Show or hide the empty view visibility.
+     *
+     * @param isEmpty Whether the list is empty and we should show the empty view.
+     */
+    private void toggleEmptyView(boolean isEmpty)
+    {
+        if (isEmpty) {
             this.emptyView.setVisibility(View.VISIBLE);
         } else {
             this.emptyView.setVisibility(View.GONE);
         }
+    }
 
-        this.fragment.updateEvents(events);
+    /**
+     * Scroll to the previous item position if it has not already been restored.
+     */
+    private void restoreState()
+    {
+        if (this.restored) {
+            return;
+        }
+
+        this.restored = true;
+        this.panelList.scrollToPosition(this.scrollPosition);
+    }
+
+    /**
+     * Get the current position of the event list view.
+     *
+     * @return The first visible item position in the list.
+     * @todo refactor this unchecked cast.
+     */
+    final public int getScrollPosition()
+    {
+        return ((LinearLayoutManager) this.panelList.getLayoutManager()).findFirstVisibleItemPosition();
+    }
+
+    /**
+     * Scrolls the list to an item position.
+     *
+     * This retains the scroll position so that if the list is updated, it will
+     * return to that position.
+     *
+     * @param scrollPosition the position to scroll to.
+     */
+    public void setScrollPosition(int scrollPosition)
+    {
+        this.panelList.scrollToPosition(scrollPosition);
+        this.scrollPosition = scrollPosition;
     }
 }

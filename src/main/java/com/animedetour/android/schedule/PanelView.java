@@ -27,7 +27,6 @@ import org.joda.time.format.DateTimeFormatter;
  *
  * This is a view for the small card / list format of a panel.
  *
- * @todo Connect starred logic
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 public class PanelView extends RelativeLayout

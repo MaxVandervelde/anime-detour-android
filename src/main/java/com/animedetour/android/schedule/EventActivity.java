@@ -25,6 +25,8 @@ import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
+import com.animedetour.android.schedule.favorite.Favorite;
+import com.animedetour.android.schedule.notification.EventNotificationManager;
 import com.animedetour.android.view.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;

@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.schedule;
+package com.animedetour.android.schedule.favorite;
 
 import android.view.View;
 import org.apache.commons.logging.Log;
@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class FavoriteUpdateSubscriber extends Subscriber<List<Favorite>>
+public class FavoriteUpdateSubscriber extends Subscriber<List<Favorite>>
 {
     private FavoritesFragment fragment;
     private View emptyView;
