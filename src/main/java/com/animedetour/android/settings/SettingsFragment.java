@@ -23,6 +23,7 @@ import butterknife.OnLongClick;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.schedule.notification.EventNotificationManager;
 
 import javax.inject.Inject;
 
@@ -59,6 +60,9 @@ final public class SettingsFragment extends Fragment
     PreferenceManager preferences;
 
     @Inject
+    EventNotificationManager notificationManager;
+
+    @Inject
     DeveloperShims developerShims;
 
     @Override
@@ -92,6 +96,7 @@ final public class SettingsFragment extends Fragment
     public void toggleNotifications(boolean checked)
     {
         this.preferences.setEventNotifications(checked);
+        this.notificationManager.toggleNotifications(checked);
     }
 
     /**
