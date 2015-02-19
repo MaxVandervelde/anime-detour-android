@@ -11,15 +11,11 @@ package com.animedetour.android.schedule.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Application;
-import com.animedetour.android.schedule.favorite.Favorite;
-import com.animedetour.android.settings.PreferenceManager;
 import org.apache.commons.logging.Log;
 import prism.framework.PrismKernel;
 
 import javax.inject.Inject;
-import java.sql.SQLException;
 
 /**
  * Schedules all of the user's favorited events when the device boots.
@@ -32,13 +28,7 @@ import java.sql.SQLException;
 public class NotificationScheduler extends BroadcastReceiver
 {
     @Inject
-    FavoriteRepository favoriteData;
-
-    @Inject
     EventNotificationManager notificationManager;
-
-    @Inject
-    PreferenceManager preferences;
 
     @Inject
     Log logger;
@@ -50,16 +40,6 @@ public class NotificationScheduler extends BroadcastReceiver
         PrismKernel prismKernel = new PrismKernel(application);
         prismKernel.bootstrap(this);
 
-        if (false == this.preferences.receiveEventNotifications()) {
-            return;
-        }
-
-        try {
-            for (Favorite favorite : this.favoriteData.getAll()) {
-                this.notificationManager.scheduleNotification(favorite.getEvent());
-            }
-        } catch (SQLException e) {
-            this.logger.error("Could not look up events to schedule notifications.", e);
-        }
+        this.notificationManager.scheduleAllNotifications();
     }
 }
