@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.schedule;
+package com.animedetour.android.schedule.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.animedetour.android.R;
+import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.api.sched.api.model.Event;
 
 /**

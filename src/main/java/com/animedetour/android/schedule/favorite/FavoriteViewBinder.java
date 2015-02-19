@@ -6,9 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.schedule;
+package com.animedetour.android.schedule.favorite;
 
 import android.view.ViewGroup;
+import com.animedetour.android.schedule.EventViewBinder;
+import com.animedetour.android.schedule.PanelView;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 
 /**
@@ -19,7 +21,7 @@ import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class FavoriteViewBinder implements ItemViewBinder<PanelView, Favorite>
+public class FavoriteViewBinder implements ItemViewBinder<PanelView, Favorite>
 {
     final private EventViewBinder eventViewBinder;
 

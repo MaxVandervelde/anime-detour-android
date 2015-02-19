@@ -6,13 +6,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.schedule;
+package com.animedetour.android.schedule.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Application;
+import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.settings.PreferenceManager;
 import org.apache.commons.logging.Log;
 import prism.framework.PrismKernel;

@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class EventUpdateSubscriber extends Subscriber<List<Event>>
+public class EventUpdateSubscriber extends Subscriber<List<Event>>
 {
     private DayFragment fragment;
     private View emptyView;

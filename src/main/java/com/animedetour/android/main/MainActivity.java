@@ -23,7 +23,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.map.HotelMapFragment;
-import com.animedetour.android.schedule.FavoritesFragment;
+import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
 import icepick.Icicle;

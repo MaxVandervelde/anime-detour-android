@@ -33,9 +33,9 @@
             android:theme="@style/Theme.AnimeDetour.TransparentHeader"
             android:name=".guest.GuestDetailActivity"
         />
-        <receiver android:name=".schedule.UpcomingEventReciever" />
+        <receiver android:name=".schedule.notification.UpcomingEventReciever" />
         <receiver
-            android:name=".schedule.NotificationScheduler"
+            android:name=".schedule.notification.NotificationScheduler"
             android:enabled="true"
         >
             <intent-filter>

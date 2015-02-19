@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.database;
 
-import com.animedetour.android.schedule.Favorite;
+import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
 import com.animedetour.api.sched.api.model.Event;

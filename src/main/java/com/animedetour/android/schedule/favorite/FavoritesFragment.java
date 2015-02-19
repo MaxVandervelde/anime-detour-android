@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.schedule;
+package com.animedetour.android.schedule.favorite;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.schedule.EventActivity;
+import com.animedetour.android.schedule.EventViewBinder;
+import com.animedetour.android.schedule.PanelView;
 import com.animedetour.android.view.animator.SlideInLeftAnimator;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
