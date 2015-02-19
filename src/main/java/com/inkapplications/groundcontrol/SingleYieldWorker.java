@@ -19,7 +19,7 @@ import rx.Subscriber;
 abstract public class SingleYieldWorker<YIELD> implements Worker<YIELD>
 {
     @Override
-    public void call(Subscriber<? super YIELD> subscriber)
+    final public void call(Subscriber<? super YIELD> subscriber)
     {
         try {
             YIELD yield = this.lookupLocal();

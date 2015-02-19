@@ -20,5 +20,11 @@ package com.inkapplications.groundcontrol;
  */
 public interface CriteriaWorkerFactory<YIELD, CRITERIA>
 {
+    /**
+     * Create a new worker.
+     *
+     * @param criteria The lookup criteria to be provided to the worker constructor.
+     * @return The fully constructed worker to use for data lookup.
+     */
     public Worker<YIELD> createWorker(CRITERIA criteria);
 }

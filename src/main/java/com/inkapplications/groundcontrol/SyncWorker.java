@@ -24,7 +24,7 @@ import java.sql.SQLException;
 abstract public class SyncWorker<YIELD> implements Worker<YIELD>
 {
     @Override
-    public void call(Subscriber<? super YIELD> subscriber)
+    final public void call(Subscriber<? super YIELD> subscriber)
     {
         try {
             this.lookup(subscriber);
@@ -44,21 +44,66 @@ abstract public class SyncWorker<YIELD> implements Worker<YIELD>
      */
     private void lookup(Subscriber<? super YIELD> subscriber) throws Exception
     {
-        YIELD currentEvents = this.lookupLocal();
-        subscriber.onNext(currentEvents);
+        this.reportLocal(subscriber);
 
         if (false == this.dataIsStale()) {
             return;
         }
 
-        YIELD events = lookupRemote();
-        this.saveLocal(events);
-
-        YIELD newEvents = this.lookupLocal();
-        subscriber.onNext(newEvents);
+        this.syncRemote();
+        this.reportLocal(subscriber);
     }
 
+    /**
+     * Lookup the local data and inform the observer of the results.
+     *
+     * @param subscriber The subscribed observer to inform.
+     * @throws SQLException If anything goes wrong with the local data lookup.
+     */
+    protected void reportLocal(Subscriber<? super YIELD> subscriber) throws SQLException
+    {
+        YIELD currentEvents = this.lookupLocal();
+        subscriber.onNext(currentEvents);
+    }
+
+    /**
+     * Synchronize the remote API data with the local data.
+     *
+     * This looks up the remote entities and saves them to the local database.
+     *
+     * @throws SQLException If anything goes wrong with the local data lookup.
+     * @throws Exception catch-all for if anything goes wrong in the lookup. Not
+     *                   considered fatal.
+     */
+    protected void syncRemote() throws Exception
+    {
+        YIELD events = lookupRemote();
+        this.saveLocal(events);
+    }
+
+    /**
+     * Check if the local database is out of date.
+     *
+     * @return Whether a query should be run to update the local data with the
+     *         remote API.
+     * @throws SQLException If something goes wrong looking up local data.
+     */
     abstract public boolean dataIsStale() throws SQLException;
+
+    /**
+     * Fetch the remote data entities.
+     *
+     * @return the entity or entities to be saved in the local database.
+     * @throws Exception catch-all for if anything goes wrong in the lookup. Not
+     *                   considered fatal.
+     */
     abstract public YIELD lookupRemote() throws Exception;
+
+    /**
+     * Save data entities into the local database.
+     *
+     * @param yield The entities to be saved to the local database.
+     * @throws SQLException If something goes wrong saving the local data.
+     */
     abstract public void saveLocal(YIELD yield) throws SQLException;
 }

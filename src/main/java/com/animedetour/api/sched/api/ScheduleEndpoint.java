@@ -25,4 +25,7 @@ public interface ScheduleEndpoint
 
     @GET("/sched_events")
     public List<Event> getSchedule(@Query("since") long sinceTimeStamp);
+
+    @GET("/sched_events")
+    public List<Event> getSchedule(@Query("since") long sinceTimeStamp, @Query("status") String status);
 }
