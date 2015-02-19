@@ -10,7 +10,7 @@ package com.animedetour.android.database.event;
 
 import com.animedetour.api.sched.api.ScheduleEndpoint;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.groundcontrol.SyncWorker;
+import com.inkapplications.groundcontrol.RemovableSyncWorker;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-abstract public class SyncEventsWorker extends SyncWorker<List<Event>>
+abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
 {
     /** A local DAO for storing events. */
     final private Dao<Event, String> localAccess;
@@ -64,6 +64,23 @@ abstract public class SyncEventsWorker extends SyncWorker<List<Event>>
         for (Event event : events) {
             this.localAccess.createOrUpdate(event);
         }
+    }
+
+    @Override
+    public void removeLocal(List<Event> events) throws SQLException
+    {
+        for (Event event : events) {
+            this.localAccess.deleteById(event.getId());
+        }
+    }
+
+    @Override
+    public List<Event> lookupRemovedRemote() throws Exception
+    {
+        Event mostRecent = this.fetchedMetrics.getMostRecentUpdated();
+        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
+
+        return this.remoteAccess.getSchedule(since, "del");
     }
 
     @Override
