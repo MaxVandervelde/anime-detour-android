@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
             >
-                <com.animedetour.android.view.ImageScrim
+                <com.animedetour.android.view.scrim.ImageScrim
                     android:id="@+id/event_banner"
                     android:background="@color/primary"
                     app:image_title="Event Name"

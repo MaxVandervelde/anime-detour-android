@@ -9,7 +9,7 @@
 package com.animedetour.android.home;
 
 import android.app.Activity;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
 import org.apache.commons.logging.Log;
 

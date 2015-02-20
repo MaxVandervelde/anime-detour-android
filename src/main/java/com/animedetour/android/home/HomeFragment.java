@@ -16,7 +16,7 @@ import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
 import com.inkapplications.prism.analytics.TrackedScreen;

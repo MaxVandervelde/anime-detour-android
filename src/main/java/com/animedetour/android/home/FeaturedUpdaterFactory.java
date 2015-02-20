@@ -9,7 +9,7 @@
 package com.animedetour.android.home;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.scrim.ImageScrim;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
