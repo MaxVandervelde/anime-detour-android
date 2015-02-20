@@ -8,22 +8,18 @@
  */
 package com.animedetour.android.schedule;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
-import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
-import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import icepick.Icicle;
-import org.apache.commons.logging.Log;
 import org.joda.time.DateTime;
 import rx.Subscription;
 
@@ -37,25 +33,10 @@ import java.util.ArrayList;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-final public class DayFragment extends Fragment implements ViewClickListener<PanelView, Event>
+final public class DayFragment extends Fragment
 {
     @Inject
     EventRepository eventData;
-
-    @Inject
-    Log logger;
-
-    @InjectView(R.id.panel_list)
-    SimpleRecyclerView<PanelView, Event> panelList;
-
-    @Icicle
-    DateTime day;
-
-    @Icicle
-    int scrollPosition = 0;
-
-    @InjectView(R.id.panel_empty_view)
-    View panelEmptyView;
 
     @Inject
     SubscriptionManager subscriptionManager;
@@ -63,17 +44,27 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     @Inject
     EventSubscriberFactory subscriberFactory;
 
+    @Inject
+    EventViewBinder viewBinder;
+
+    @InjectView(R.id.panel_list)
+    SimpleRecyclerView<PanelView, Event> panelList;
+
+    @InjectView(R.id.panel_empty_view)
+    View panelEmptyView;
+
+    @Icicle
+    DateTime day;
+
+    @Icicle
+    int scrollPosition = 0;
+
     private EventUpdateSubscriber eventUpdateSubscriber;
 
-    public DayFragment()
-    {
-        super();
-    }
+    public DayFragment() {}
 
     public DayFragment(DateTime day)
     {
-        super();
-
         this.day = day;
     }
 
@@ -90,10 +81,7 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     {
         super.onActivityCreated(savedInstanceState);
 
-        this.panelList.init(
-            new ArrayList<Event>(),
-            new EventViewBinder(this.getActivity(), this)
-        );
+        this.panelList.init(new ArrayList<Event>(), this.viewBinder);
         this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, this.panelEmptyView);
     }
 
@@ -119,15 +107,6 @@ final public class DayFragment extends Fragment implements ViewClickListener<Pan
     {
         super.onViewStateRestored(savedInstanceState);
         this.eventUpdateSubscriber.setScrollPosition(this.scrollPosition);
-    }
-
-    @Override
-    public void onViewClicked(Event selected, PanelView view)
-    {
-        this.logger.trace(EventFactory.eventDetails(selected));
-
-        Intent intent = EventActivity.createIntent(this.getActivity(), selected);
-        this.startActivity(intent);
     }
 
     protected void updateEvents()

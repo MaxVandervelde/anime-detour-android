@@ -15,6 +15,7 @@ import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.main.MainActivity;
 import com.animedetour.android.schedule.DayFragment;
 import com.animedetour.android.schedule.EventActivity;
+import com.animedetour.android.schedule.ScheduleModule;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
@@ -25,6 +26,7 @@ import javax.inject.Singleton;
 
 @Module(
     includes = {
+        ScheduleModule.class
     },
     injects = {
         MainActivity.class,
