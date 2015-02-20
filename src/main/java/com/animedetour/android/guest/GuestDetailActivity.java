@@ -21,7 +21,7 @@ import android.widget.TextView;
 import butterknife.InjectView;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.api.guest.model.Guest;

@@ -16,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.animedetour.android.schedule.EventActivity;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
 import org.apache.commons.logging.Log;
 

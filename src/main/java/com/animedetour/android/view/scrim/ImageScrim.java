@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.animedetour.android.view;
+package com.animedetour.android.view.scrim;
 
 import android.content.Context;
 import android.content.res.TypedArray;

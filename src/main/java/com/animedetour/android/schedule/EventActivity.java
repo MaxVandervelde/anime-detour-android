@@ -14,23 +14,22 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
-import com.animedetour.android.view.ImageScrim;
+import com.animedetour.android.view.FinishClickListener;
+import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
+import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
@@ -82,11 +81,8 @@ final public class EventActivity extends ActionBarActivity
     @InjectView(R.id.event_container)
     ScrollView detailsContainer;
 
-    /**
-     * Service used for loading the banner image.
-     */
     @Inject
-    ImageLoader loader;
+    ScrimLoader loader;
 
     @Inject
     Log logger;
@@ -180,25 +176,41 @@ final public class EventActivity extends ActionBarActivity
     public void addFavoriteEvent()
     {
         if (this.addButton.isStarred()) {
-            try {
-                this.favoriteRepository.remove(this.event);
-                this.addButton.setStarred(false);
-            } catch (SQLException e) {
-                this.logger.error("Error when removing Favorite", e);
-            }
+            this.unfavoriteEvent();
         } else {
-            this.logger.trace(EventFactory.favoriteEvent(this.event));
+            this.favoriteEvent();
+        }
+    }
 
-            try {
-                Favorite favorite = new Favorite();
-                favorite.setEvent(this.event);
-                this.favoriteRepository.save(favorite);
-                this.addButton.setStarred(true);
-            } catch (SQLException e) {
-                this.logger.error("Error when saving Favorite", e);
-            }
+    /**
+     * Unfavorite this event and unchedule any notifications.
+     */
+    public void unfavoriteEvent()
+    {
+        try {
+            this.favoriteRepository.remove(this.event);
+            this.addButton.setStarred(false);
+            this.notificationManager.cancelNotification(this.event);
+        } catch (SQLException e) {
+            this.logger.error("Error when removing Favorite", e);
+        }
+    }
 
+    /**
+     * Favorite this event and schedule a notification.
+     */
+    public void favoriteEvent()
+    {
+        this.logger.trace(EventFactory.favoriteEvent(this.event));
+
+        try {
+            Favorite favorite = new Favorite();
+            favorite.setEvent(this.event);
+            this.favoriteRepository.save(favorite);
+            this.addButton.setStarred(true);
             this.notificationManager.scheduleNotification(this.event);
+        } catch (SQLException e) {
+            this.logger.error("Error when saving Favorite", e);
         }
     }
 
@@ -209,7 +221,7 @@ final public class EventActivity extends ActionBarActivity
      *
      * @return The details string for the event
      */
-    final protected String getEventDetailsString()
+    protected String getEventDetailsString()
     {
         String format = this.getString(R.string.panel_details);
         Date start = this.event.getStartDateTime().toDate();
@@ -222,21 +234,14 @@ final public class EventActivity extends ActionBarActivity
     /**
      * Updates the top banner based on the event data
      */
-    final protected void updateBannerImage()
+    protected void updateBannerImage()
     {
         if (null == this.event.getMediaUrl()) {
             return;
         }
 
         this.bannerView.expandImage();
-        this.loader.get(this.event.getMediaUrl(), new ImageLoader.ImageListener() {
-            @Override public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                EventActivity.this.bannerView.setImage(imageContainer.getBitmap());
-            }
-            @Override public void onErrorResponse(VolleyError volleyError) {
-                EventActivity.this.logger.error("Error loading banner image", volleyError);
-            }
-        });
+        this.loader.loadImage(this.bannerView, this.event.getMediaUrl());
     }
 
     /**
@@ -245,10 +250,6 @@ final public class EventActivity extends ActionBarActivity
     protected void setupNavigation()
     {
         this.actionBar.setNavigationIcon(R.drawable.ic_action_arrow_left);
-        this.actionBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                EventActivity.this.finish();
-            }
-        });
+        this.actionBar.setNavigationOnClickListener(new FinishClickListener(this));
     }
 }
