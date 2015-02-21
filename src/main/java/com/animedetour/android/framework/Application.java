@@ -11,6 +11,7 @@ package com.animedetour.android.framework;
 import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
+import com.inkapplications.prism.ApplicationCallback;
 import com.inkapplications.prism.analytics.AutoLogger;
 import dagger.ObjectGraph;
 import org.apache.commons.logging.Log;
@@ -31,6 +32,9 @@ final public class Application extends android.app.Application implements GraphC
     @Inject
     Log logger;
 
+    @Inject
+    ApplicationCallback applicationCallback;
+
     @Override
     public void onCreate()
     {
@@ -39,6 +43,7 @@ final public class Application extends android.app.Application implements GraphC
         this.applicationGraph = ObjectGraph.create(this.getApplicationModules());
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
+        this.applicationCallback.onCreate(this);
 
         this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
         this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());

@@ -40,7 +40,8 @@ final public class ApiModule
     }
 
     @Provides @Singleton RestAdapter provideRestAdapter(
-        final Log logger
+        final Log logger,
+        OkHttpClient client
     ) {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint("http://animedetour.com");
@@ -59,7 +60,6 @@ final public class ApiModule
         );
         builder.setLogLevel(RestAdapter.LogLevel.BASIC);
 
-        OkHttpClient client = new OkHttpClient();
         builder.setClient(new OkClient(client));
 
         RestAdapter adapter = builder.build();

@@ -22,9 +22,11 @@ import com.animedetour.android.database.DataModule;
 import com.animedetour.android.schedule.notification.NotificationScheduler;
 import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.api.ApiModule;
+import com.circle.android.api.OkHttpStack;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+import com.squareup.okhttp.OkHttpClient;
 import dagger.Module;
 import dagger.Provides;
 
@@ -32,6 +34,8 @@ import javax.inject.Singleton;
 
 @Module(
     includes = {
+        DebugModule.class,
+        NetworkModule.class,
         DataModule.class,
         ApiModule.class,
         LogModule.class,
@@ -62,9 +66,11 @@ final public class ApplicationModule
         return this.application;
     }
 
-    @Provides @Singleton ImageLoader provideImageLoader(Application context)
-    {
-        RequestQueue queue = Volley.newRequestQueue(context);
+    @Provides @Singleton ImageLoader provideImageLoader(
+        Application context,
+        OkHttpClient client
+    ) {
+        RequestQueue queue = Volley.newRequestQueue(context, new OkHttpStack(client));
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
 

@@ -224,3 +224,7 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
+
+## Stetho ##
+-keep class com.facebook.stetho.** { *; }
+-keepclassmembers class com.facebook.stetho.** { *; }
