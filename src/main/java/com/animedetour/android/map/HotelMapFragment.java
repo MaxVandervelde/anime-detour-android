@@ -23,6 +23,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.inkapplications.prism.analytics.ScreenName;
+import org.apache.commons.logging.Log;
+import prism.framework.PrismFacade;
+
+import javax.inject.Inject;
 
 import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
 
@@ -31,6 +36,7 @@ import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@ScreenName("Map")
 final public class HotelMapFragment extends SupportMapFragment
 {
     @InjectView(R.id.map_control_first_floor)
@@ -41,6 +47,9 @@ final public class HotelMapFragment extends SupportMapFragment
 
     @InjectView(R.id.map_control_22nd_floor)
     Button switch22ndFloor;
+
+    @Inject
+    Log logger;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -59,7 +68,9 @@ final public class HotelMapFragment extends SupportMapFragment
     {
         super.onViewCreated(view, savedInstanceState);
 
+        PrismFacade.bootstrap(this);
         ButterKnife.inject(this, view);
+        this.logger.trace(this);
     }
 
     @Override

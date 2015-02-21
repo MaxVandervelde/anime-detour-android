@@ -9,6 +9,8 @@
 package com.animedetour.android.settings;
 
 import android.content.SharedPreferences;
+import com.animedetour.android.analytics.EventFactory;
+import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,11 +24,13 @@ import javax.inject.Singleton;
 final public class PreferenceManager
 {
     final private SharedPreferences preferences;
+    final private Log logger;
 
     @Inject
-    public PreferenceManager(SharedPreferences preferences)
+    public PreferenceManager(SharedPreferences preferences, Log logger)
     {
         this.preferences = preferences;
+        this.logger = logger;
     }
 
     /**
@@ -39,6 +43,7 @@ final public class PreferenceManager
         SharedPreferences.Editor editor = this.preferences.edit();
         editor.putBoolean("notify_events", notify);
         editor.apply();
+        this.logger.trace(EventFactory.notificationSetting(notify));
     }
 
     /**
@@ -59,6 +64,10 @@ final public class PreferenceManager
         SharedPreferences.Editor editor = this.preferences.edit();
         editor.putBoolean("developer", showDeveloperSettings);
         editor.apply();
+
+        if (showDeveloperSettings) {
+            this.logger.trace(EventFactory.developerEnabled());
+        }
     }
 
     /**

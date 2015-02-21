@@ -9,31 +9,39 @@
 package com.animedetour.android.guest;
 
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
 import android.view.ViewGroup;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 import org.apache.commons.logging.Log;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Creates and binds new views for the guest widgets.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
- * @todo Replace GuestLoader creation with a factory.
  */
+@Singleton
 public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
 {
     final private ImageLoader imageLoader;
     final private Log log;
     final private Context context;
+    final private GuestControllerFactory controllerFactory;
 
-    public GuestIndexBinder(ImageLoader imageLoader, Log log, Context context)
-    {
+    @Inject
+    public GuestIndexBinder(
+        ImageLoader imageLoader,
+        Log log,
+        Context context,
+        GuestControllerFactory controllerFactory
+    ) {
         this.imageLoader = imageLoader;
         this.log = log;
         this.context = context;
+        this.controllerFactory = controllerFactory;
     }
 
     @Override
@@ -43,7 +51,7 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     }
 
     @Override
-    public void bindView(final Guest guest, GuestWidgetView view)
+    public void bindView(Guest guest, GuestWidgetView view)
     {
         view.setName(guest.getFullName());
         view.showDefaultImage();
@@ -51,11 +59,8 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
             guest.getPhoto(),
             new GuestWidgetImageLoader(view, this.log)
         );
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                Intent intent = GuestDetailActivity.createIntent(context, guest);
-                context.startActivity(intent);
-            }
-        });
+
+        GuestWidgetController controller = this.controllerFactory.create(guest);
+        view.setOnClickListener(controller);
     }
 }
