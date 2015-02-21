@@ -19,7 +19,6 @@ import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.inkapplications.prism.analytics.ScreenName;
-import com.inkapplications.prism.analytics.TrackedScreen;
 import org.apache.commons.logging.Log;
 import rx.Subscription;
 
@@ -60,13 +59,6 @@ final public class HomeFragment extends Fragment
         View view = inflater.inflate(R.layout.landing, container, false);
 
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
-        this.logger.trace(new TrackedScreen("Home"));
     }
 
     @Override
