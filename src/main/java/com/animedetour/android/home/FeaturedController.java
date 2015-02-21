@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
@@ -70,6 +71,7 @@ public class FeaturedController implements ImageListener, OnClickListener
     @Override
     public void onClick(View view)
     {
+        this.logger.trace(EventFactory.suggestedClick(this.event));
         Intent intent = EventActivity.createIntent(this.context, this.event);
         this.context.startActivity(intent);
     }

@@ -36,4 +36,9 @@ final public class EventFactory
     {
         return new TrackedEvent("Event", "Favorite", target.getName());
     }
+
+    public static TrackedEvent suggestedClick(Event target)
+    {
+        return new TrackedEvent("Home", "Suggested Click", target.getName());
+    }
 }
