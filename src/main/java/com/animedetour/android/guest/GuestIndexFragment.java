@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.Fragment;
@@ -46,7 +45,7 @@ public class GuestIndexFragment extends Fragment
     Log log;
 
     @Inject
-    ImageLoader imageLoader;
+    GuestIndexBinder binder;
 
     @Inject
     SubscriptionManager subscriptionManager;
@@ -64,10 +63,7 @@ public class GuestIndexFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
         this.categoryList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        this.categoryList.init(
-            new ArrayList<Guest>(),
-            new GuestIndexBinder(this.imageLoader, this.log, this.getActivity())
-        );
+        this.categoryList.init(new ArrayList<Guest>(), this.binder);
     }
 
     @Override

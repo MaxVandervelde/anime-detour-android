@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.analytics;
 
+import com.animedetour.api.guest.model.Guest;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.prism.analytics.TrackedEvent;
 
@@ -24,6 +25,11 @@ final public class EventFactory
     public static TrackedEvent eventDetails(Event target)
     {
         return new TrackedEvent("Event", "View Details", target.getName());
+    }
+
+    public static TrackedEvent guestDetails(Guest target)
+    {
+        return new TrackedEvent("Guest", "View Details", target.getFullName());
     }
 
     public static TrackedEvent favoriteEvent(Event target)
