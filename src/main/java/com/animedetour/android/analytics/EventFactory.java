@@ -41,4 +41,15 @@ final public class EventFactory
     {
         return new TrackedEvent("Home", "Suggested Click", target.getName());
     }
+
+    public static TrackedEvent notificationSetting(boolean enabled)
+    {
+        long value = enabled ? 1 : 0;
+        return new TrackedEvent("Settings", "Notifications", null, value);
+    }
+
+    public static TrackedEvent developerEnabled()
+    {
+        return new TrackedEvent("Settings", "Dev-enable");
+    }
 }
