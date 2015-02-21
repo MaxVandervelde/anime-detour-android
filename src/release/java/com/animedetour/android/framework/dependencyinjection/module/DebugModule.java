@@ -11,9 +11,7 @@ import javax.inject.Singleton;
 @Module(library = true, complete = false)
 public class DebugModule
 {
-    @Provides @Singleton ApplicationCallback provideDebugCallbacks(
-        Application context
-    ) {
+    @Provides @Singleton ApplicationCallback provideDebugCallbacks() {
         return new EmptyApplicationCallback();
     }
 }
