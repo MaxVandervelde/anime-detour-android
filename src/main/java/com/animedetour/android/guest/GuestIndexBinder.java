@@ -53,11 +53,12 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     @Override
     public void bindView(Guest guest, GuestWidgetView view)
     {
-        view.setName(guest.getFullName());
         view.showDefaultImage();
+        view.bindGuest(guest);
+
         this.imageLoader.get(
             guest.getPhoto(),
-            new GuestWidgetImageLoader(view, this.log)
+            new GuestWidgetImageLoader(view, guest.getPhoto(), this.log)
         );
 
         GuestWidgetController controller = this.controllerFactory.create(guest);
