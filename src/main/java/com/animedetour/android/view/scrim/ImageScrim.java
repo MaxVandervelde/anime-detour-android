@@ -11,6 +11,7 @@ package com.animedetour.android.view.scrim;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,6 +104,18 @@ public class ImageScrim extends FrameLayout
         }
 
         this.background.setImageBitmap(drawable);
+        this.scrim.setVisibility(VISIBLE);
+    }
+
+    public void setDrawable(Drawable drawable)
+    {
+        if (null == drawable) {
+            this.background.setImageResource(0);
+            this.scrim.setVisibility(INVISIBLE);
+            return;
+        }
+
+        this.background.setImageDrawable(drawable);
         this.scrim.setVisibility(VISIBLE);
     }
 

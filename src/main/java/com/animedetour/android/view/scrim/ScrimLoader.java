@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.view.scrim;
 
-import com.android.volley.toolbox.ImageLoader;
+import com.inkapplications.prism.imageloader.ImageLoader;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -55,6 +55,6 @@ public class ScrimLoader
      */
     public void loadImage(ImageScrim scrim, String url)
     {
-        this.loader.get(url, this.scrimUpdaterFactory.create(scrim));
+        this.loader.load(url, this.scrimUpdaterFactory.create(scrim));
     }
 }

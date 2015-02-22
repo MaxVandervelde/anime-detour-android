@@ -12,9 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.view.scrim.ImageScrim;
@@ -28,7 +25,7 @@ import org.apache.commons.logging.Log;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class FeaturedController implements ImageListener, OnClickListener
+public class FeaturedController implements OnClickListener
 {
     /** Activity containing the views for starting a new activity. */
     final private Context context;
@@ -36,36 +33,22 @@ public class FeaturedController implements ImageListener, OnClickListener
     /** Logger to log networking issues with image loading. */
     final private Log logger;
 
-    /** The featured event view that this controller is reacting to. */
-    final private ImageScrim subject;
-
     /** An event bound to the view and displayed in it. */
     final private Event event;
 
     /**
      * @param context Activity containing the views for starting a new activity.
      * @param logger Logger to log networking issues with image loading.
-     * @param preview The featured event view that this controller is reacting to.
      * @param event An event bound to the view and displayed in it.
      */
-    public FeaturedController(Context context, Log logger, ImageScrim preview, Event event)
-    {
+    public FeaturedController(
+        Context context,
+        Log logger,
+        Event event
+    ) {
         this.context = context;
         this.logger = logger;
-        this.subject = preview;
         this.event = event;
-    }
-
-    @Override
-    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b)
-    {
-        this.subject.setImage(imageContainer.getBitmap());
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError volleyError)
-    {
-        this.logger.error("Error loading featured image", volleyError);
     }
 
     @Override

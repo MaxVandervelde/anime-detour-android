@@ -8,8 +8,8 @@
  */
 package com.animedetour.android.home;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.view.scrim.ImageScrim;
+import com.animedetour.android.view.scrim.ScrimLoader;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
@@ -28,13 +28,13 @@ public class FeaturedUpdaterFactory
 {
     final private Log logger;
     final private FeaturedControllerFactory controllerFactory;
-    final private ImageLoader imageLoader;
+    final private ScrimLoader imageLoader;
 
     @Inject
     public FeaturedUpdaterFactory(
         Log logger,
         FeaturedControllerFactory controllerFactory,
-        ImageLoader imageLoader
+        ScrimLoader imageLoader
     ) {
         this.logger = logger;
         this.controllerFactory = controllerFactory;

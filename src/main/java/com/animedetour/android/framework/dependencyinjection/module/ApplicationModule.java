@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
@@ -26,9 +25,12 @@ import com.circle.android.api.OkHttpStack;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+import com.inkapplications.prism.imageloader.ImageLoader;
+import com.inkapplications.prism.imageloader.adapter.volley.VolleyLoader;
 import com.squareup.okhttp.OkHttpClient;
 import dagger.Module;
 import dagger.Provides;
+import org.apache.commons.logging.Log;
 
 import javax.inject.Singleton;
 
@@ -66,7 +68,7 @@ final public class ApplicationModule
         return this.application;
     }
 
-    @Provides @Singleton ImageLoader provideImageLoader(
+    @Provides @Singleton com.android.volley.toolbox.ImageLoader provideVolleyImageLoader(
         Application context,
         OkHttpClient client
     ) {
@@ -74,7 +76,16 @@ final public class ApplicationModule
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
 
-        return new ImageLoader(queue, new LongImageCache(cacheSize));
+        return new com.android.volley.toolbox.ImageLoader(queue, new LongImageCache(cacheSize));
+    }
+
+    @Provides @Singleton ImageLoader provideImageLoader(
+        Application context,
+        Log logger,
+        com.android.volley.toolbox.ImageLoader volleyLoader
+    ) {
+        Resources resources = context.getResources();
+        return new VolleyLoader(volleyLoader, resources, logger);
     }
 
     @Provides @Singleton Tracker provideAnalytics(Application context)

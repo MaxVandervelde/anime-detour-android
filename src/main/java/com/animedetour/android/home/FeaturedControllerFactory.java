@@ -37,6 +37,6 @@ public class FeaturedControllerFactory
 
     public FeaturedController create(ImageScrim preview, Event event)
     {
-        return new FeaturedController(this.context, this.logger, preview, event);
+        return new FeaturedController(this.context, this.logger, event);
     }
 }

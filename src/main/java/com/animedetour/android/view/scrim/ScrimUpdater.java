@@ -8,8 +8,11 @@
  */
 package com.animedetour.android.view.scrim;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import com.animedetour.android.view.FadeInDrawable;
+import com.inkapplications.prism.imageloader.ImageCallback;
+import com.inkapplications.prism.imageloader.LoadType;
 import org.apache.commons.logging.Log;
 
 /**
@@ -17,29 +20,43 @@ import org.apache.commons.logging.Log;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class ScrimUpdater implements ImageLoader.ImageListener
+public class ScrimUpdater implements ImageCallback
 {
+    final private Resources resources;
     final private Log logger;
     final private ImageScrim scrim;
 
     /**
+     * @param resources Android resources.
      * @param scrim Image view to control.
      */
-    public ScrimUpdater(Log logger, ImageScrim scrim)
+    public ScrimUpdater(Resources resources, Log logger, ImageScrim scrim)
     {
+        this.resources = resources;
         this.logger = logger;
         this.scrim = scrim;
     }
 
     @Override
-    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b)
+    public void onLoad(Bitmap source, LoadType loadType)
     {
-        this.scrim.setImage(imageContainer.getBitmap());
+        if (null == source) {
+            return;
+        }
+
+        if (loadType.isCache()) {
+            this.scrim.setImage(source);
+            return;
+        }
+
+        FadeInDrawable drawable = new FadeInDrawable(this.resources, source);
+        this.scrim.setDrawable(drawable);
+        drawable.startDefaultTransition();
     }
 
     @Override
-    public void onErrorResponse(VolleyError volleyError)
+    public void onError(Exception e)
     {
-        this.logger.error("Error loading scrim image", volleyError);
+        this.logger.error("Error loading scrim image", e);
     }
 }

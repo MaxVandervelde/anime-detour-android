@@ -8,8 +8,9 @@
  */
 package com.animedetour.android.guest;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
+import android.graphics.Bitmap;
+import com.inkapplications.prism.imageloader.ImageCallback;
+import com.inkapplications.prism.imageloader.LoadType;
 import org.apache.commons.logging.Log;
 
 /**
@@ -19,30 +20,42 @@ import org.apache.commons.logging.Log;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-final class GuestWidgetImageLoader implements ImageLoader.ImageListener
+final class GuestWidgetImageLoader implements ImageCallback
 {
-    final private GuestWidgetView view;
     final private Log log;
+    final private GuestWidgetView view;
+    final private String photo;
 
     /**
      * @param view The view to be updated with the loaded image.
      * @param log Logged to on a network error.
      */
-    public GuestWidgetImageLoader(GuestWidgetView view, Log log)
+    public GuestWidgetImageLoader(GuestWidgetView view, Log log, String photo)
     {
         this.view = view;
         this.log = log;
+        this.photo = photo;
     }
 
     @Override
-    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b)
+    public void onLoad(Bitmap source, LoadType loadType)
     {
-        this.view.setImage(imageContainer.getBitmap());
+        if (null == source) {
+            this.view.showDefaultImage();
+            return;
+        }
+
+        String expected = this.view.getGuest().getPhoto();
+        if (false == expected.equals(this.photo)) {
+            return;
+        }
+
+        this.view.setImage(source);
     }
 
     @Override
-    public void onErrorResponse(VolleyError volleyError)
+    public void onError(Exception e)
     {
-        this.log.error("Error loading guest image", volleyError);
+        this.log.error("Error loading guest image", e);
     }
 }

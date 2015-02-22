@@ -10,9 +10,9 @@ package com.animedetour.android.guest;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
+import com.inkapplications.prism.imageloader.ImageLoader;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
@@ -47,17 +47,17 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     @Override
     public GuestWidgetView createView(ViewGroup viewGroup, int i)
     {
-        return new GuestWidgetView(context);
+        return new GuestWidgetView(this.context);
     }
 
     @Override
     public void bindView(Guest guest, GuestWidgetView view)
     {
-        view.setName(guest.getFullName());
         view.showDefaultImage();
-        this.imageLoader.get(
+        view.bind(guest);
+        this.imageLoader.load(
             guest.getPhoto(),
-            new GuestWidgetImageLoader(view, this.log)
+            new GuestWidgetImageLoader(view, this.log, guest.getPhoto())
         );
 
         GuestWidgetController controller = this.controllerFactory.create(guest);

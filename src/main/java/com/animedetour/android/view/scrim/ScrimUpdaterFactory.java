@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.view.scrim;
 
+import android.content.res.Resources;
 import org.apache.commons.logging.Log;
 
 import javax.inject.Inject;
@@ -24,11 +25,13 @@ import javax.inject.Singleton;
 @Singleton
 public class ScrimUpdaterFactory
 {
+    final private Resources resources;
     final private Log logger;
 
     @Inject
-    public ScrimUpdaterFactory(Log logger)
+    public ScrimUpdaterFactory(Resources resources, Log logger)
     {
+        this.resources = resources;
         this.logger = logger;
     }
 
@@ -38,6 +41,6 @@ public class ScrimUpdaterFactory
      */
     public ScrimUpdater create(ImageScrim scrim)
     {
-        return new ScrimUpdater(this.logger, scrim);
+        return new ScrimUpdater(this.resources, this.logger, scrim);
     }
 }

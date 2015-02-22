@@ -10,12 +10,14 @@ package com.animedetour.android.guest;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.animedetour.android.R;
+import com.animedetour.api.guest.model.Guest;
 
 /**
  * A small widget view to represent a guest.
@@ -35,6 +37,8 @@ public class GuestWidgetView extends FrameLayout
      * The displayed name of the guest.
      */
     final private TextView name;
+
+    private Guest guest;
 
     public GuestWidgetView(Context context)
     {
@@ -69,6 +73,17 @@ public class GuestWidgetView extends FrameLayout
     public void setImage(Bitmap image)
     {
         this.image.setImageBitmap(image);
+    }
+
+    public void bind(Guest guest)
+    {
+        this.setName(guest.getFirstName());
+        this.guest = guest;
+    }
+
+    final public Guest getGuest()
+    {
+        return this.guest;
     }
 
     /**

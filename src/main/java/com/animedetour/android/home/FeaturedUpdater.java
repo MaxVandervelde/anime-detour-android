@@ -9,8 +9,8 @@
 package com.animedetour.android.home;
 
 import android.view.View;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.view.scrim.ImageScrim;
+import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
 import org.apache.commons.logging.Log;
 import rx.Observer;
@@ -29,18 +29,18 @@ final class FeaturedUpdater implements Observer<Event>
     final private Log logger;
     final private FeaturedControllerFactory controllerFactory;
     final private ImageScrim preview;
-    final private ImageLoader imageLoader;
+    final private ScrimLoader scrimLoader;
 
     public FeaturedUpdater(
         Log logger,
         FeaturedControllerFactory controllerFactory,
-        ImageLoader imageLoader,
+        ScrimLoader scrimLoader,
         ImageScrim preview
     ) {
         this.logger = logger;
         this.controllerFactory = controllerFactory;
         this.preview = preview;
-        this.imageLoader = imageLoader;
+        this.scrimLoader = scrimLoader;
     }
 
     @Override
@@ -72,6 +72,6 @@ final class FeaturedUpdater implements Observer<Event>
 
         this.preview.setImage(null);
         this.preview.expandImage();
-        this.imageLoader.get(event.getMediaUrl(), controller);
+        this.scrimLoader.loadImage(this.preview, event.getMediaUrl());
     }
 }
