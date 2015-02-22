@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.animedetour.android.R;
+import com.animedetour.api.guest.model.Guest;
 
 /**
  * A small widget view to represent a guest.
@@ -36,6 +37,8 @@ public class GuestWidgetView extends FrameLayout
      */
     final private TextView name;
 
+    private Guest displayedGuest;
+
     public GuestWidgetView(Context context)
     {
         this(context, null, 0);
@@ -53,6 +56,26 @@ public class GuestWidgetView extends FrameLayout
         LayoutInflater.from(context).inflate(R.layout.guest_widget_view, this);
         this.image = (ImageView) this.findViewById(R.id.guest_widget_image);
         this.name = (TextView) this.findViewById(R.id.guest_widget_name);
+    }
+
+    /**
+     * Attach a guest to the view for later reference and bind it's properties
+     * to the display.
+     *
+     * @param guest The guest to display in the view.
+     */
+    public void bindGuest(Guest guest)
+    {
+        this.setName(guest.getFirstName());
+        this.displayedGuest = guest;
+    }
+
+    /**
+     * @return The guest that is currently displayed in the view.
+     */
+    public Guest getDisplayedGuest()
+    {
+        return displayedGuest;
     }
 
     /**
