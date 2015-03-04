@@ -80,6 +80,11 @@ public class ItemAdapter<VIEW extends View, ITEM> extends BaseAdapter
         return (VIEW) recycled;
     }
 
+    public List<ITEM> getItems()
+    {
+        return this.items;
+    }
+
     /**
      * Set a new list of items to display.
      *

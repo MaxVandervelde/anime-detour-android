@@ -43,4 +43,7 @@
     <style name="panel">
         <item name="android:padding">16dp</item>
     </style>
+    <style name="SectionIndex" parent="display1">
+        <item name="android:textColor">@color/foreground_inverse</item>
+    </style>
 </resources>

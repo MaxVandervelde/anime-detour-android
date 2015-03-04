@@ -82,8 +82,9 @@ final public class DayFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
 
-        ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
+        ItemAdapter<PanelView, Event> adapter = new EventListAdapter(this.viewBinder);
         this.panelList.setAdapter(adapter);
+        this.panelList.setFastScrollEnabled(true);
         this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
     }
 
