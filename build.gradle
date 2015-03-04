@@ -111,8 +111,8 @@ dependencies {
     compile 'org.joda:joda-convert:1.7'
     compile 'com.mcxiaoke.volley:library:1.0.7@aar'
 
-    compile 'com.facebook.stetho:stetho:1.0.0'
-    compile 'com.facebook.stetho:stetho-okhttp:1.0.0'
+    compile 'com.facebook.stetho:stetho:1.0.1'
+    compile 'com.facebook.stetho:stetho-okhttp:1.0.1'
 }
 
 apply from: 'playservices.gradle'
