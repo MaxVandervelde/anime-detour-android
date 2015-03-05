@@ -8,7 +8,6 @@
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
-import android.app.Activity;
 import com.animedetour.android.guest.GuestDetailActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
@@ -21,9 +20,6 @@ import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
 import dagger.Module;
-import dagger.Provides;
-
-import javax.inject.Singleton;
 
 @Module(
     includes = {
@@ -47,15 +43,4 @@ import javax.inject.Singleton;
 )
 final public class ActivityModule
 {
-    final private Activity activity;
-
-    public ActivityModule(Activity activity)
-    {
-        this.activity = activity;
-    }
-
-    @Provides @Singleton Activity provideActivity()
-    {
-        return activity;
-    }
 }

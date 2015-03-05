@@ -11,8 +11,6 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -49,23 +47,6 @@ import javax.inject.Singleton;
 )
 final public class ApplicationModule
 {
-    private android.app.Application application;
-
-    public ApplicationModule(android.app.Application application)
-    {
-        this.application = application;
-    }
-
-    @Provides @Singleton android.app.Application getApplication()
-    {
-        return this.application;
-    }
-
-    @Provides @Singleton Context provideAppContext()
-    {
-        return this.application;
-    }
-
     @Provides @Singleton ImageLoader provideImageLoader(
         Application context,
         OkHttpClient client
@@ -95,16 +76,5 @@ final public class ApplicationModule
     @Provides @Singleton SubscriptionManager provideSubscriptionManager()
     {
         return new SubscriptionManager();
-    }
-
-    @Provides @Singleton SharedPreferences provideSharedPreferences(
-        android.app.Application context
-    ) {
-        return context.getSharedPreferences("anime_detour", Context.MODE_PRIVATE);
-    }
-
-    @Provides @Singleton Resources provideResources(Application context)
-    {
-        return context.getResources();
     }
 }

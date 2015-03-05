@@ -68,14 +68,16 @@ final public class Application extends android.app.Application implements GraphC
     public Object[] getActivityModules(Activity activity)
     {
         return new Object[] {
-            new ActivityModule(activity),
+            new prism.module.ActivityModule(activity),
+            new ActivityModule(),
         };
     }
 
     private Object[] getApplicationModules()
     {
         return new Object[] {
-            new ApplicationModule(this),
+            new prism.module.ApplicationModule(this),
+            new ApplicationModule(),
         };
     }
 
