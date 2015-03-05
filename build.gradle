@@ -77,10 +77,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.inkapplications:prism:0.0.1'
+    compile 'com.github.InkApplications:Prism:v0.1.1'
     compile 'com.inkapplications:android-simple-recycler-view:1.0.0'
     compile 'com.inkapplications:android-logger:1.1.0'
-    compile 'com.github.InkApplications:ground-control:v0.0.1'
+    compile 'com.github.InkApplications:ground-control:v0.0.2'
 
     compile 'com.android.support:support-v4:21.0.0'
     compile "com.android.support:appcompat-v7:21.0.0"
