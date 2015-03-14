@@ -33,6 +33,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import javax.inject.Singleton;
 import java.sql.SQLException;
@@ -46,7 +49,9 @@ final public class DataModule
         ScheduleEndpoint remote,
         Log logger
     ) {
-        SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(logger);
+        Scheduler main = AndroidSchedulers.mainThread();
+        Scheduler io = Schedulers.io();
+        SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(logger, io, main);
 
         try {
             Dao<Event, String> local = DaoManager.createDao(connectionSource, Event.class);
@@ -70,7 +75,9 @@ final public class DataModule
         GuestEndpoint remote,
         Log logger
     ) {
-        SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(logger);
+        Scheduler main = AndroidSchedulers.mainThread();
+        Scheduler io = Schedulers.io();
+        SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(logger, io, main);
 
         try {
             Dao<Category, Integer> localCategory = DaoManager.createDao(connectionSource, Category.class);
