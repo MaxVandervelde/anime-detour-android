@@ -10,9 +10,11 @@ package com.animedetour.android.schedule;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import org.apache.commons.logging.Log;
+import org.joda.time.DateTime;
 import rx.Subscriber;
 
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.List;
  */
 public class EventUpdateSubscriber extends Subscriber<List<Event>>
 {
+    final private long created = new DateTime().getMillis();
     final private Log logger;
 
     /** View to display when there are no items in the list */
@@ -68,6 +71,8 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
     @Override
     public void onCompleted()
     {
+        long elapsed = this.getElapsedTime();
+        this.logger.trace(EventFactory.eventDownload(elapsed));
     }
 
     @Override
@@ -84,6 +89,11 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
 
         if (false == events.isEmpty()) {
             this.restoreState();
+        }
+
+        if (false == events.isEmpty() && this.panelList.getItemAdapter().getItemCount() == 0) {
+            long elapsed = this.getElapsedTime();
+            this.logger.trace(EventFactory.eventLoad(elapsed));
         }
     }
 
@@ -137,5 +147,11 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
     {
         this.panelList.scrollToPosition(scrollPosition);
         this.scrollPosition = scrollPosition;
+    }
+
+    private long getElapsedTime()
+    {
+        long now = new DateTime().getMillis();
+        return now - this.created;
     }
 }

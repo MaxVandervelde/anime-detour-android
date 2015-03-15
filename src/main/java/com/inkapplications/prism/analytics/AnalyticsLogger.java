@@ -107,6 +107,22 @@ public class AnalyticsLogger implements Log
             this.logEvent((TrackedEvent) o);
             return;
         }
+        if (o instanceof TrackedTime) {
+            this.logTime((TrackedTime) o);
+        }
+    }
+
+    /**
+     * Adds an event timing into Google Analytics.
+     */
+    protected void logTime(TrackedTime time)
+    {
+        HitBuilders.TimingBuilder builder = new HitBuilders.TimingBuilder();
+        builder.setValue(time.getTime());
+        builder.setCategory(time.getCategory());
+        builder.setLabel(time.getLabel());
+        builder.setVariable(time.getName());
+        this.analyticsTracker.send(builder.build());
     }
 
     /**
