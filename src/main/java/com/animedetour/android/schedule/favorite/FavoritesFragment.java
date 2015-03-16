@@ -20,6 +20,7 @@ import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.schedule.EventActivity;
+import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.api.model.Event;
@@ -60,6 +61,9 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
 
     @Inject
     SubscriptionManager subscriptionManager;
+
+    @Inject
+    EventPalette palette;
 
     private ItemAdapter<PanelView, Favorite> adapter;
 
@@ -108,7 +112,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
      */
     protected void setupPanelList()
     {
-        EventViewBinder eventViewBinder = new EventViewBinder(this.getActivity(), this);
+        EventViewBinder eventViewBinder = new EventViewBinder(this.getActivity(), this.palette, this);
         FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(eventViewBinder);
         this.adapter = new ItemAdapter<>(favoriteViewBinder);
         this.panelList.setAdapter(adapter);

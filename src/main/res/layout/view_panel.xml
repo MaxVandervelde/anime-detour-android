@@ -7,50 +7,63 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:layout_height="75dp"
     card_view:elevation="1dp"
     card_view:cardCornerRadius="0dp"
     android:layout_margin="4dp"
 >
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
     >
-        <LinearLayout
-            style="@style/panel"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/drawer_row_background"
-        >
-            <TextView
-                style="@style/title"
-                android:id="@+id/view_panel_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                tools:text="Panel Name"
-            />
-
-            <TextView
-                style="@style/caption"
-                android:id="@+id/view_panel_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="1:00 - 4:00 in Room B"
-            />
-        </LinearLayout>
-        <com.animedetour.android.view.ColoredImageView
-            android:id="@+id/view_panel_starred"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/starred"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            colored_image:colorOverlay="@color/primary"
+        <View
+            android:id="@+id/view_panel_color_label"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            tools:background="@color/success"
         />
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        >
+            <LinearLayout
+                style="@style/panel"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawer_row_background"
+            >
+                <TextView
+                    style="@style/title"
+                    android:id="@+id/view_panel_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32dp"
+                    tools:text="Panel Name"
+                />
+
+                <TextView
+                    style="@style/caption"
+                    android:id="@+id/view_panel_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="1:00 - 4:00 in Room B"
+                />
+            </LinearLayout>
+            <com.animedetour.android.view.ColoredImageView
+                android:id="@+id/view_panel_starred"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/starred"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                colored_image:colorOverlay="@color/primary"
+            />
+        </RelativeLayout>
+    </LinearLayout>
     <View
         android:id="@+id/view_panel_overlay"
         android:layout_width="match_parent"

@@ -31,4 +31,18 @@
     <color name="background_faded">#99fafafa</color>
     <color name="background_highlight">#ffffffff</color>
     <color name="background_inverse">#ff000000</color>
+
+    <color name="label_official">@color/primary_highlight</color>
+    <color name="label_attendee_panel">#ffe84e40</color>
+    <color name="label_gaming">#ff5C6BC0</color>
+    <color name="label_guest_panel">#ff4CAF50</color>
+    <color name="label_movie_premiere">#ffAB47BC</color>
+    <color name="label_photo_shoot">#ff00BCD4</color>
+    <color name="label_video">#ffFDD835</color>
+    <color name="label_unknown">#ff212121</color>
+    <color name="label_unknown2">#ff8D6E63</color>
+    <color name="label_unknown3">#ffEC407A</color>
+    <color name="label_unknown4">#ff26A69A</color>
+    <color name="label_unknown5">#ffD4E157</color>
+    <color name="label_unknown6">#ff9E9E9E</color>
 </resources>
