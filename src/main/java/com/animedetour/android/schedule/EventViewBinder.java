@@ -15,30 +15,36 @@ import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 
+import javax.inject.Inject;
+
 /**
- * Binds Events to the displayed Panel View
+ * Binds Events to the displayed Panel View.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 public class EventViewBinder implements ItemViewBinder<PanelView, Event>
 {
-    /**
-     * Context to be used when creating new panel views.
-     */
+    /** Context to be used when creating new panel views. */
     private Context context;
 
-    /**
-     * Listener to invoke when a panel view is clicked.
-     */
+    /** Listener to invoke when a panel view is clicked. */
     private ViewClickListener<PanelView, Event> clickListener;
 
+    /** For creating the label colors on events. */
+    private EventPalette eventPalette;
+
     /**
-     * @param context Context to be used when creating new panel views
-     * @param clickListener Listener to invoke when a panel view is clicked
+     * @param context Context to be used when creating new panel views.
+     * @param clickListener Listener to invoke when a panel view is clicked.
      */
-    public EventViewBinder(Context context, ViewClickListener<PanelView, Event> clickListener)
-    {
+    @Inject
+    public EventViewBinder(
+        Context context,
+        EventPalette eventPalette,
+        ViewClickListener<PanelView, Event> clickListener
+    ) {
         this.context = context;
+        this.eventPalette = eventPalette;
         this.clickListener = clickListener;
     }
 
@@ -51,7 +57,12 @@ public class EventViewBinder implements ItemViewBinder<PanelView, Event>
     @Override
     public void bindView(final Event event, final PanelView view)
     {
+        view.reset();
         view.bind(event);
+
+        String eventType = event.getEventType();
+        view.setLabelColor(this.eventPalette.getColor(eventType));
+
         view.setOnClickListener(new ItemBoundClickListener<>(event, this.clickListener));
     }
 }

@@ -10,6 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,8 @@ public class PanelView extends RelativeLayout
      */
     private View fadeOverlay;
 
+    private View color;
+
     /**
      * The time format to use for the panel start and end time
      */
@@ -90,6 +93,7 @@ public class PanelView extends RelativeLayout
         this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
         this.fadeOverlay = this.findViewById(R.id.view_panel_overlay);
         this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
+        this.color = this.findViewById(R.id.view_panel_color_label);
     }
 
     /**
@@ -106,6 +110,18 @@ public class PanelView extends RelativeLayout
     public void setDescription(String description)
     {
         this.description.setText(description);
+    }
+
+    /**
+     * Reset the view to a default state; intended to be used when the view
+     * gets recycled by a listview.
+     */
+    public void reset()
+    {
+        this.setLabelColor(android.R.color.transparent);
+        this.setTitle("");
+        this.setDescription("");
+        this.fadeOverlay.setVisibility(GONE);
     }
 
     /**
@@ -128,6 +144,17 @@ public class PanelView extends RelativeLayout
         } else {
             this.fadeOverlay.setVisibility(GONE);
         }
+    }
+
+    /**
+     * Set the highlight color for the panel used to indicate the category/type.
+     *
+     * @param colorResource The color resource ID to display.
+     */
+    public void setLabelColor(@ColorRes int colorResource)
+    {
+        int color = this.getResources().getColor(colorResource);
+        this.color.setBackgroundColor(color);
     }
 
     /**

@@ -19,8 +19,9 @@ public class ScheduleModule
 {
     @Provides @Singleton EventViewBinder provideEventViewBinder(
         Context context,
-        PanelViewController controller
+        PanelViewController controller,
+        EventPalette palette
     ) {
-        return new EventViewBinder(context, controller);
+        return new EventViewBinder(context, palette, controller);
     }
 }

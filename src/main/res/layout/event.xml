@@ -34,6 +34,38 @@
                     android:layout_height="wrap_content"
                     android:background="@color/background"
                 >
+                    <RelativeLayout
+                        android:id="@+id/event_type_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        tools:background="@color/label_attendee_panel"
+                    >
+                        <TextView
+                            android:id="@+id/event_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:padding="8dp"
+                            android:textStyle="bold"
+                            tools:text="Guest Panel"
+                            android:textColor="@color/foreground_inverse"
+                        />
+                        <TextView
+                            android:id="@+id/event_speakers"
+                            android:layout_toRightOf="@id/event_type"
+                            android:layout_toEndOf="@id/event_type"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/foreground_inverse"
+                            tools:text="with John Doe"
+                            android:layout_marginEnd="72dp"
+                            android:layout_marginRight="72dp"
+                        />
+                    </RelativeLayout>
                     <TextView
                         android:layout_marginEnd="88dp"
                         android:layout_marginRight="88dp"

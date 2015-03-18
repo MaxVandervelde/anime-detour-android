@@ -31,4 +31,31 @@
     <color name="background_faded">#99fafafa</color>
     <color name="background_highlight">#ffffffff</color>
     <color name="background_inverse">#ff000000</color>
+
+    <color name="label_official">@color/primary</color>
+    <color name="label_official_dim">@color/primary_dim</color>
+    <color name="label_attendee_panel">#ffE53935</color>
+    <color name="label_attendee_panel_dim">#ffD32F2F</color>
+    <color name="label_gaming">#ff3949AB</color>
+    <color name="label_gaming_dim">#ff303F9F</color>
+    <color name="label_guest_panel">#ff43A047</color>
+    <color name="label_guest_panel_dim">#ff388E3C</color>
+    <color name="label_movie_premiere">#ff8E24AA</color>
+    <color name="label_movie_premiere_dim">#ff7B1FA2</color>
+    <color name="label_photo_shoot">#ff00ACC1</color>
+    <color name="label_photo_shoot_dim">#ff0097A7</color>
+    <color name="label_video">#ffFFB300</color>
+    <color name="label_video_dim">#ffFFA000</color>
+    <color name="label_unknown">#ff424242</color>
+    <color name="label_unknown_dim">#ff212121</color>
+    <color name="label_unknown2">#ff6D4C41</color>
+    <color name="label_unknown2_dim">#ff5D4037</color>
+    <color name="label_unknown3">#ffD81B60</color>
+    <color name="label_unknown3_dim">#ffC2185B</color>
+    <color name="label_unknown4">#ff00897B</color>
+    <color name="label_unknown4_dim">#ff00796B</color>
+    <color name="label_unknown5">#ffC0CA33</color>
+    <color name="label_unknown5_dim">#ffAFB42B</color>
+    <color name="label_unknown6">#ff546E7A</color>
+    <color name="label_unknown6_dim">#ff455A64</color>
 </resources>
