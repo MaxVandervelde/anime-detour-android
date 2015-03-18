@@ -32,7 +32,7 @@ import java.sql.SQLException;
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public DetourDatabaseHelper(Context context)
     {
@@ -59,7 +59,9 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
             TableUtils.dropTable(connectionSource, Event.class, true);
             TableUtils.dropTable(connectionSource, Guest.class, true);
             TableUtils.dropTable(connectionSource, Category.class, true);
-            onCreate(db, connectionSource);
+            TableUtils.createTable(connectionSource, Event.class);
+            TableUtils.createTable(connectionSource, Category.class);
+            TableUtils.createTable(connectionSource, Guest.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

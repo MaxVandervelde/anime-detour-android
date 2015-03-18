@@ -33,6 +33,7 @@ import org.apache.commons.logging.Log;
 import rx.Subscription;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -130,11 +131,19 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
      */
     public void updateEvents(List<Favorite> events)
     {
+        List<Favorite> filtered =  new ArrayList<>();
+        for (Favorite favorite : events) {
+            if (null == favorite.getEvent()) {
+                continue;
+            }
+            filtered.add(favorite);
+        }
+
         if (this.panelList.getAdapter().getCount() != 0) {
             this.syncScrollPosition();
         }
 
-        this.adapter.setItems(events);
+        this.adapter.setItems(filtered);
         this.panelList.setVerticalScrollbarPosition(this.scrollPosition);
     }
 
