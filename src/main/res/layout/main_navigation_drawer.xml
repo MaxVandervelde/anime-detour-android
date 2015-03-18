@@ -5,71 +5,90 @@
     android:id="@+id/left_drawer"
     android:layout_width="240dp"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
     android:orientation="vertical"
+    android:layout_gravity="start"
     android:clickable="true"
 >
-    <TextView
-        android:id="@+id/drawer_home"
-        style="@style/drawer_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_home_label"
-        android:gravity="center_vertical"
-        android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_nav_home"
-        android:drawableStart="@drawable/ic_nav_home"
-    />
-    <TextView
-        android:id="@+id/drawer_guests"
-        style="@style/drawer_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_guests_label"
-        android:gravity="center_vertical"
-        android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_nav_guests"
-        android:drawableStart="@drawable/ic_nav_guests"
-    />
-    <TextView
-        android:id="@+id/drawer_favorites"
-        style="@style/drawer_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_favorites_label"
-        android:gravity="center_vertical"
-        android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_nav_favorites"
-        android:drawableStart="@drawable/ic_nav_favorites"
-    />
-    <TextView
-        android:id="@+id/drawer_programming"
-        style="@style/drawer_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_programming_label"
-        android:gravity="center_vertical"
-        android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_nav_programming"
-        android:drawableStart="@drawable/ic_nav_programming"
-    />
-    <TextView
-        android:id="@+id/drawer_maps"
-        style="@style/drawer_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_maps_label"
-        android:gravity="center_vertical"
-        android:drawablePadding="16dp"
-        android:drawableLeft="@drawable/ic_nav_map"
-        android:drawableStart="@drawable/ic_nav_map"
-    />
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/drawer_scroll_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+        >
+            <TextView
+                android:id="@+id/drawer_home"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_home_label"
+                android:gravity="center_vertical"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_nav_home"
+                android:drawableStart="@drawable/ic_nav_home"
+            />
+            <TextView
+                android:id="@+id/drawer_guests"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_guests_label"
+                android:gravity="center_vertical"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_nav_guests"
+                android:drawableStart="@drawable/ic_nav_guests"
+            />
+            <TextView
+                android:id="@+id/drawer_favorites"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_favorites_label"
+                android:gravity="center_vertical"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_nav_favorites"
+                android:drawableStart="@drawable/ic_nav_favorites"
+            />
+            <TextView
+                android:id="@+id/drawer_programming"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_programming_label"
+                android:gravity="center_vertical"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_nav_programming"
+                android:drawableStart="@drawable/ic_nav_programming"
+            />
+            <TextView
+                android:id="@+id/drawer_maps"
+                style="@style/drawer_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drawer_maps_label"
+                android:gravity="center_vertical"
+                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/ic_nav_map"
+                android:drawableStart="@drawable/ic_nav_map"
+            />
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="bottom"
     >
+        <View
+            android:id="@+id/drawer_settings_seam"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/background_inverse"
+            android:layout_alignParentTop="true"
+        />
         <TextView
             android:id="@+id/drawer_settings"
             style="@style/drawer_row"
@@ -79,6 +98,7 @@
             android:drawablePadding="16dp"
             android:drawableLeft="@drawable/ic_nav_settings"
             android:drawableStart="@drawable/ic_nav_settings"
+            android:layout_below="@id/drawer_settings_seam"
             android:text="@string/drawer_settings_label"
         />
     </RelativeLayout>
