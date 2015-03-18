@@ -125,7 +125,12 @@ public class EventRepository
     {
         String key = "findUpcomingByType:" + type + ":" + ordinal;
         return this.subscriptionFactory.createSubscription(
-            this.upcomingByTypeFactory.createWorker(new TypeCriteria(type, ordinal)),
+            this.upcomingByTypeFactory.createWorker(
+                new TypeCriteria(
+                    type,
+                    ordinal
+                )
+            ),
             observer,
             key
         );
@@ -154,6 +159,16 @@ public class EventRepository
     public List<Event> getAll() throws SQLException
     {
         return this.allEventsWorker.lookupLocal();
+    }
+
+    /**
+     * Check if the local database is empty.
+     *
+     * @return Whether or not there are any saved events.
+     */
+    public boolean isEmpty() throws SQLException
+    {
+        return this.localAccess.countOf() == 0;
     }
 
     /**

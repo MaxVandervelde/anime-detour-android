@@ -9,6 +9,7 @@
 package com.animedetour.android.main;
 
 import android.annotation.TargetApi;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +17,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
@@ -26,6 +30,7 @@ import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
+import com.inkapplications.android.widget.listview.ItemAdapter;
 import icepick.Icicle;
 import prism.framework.Layout;
 
@@ -58,6 +63,9 @@ final public class MainActivity extends ActionBarActivity
     @InjectView(R.id.main_action_bar)
     Toolbar actionBar;
 
+    @InjectView(R.id.spinner_nav)
+    Spinner spinnerNav;
+
     @InjectView(R.id.drawer_favorites)
     View favoritesOption;
 
@@ -88,6 +96,9 @@ final public class MainActivity extends ActionBarActivity
             this.favoritesOption
         );
 
+        this.spinnerNav.setAdapter(
+            new ItemAdapter(null)
+        );
 
         if (null == savedInstanceState) {
             this.openLandingFragment();

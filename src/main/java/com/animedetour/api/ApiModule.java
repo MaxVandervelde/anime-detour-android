@@ -41,14 +41,12 @@ final public class ApiModule
 
     @Provides @Singleton RestAdapter provideRestAdapter(
         final Log logger,
-        OkHttpClient client
+        OkHttpClient client,
+        ObjectMapper mapper
     ) {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint("http://animedetour.com");
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JodaModule());
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         builder.setConverter(new JacksonConverter(mapper));
 
         builder.setLog(
@@ -65,5 +63,14 @@ final public class ApiModule
         RestAdapter adapter = builder.build();
 
         return adapter;
+    }
+
+    @Provides @Singleton ObjectMapper provideObjectMapper()
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JodaModule());
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        return mapper;
     }
 }
