@@ -66,7 +66,7 @@ public class GuestWidgetView extends FrameLayout
      */
     public void bindGuest(Guest guest)
     {
-        this.setName(guest.getFirstName());
+        this.setName(guest.getFullName());
         this.displayedGuest = guest;
     }
 
