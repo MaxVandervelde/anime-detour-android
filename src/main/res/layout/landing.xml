@@ -30,20 +30,22 @@
             android:visibility="gone"
             android:id="@+id/event_banner"
             android:background="@color/primary"
+            android:layout_marginBottom="8dp"
             app:image_title="Event Name"
             app:image_textPaddingTop="72dp"
             app:image_height="200dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
         />
         <com.animedetour.android.view.scrim.ImageScrim
             android:visibility="gone"
             android:id="@+id/event_banner2"
             android:background="@color/primary"
+            android:layout_marginBottom="8dp"
             app:image_title="Event Name"
             app:image_textPaddingTop="72dp"
             app:image_height="200dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
         />
     </LinearLayout>
