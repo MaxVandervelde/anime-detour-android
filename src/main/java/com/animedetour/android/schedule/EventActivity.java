@@ -165,7 +165,11 @@ final public class EventActivity extends ActionBarActivity
         int bannerColorRes = this.eventPalette.getColor(type);
         int bannerColor = this.getResources().getColor(bannerColorRes);
         this.bannerView.setBackgroundColor(bannerColor);
-        this.speakers.setText(this.event.getSpeakers());
+        if (null != this.event.getSpeakers()) {
+            this.speakers.setText(Html.fromHtml(this.event.getSpeakers()));
+        } else {
+            this.speakers.setText("");
+        }
         this.eventDetails.setText(this.getEventDetailsString());
 
         this.setupNavigation();
