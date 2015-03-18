@@ -45,6 +45,16 @@ public class EventPalette
         R.color.label_unknown6,
     };
 
+    /** colors that can be used if an event without an identifiable type is found. */
+    final private static int[] unknownDims = new int[] {
+        R.color.label_unknown_dim,
+        R.color.label_unknown2_dim,
+        R.color.label_unknown3_dim,
+        R.color.label_unknown4_dim,
+        R.color.label_unknown5_dim,
+        R.color.label_unknown6_dim,
+    };
+
     @Inject
     public EventPalette(Log logger)
     {
@@ -96,6 +106,50 @@ public class EventPalette
     }
 
     /**
+     * Get a darker color unique to the string type.
+     *
+     * Tries to match the type to a known type and color for that. If it fails
+     * it will assign an unknown color for that type. That unknown color will
+     * be the same for subsequent calls of the same type.
+     *
+     * @param type The type to match and get a color for.
+     * @return The color to identify that type.
+     */
+    @ColorRes
+    final public int getDimColor(String type)
+    {
+        if (type.equals("Anime Detour Panel")) {
+            return R.color.label_official_dim;
+        }
+
+        if (type.equals("Attendee Panel")) {
+            return R.color.label_attendee_panel_dim;
+        }
+
+        if (type.equals("Gaming")) {
+            return R.color.label_gaming_dim;
+        }
+
+        if (type.equals("Guest Panel")) {
+            return R.color.label_guest_panel_dim;
+        }
+
+        if (type.equals("Movie Premiere")) {
+            return R.color.label_movie_premiere_dim;
+        }
+
+        if (type.equals("Photo Shoot")) {
+            return R.color.label_photo_shoot_dim;
+        }
+
+        if (type.equals("Video")) {
+            return R.color.label_video_dim;
+        }
+
+        return this.getDimUnknowncolor(type);
+    }
+
+    /**
      * Get a color to identify an type.
      *
      * This will register the color so that it always returns the same color for
@@ -121,5 +175,33 @@ public class EventPalette
         }
 
         return unknowns[index % unknownLabels.size()];
+    }
+
+    /**
+     * Get a darker color to identify an type.
+     *
+     * This will register the color so that it always returns the same color for
+     * each unique value.
+     * If we run out of colors, this will loop back around to the start, but
+     * will log a warning.
+     *
+     * @param type The type to match and get a color for.
+     * @return The color to identify that type.
+     */
+    @ColorRes
+    private int getDimUnknowncolor(String type)
+    {
+        if (false == this.unknownLabels.contains(type)) {
+            this.unknownLabels.add(type);
+        }
+        int index = this.unknownLabels.indexOf(type);
+
+        if (index > this.unknownLabels.size()) {
+            this.logger.warn(
+                "Ran out of colors for palette. Will recycle old color"
+            );
+        }
+
+        return unknownDims[index % unknownLabels.size()];
     }
 }

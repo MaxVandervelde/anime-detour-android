@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.InjectView;
@@ -69,6 +70,15 @@ final public class EventActivity extends ActionBarActivity
     @InjectView(R.id.event_text)
     TextView descriptionView;
 
+    @InjectView(R.id.event_speakers)
+    TextView speakers;
+
+    @InjectView(R.id.event_type)
+    TextView eventType;
+
+    @InjectView(R.id.event_type_container)
+    View eventTypeContainer;
+
     @InjectView(R.id.event_details)
     TextView eventDetails;
 
@@ -98,6 +108,9 @@ final public class EventActivity extends ActionBarActivity
 
     @Inject
     ToolbarFaderFactory faderFactory;
+
+    @Inject
+    EventPalette eventPalette;
 
     /**
      * The event we are currently displaying
@@ -143,6 +156,16 @@ final public class EventActivity extends ActionBarActivity
             this.descriptionView.setText("");
         }
         this.bannerView.setTitle(this.event.getName());
+
+        String type = this.event.getEventType();
+        this.eventType.setText(type);
+        int colorRes = this.eventPalette.getDimColor(type);
+        int color = this.getResources().getColor(colorRes);
+        this.eventTypeContainer.setBackgroundColor(color);
+        int bannerColorRes = this.eventPalette.getColor(type);
+        int bannerColor = this.getResources().getColor(bannerColorRes);
+        this.bannerView.setBackgroundColor(bannerColor);
+        this.speakers.setText(this.event.getSpeakers());
         this.eventDetails.setText(this.getEventDetailsString());
 
         this.setupNavigation();
