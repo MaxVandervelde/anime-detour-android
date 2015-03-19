@@ -98,6 +98,9 @@ public class EventNotificationManager
     {
         try {
             for (Favorite favorite : this.favoriteData.getAll()) {
+                if (null == favorite.getEvent()) {
+                    continue;
+                }
                 this.cancelNotification(favorite.getEvent());
             }
         } catch (SQLException e) {
@@ -112,6 +115,9 @@ public class EventNotificationManager
     {
         try {
             for (Favorite favorite : this.favoriteData.getAll()) {
+                if (null == favorite.getEvent()) {
+                    continue;
+                }
                 this.scheduleNotification(favorite.getEvent());
             }
         } catch (SQLException e) {

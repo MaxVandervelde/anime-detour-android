@@ -17,7 +17,7 @@ android {
         applicationId "org.animetwincities.animedetour"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 214
+        versionCode 215
         versionName "2.0.0"
     }
 
