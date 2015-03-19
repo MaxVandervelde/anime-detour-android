@@ -52,7 +52,7 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
     {
         Event mostRecent = this.fetchedMetrics.getMostRecentUpdated();
 
-        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
+        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis() / 1000;
         List<Event> events = this.remoteAccess.getSchedule(since);
 
         return events;
@@ -78,7 +78,7 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
     public List<Event> lookupRemovedRemote() throws Exception
     {
         Event mostRecent = this.fetchedMetrics.getMostRecentUpdated();
-        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
+        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis() / 1000;
 
         return this.remoteAccess.getSchedule(since, "del");
     }
@@ -86,6 +86,6 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
     @Override
     public boolean dataIsStale() throws SQLException
     {
-        return this.fetchedMetrics.dataIsStale();
+        return true;
     }
 }
