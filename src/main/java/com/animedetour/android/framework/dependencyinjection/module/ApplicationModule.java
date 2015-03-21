@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,6 +25,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
 
@@ -76,5 +77,10 @@ final public class ApplicationModule
     @Provides @Singleton SubscriptionManager provideSubscriptionManager()
     {
         return new SubscriptionManager();
+    }
+
+    @Provides @Singleton Bus provideBus()
+    {
+        return new Bus();
     }
 }

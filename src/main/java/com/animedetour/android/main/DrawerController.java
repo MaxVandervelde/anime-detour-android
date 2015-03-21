@@ -40,6 +40,7 @@ public class DrawerController extends ActionBarDrawerToggle
     final private Toolbar toolbar;
     final private DrawerLayout layout;
     private String title;
+    private boolean displayTitles = true;
 
     public DrawerController(
         Activity activity,
@@ -75,7 +76,9 @@ public class DrawerController extends ActionBarDrawerToggle
     {
         super.onDrawerOpened(drawerView);
 
-        this.toolbar.setTitle(R.string.app_name);
+        if (this.displayTitles) {
+            this.toolbar.setTitle(R.string.app_name);
+        }
         this.updateFavoritesVisibility();
     }
 
@@ -127,6 +130,7 @@ public class DrawerController extends ActionBarDrawerToggle
     {
         this.title = title;
         this.toolbar.setTitle(title);
+        this.displayTitles = true;
     }
 
     /**
@@ -172,5 +176,15 @@ public class DrawerController extends ActionBarDrawerToggle
     public void closeDrawer()
     {
         this.layout.closeDrawer(Gravity.START);
+    }
+
+    /**
+     * Hides the title of the page and prevents it from appearing when the
+     * drawer is opened.
+     */
+    public void disableTitles()
+    {
+        this.setTitle("");
+        this.displayTitles = false;
     }
 }
