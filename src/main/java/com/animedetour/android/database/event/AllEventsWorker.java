@@ -43,6 +43,7 @@ public class AllEventsWorker extends SyncEventsWorker
     {
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         builder.orderBy("start", true);
+        builder.orderBy("name", true);
 
         PreparedQuery<Event> query = builder.prepare();
         List<Event> result = this.localAccess.query(query);

@@ -50,7 +50,7 @@ public class GetAllFavoritesWorker extends SingleYieldWorker<List<Favorite>>
     {
         QueryBuilder<Favorite, Integer> builder = this.localAccess.queryBuilder();
         builder.join(this.localEventAccess.queryBuilder());
-        builder.orderByRaw("event.start ASC");
+        builder.orderByRaw("event.start ASC, event.name ASC");
 
         PreparedQuery<Favorite> query = builder.prepare();
         List<Favorite> result = this.localAccess.query(query);
