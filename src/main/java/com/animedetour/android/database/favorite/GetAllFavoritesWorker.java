@@ -9,6 +9,7 @@
 package com.animedetour.android.database.favorite;
 
 import com.animedetour.android.schedule.favorite.Favorite;
+import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -27,12 +28,19 @@ public class GetAllFavoritesWorker extends SingleYieldWorker<List<Favorite>>
     /** Local favorite storage. */
     final private Dao<Favorite, Integer> localAccess;
 
+    /** Local event storage used for sorting. */
+    final private Dao<Event, Integer> localEventAccess;
+
     /**
      * @param localAccess Local favorite storage.
+     * @param localEventAccess Local event storage used for sorting.
      */
-    public GetAllFavoritesWorker(Dao<Favorite, Integer> localAccess)
-    {
+    public GetAllFavoritesWorker(
+        Dao<Favorite, Integer> localAccess,
+        Dao<Event, Integer> localEventAccess
+    ) {
         this.localAccess = localAccess;
+        this.localEventAccess = localEventAccess;
     }
 
     /**
@@ -41,6 +49,8 @@ public class GetAllFavoritesWorker extends SingleYieldWorker<List<Favorite>>
     public List<Favorite> lookupLocal() throws SQLException
     {
         QueryBuilder<Favorite, Integer> builder = this.localAccess.queryBuilder();
+        builder.join(this.localEventAccess.queryBuilder());
+        builder.orderByRaw("event.start ASC, event.name ASC");
 
         PreparedQuery<Favorite> query = builder.prepare();
         List<Favorite> result = this.localAccess.query(query);

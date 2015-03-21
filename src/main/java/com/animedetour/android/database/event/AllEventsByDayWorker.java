@@ -51,6 +51,7 @@ public class AllEventsByDayWorker extends SyncEventsWorker
         DateTime end = this.criteria.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59);
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         builder.orderBy("start", true);
+        builder.orderBy("name", true);
         builder.where().between("start", start, end);
 
         PreparedQuery<Event> query = builder.prepare();

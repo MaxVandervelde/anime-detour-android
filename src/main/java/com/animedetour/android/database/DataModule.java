@@ -96,7 +96,8 @@ final public class DataModule
     ) {
         try {
             Dao<Favorite, Integer> local = DaoManager.createDao(connectionSource, Favorite.class);
-            GetAllFavoritesWorker collectionWorker = new GetAllFavoritesWorker(local);
+            Dao<Event, Integer> eventLocal = DaoManager.createDao(connectionSource, Event.class);
+            GetAllFavoritesWorker collectionWorker = new GetAllFavoritesWorker(local, eventLocal);
 
             return new FavoriteRepository(local, collectionWorker);
         } catch (SQLException e) {
