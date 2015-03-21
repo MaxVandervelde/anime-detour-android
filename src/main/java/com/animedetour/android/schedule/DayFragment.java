@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,9 +17,12 @@ import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.main.SpinnerOptionContainer;
+import com.animedetour.android.main.SubNavigationSelectionChange;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+import com.squareup.otto.Subscribe;
 import icepick.Icicle;
 import org.joda.time.DateTime;
 import rx.Subscription;
@@ -81,7 +84,6 @@ final public class DayFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
-
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.panelList.setAdapter(adapter);
         this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
@@ -92,6 +94,7 @@ final public class DayFragment extends Fragment
     {
         super.onResume();
 
+        this.initializeFilter();
         this.updateEvents();
     }
 
@@ -111,6 +114,39 @@ final public class DayFragment extends Fragment
         this.eventUpdateSubscriber.setScrollPosition(this.scrollPosition);
     }
 
+    @Subscribe
+    public void onFilterChange(SubNavigationSelectionChange event)
+    {
+        this.eventUpdateSubscriber.displayFiltered(event.getSelection());
+    }
+
+    /**
+     * Set up the events to be filtered on a type that is specified by the
+     * spinner selection in the main navigation.
+     *
+     * Assuming the attached activity has a spinner, this changes the displayed
+     * filter to whatever is selected. It is intended to be called during the
+     * start of the fragment so that upon initialization, rotation, or resume
+     * of the activity, these filters remain in-tact.
+     *
+     * Since the selection might change while this fragment is paused, the
+     * selection cannot be stored here. So, we store it in the parent activity
+     * under a container interface.
+     *
+     * @todo Look into refactoring this so that we don't have to check/cast the activity.
+     */
+    private void initializeFilter()
+    {
+        if (this.getActivity() instanceof SpinnerOptionContainer) {
+            SpinnerOptionContainer container = (SpinnerOptionContainer) this.getActivity();
+            this.eventUpdateSubscriber.displayFiltered(container.getSpinnerSelection());
+        }
+    }
+
+    /**
+     * Fetch a new set of data to display in the list of events based on the
+     * bound date of the fragment.
+     */
     protected void updateEvents()
     {
         Subscription eventSubscription = this.eventData.findAllOnDay(this.day, this.eventUpdateSubscriber);

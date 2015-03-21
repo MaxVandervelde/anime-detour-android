@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,6 +15,7 @@ import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
 import rx.Subscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,19 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
      */
     private boolean restored = false;
 
+    /**
+     * The most recent collection of events received.
+     *
+     * This is needed to be used as a reference when changing filters for what
+     * is displayed in the list.
+     */
+    private List<Event> events = new ArrayList<>();
+
+    /**
+     * Currently displayed filter. (default: all)
+     */
+    private String filterType = EventFilterUpdater.ALL_EVENTS;
+
     public EventUpdateSubscriber(
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
@@ -82,6 +96,45 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
 
     @Override
     public void onNext(List<Event> events)
+    {
+        this.events = events;
+        this.displayFiltered(this.filterType);
+    }
+
+    /**
+     * Change the events displayed by a specified type filter.
+     *
+     * @param filterType The Event type to only display events of.
+     */
+    public void displayFiltered(String filterType)
+    {
+        this.filterType = filterType;
+        ArrayList<Event> filtered = new ArrayList<>();
+
+        if (null == filterType || filterType.equals(EventFilterUpdater.ALL_EVENTS)) {
+            this.displayEvents(this.events);
+            return;
+        }
+
+        for (Event event : this.events) {
+            String type = event.getEventType();
+            if (null ==  type || false == type.equals(filterType)) {
+                continue;
+            }
+            filtered.add(event);
+        }
+
+        this.displayEvents(filtered);
+    }
+
+    /**
+     * Change the items displayed in the event list.
+     *
+     * If the list is empty, this will toggle an empty view to be displayed.
+     *
+     * @param events The list of events to display.
+     */
+    private void displayEvents(List<Event> events)
     {
         this.toggleEmptyView(events.isEmpty());
         this.itemAdapter.setItems(events);

@@ -17,6 +17,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
@@ -26,6 +29,8 @@ import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.settings.SettingsFragment;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import icepick.Icicle;
 import prism.framework.Layout;
 
@@ -39,7 +44,7 @@ import javax.inject.Inject;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.main)
-final public class MainActivity extends ActionBarActivity
+final public class MainActivity extends ActionBarActivity implements SpinnerOptionContainer
 {
     /**
      * Storage of the current page title.
@@ -48,6 +53,15 @@ final public class MainActivity extends ActionBarActivity
      * swapped with the application title
      */
     @Icicle String pageTitle;
+
+    /**
+     * Storage of the current spinner selected option, if available.
+     *
+     * This is used to maintain state in the navigation spinner when the
+     * application is paused in instances like rotation.
+     */
+    @Icicle
+    int spinnerSelection;
 
     /**
      * View of the main sliding left drawer
@@ -60,6 +74,15 @@ final public class MainActivity extends ActionBarActivity
 
     @InjectView(R.id.drawer_favorites)
     View favoritesOption;
+
+    @InjectView(R.id.spinner_nav)
+    Spinner spinner;
+
+    @Inject
+    Bus applicationBus;
+
+    @Inject
+    SpinnerEventProxy eventProxy;
 
     @Inject
     DrawerControllerFactory drawerControllerFactory;
@@ -95,8 +118,23 @@ final public class MainActivity extends ActionBarActivity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        this.applicationBus.register(this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        this.applicationBus.unregister(this);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState)
     {
+        this.spinnerSelection = this.spinner.getSelectedItemPosition();
         this.pageTitle = this.drawerController.getPageTitle();
         super.onSaveInstanceState(outState);
     }
@@ -150,12 +188,48 @@ final public class MainActivity extends ActionBarActivity
     }
 
     /**
+     * Set up the spinner and display it when content is provided.
+     *
+     * This takes the previous state of the adapter/spinner and stores it.
+     * After updating the contents of the spinner, we restore the previous
+     * selection into the spinner (it will reset to item 0 after a new adapter
+     * is set) This might mean restoring from the old activity state or the
+     * previous spinner state; depending on what is available. This is to
+     * prevent the spinner from reverting on events like rotation.
+     *
+     * @param event An event containing new content to display in the spinner.
+     */
+    @Subscribe
+    public void onContentUpdate(NavigationSubContentUpdate event)
+    {
+        if (null == event.getOptions()) {
+            this.spinner.setVisibility(View.GONE);
+            return;
+        }
+
+        SpinnerAdapter previousAdapter = this.spinner.getAdapter();
+        int previousItem = this.spinner.getSelectedItemPosition();
+        this.drawerController.disableTitles();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.main_navigation_spinner_item, event.getOptionsArray());
+        this.spinner.setAdapter(adapter);
+        this.spinner.setOnItemSelectedListener(this.eventProxy);
+        this.spinner.setVisibility(View.VISIBLE);
+
+        if (null == previousAdapter && this.spinnerSelection != 0) {
+            this.spinner.setSelection(this.spinnerSelection);
+        } else {
+            this.spinner.setSelection(previousItem);
+        }
+    }
+
+    /**
      * Transition to the new fragment, optionally adding to the back stack.
      *
      * @param newFragment The fragment to add to the main content view
      */
     protected void contentFragmentTransaction(Fragment newFragment)
     {
+        this.spinner.setVisibility(View.GONE);
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
         transaction.replace(R.id.content_frame, newFragment);
@@ -168,5 +242,16 @@ final public class MainActivity extends ActionBarActivity
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         }
+    }
+
+    @Override
+    public String getSpinnerSelection()
+    {
+        Object selectedItem = this.spinner.getSelectedItem();
+        if (null != selectedItem) {
+            return (String) selectedItem;
+        }
+
+        return null;
     }
 }

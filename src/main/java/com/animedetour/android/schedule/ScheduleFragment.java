@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,10 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.InjectView;
 import com.animedetour.android.R;
+import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.inkapplications.prism.analytics.ScreenName;
+import com.squareup.otto.Bus;
 import org.joda.time.DateTime;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,15 @@ final public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)
     ViewPager pager;
+
+    @Inject
+    Bus applicationBus;
+
+    @Inject
+    EventRepository eventData;
+
+    @Inject
+    EventFilterUpdater filterUpdater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -54,6 +66,7 @@ final public class ScheduleFragment extends Fragment
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
+        this.eventData.findAll(this.filterUpdater);
     }
 
     /**
