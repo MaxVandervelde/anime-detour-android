@@ -169,7 +169,7 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
     @OnClick(R.id.drawer_guests)
     protected void openGuests()
     {
-        this.drawerController.closeDrawer();
+        this.drawerController.closeToPage(R.string.guests_title);
         this.contentFragmentTransaction(new GuestIndexFragment());
     }
 
