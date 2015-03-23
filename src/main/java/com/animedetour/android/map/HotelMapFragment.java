@@ -21,6 +21,7 @@ import com.animedetour.android.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.inkapplications.prism.analytics.ScreenName;
@@ -37,7 +38,7 @@ import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @ScreenName("Map")
-final public class HotelMapFragment extends SupportMapFragment
+final public class HotelMapFragment extends SupportMapFragment implements OnMapReadyCallback
 {
     @InjectView(R.id.map_control_first_floor)
     Button switchFirstFloor;
@@ -78,17 +79,24 @@ final public class HotelMapFragment extends SupportMapFragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        this.resetMap();
-        this.centerMap();
-        this.showFirstFloor();
+        this.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map)
+    {
+        this.resetMap(map);
+        this.centerMap(map);
+
+        this.switchFirstFloor.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
     }
 
     /**
      * Center the map camera on the hotel and zoom appropriately.
      */
-    private void centerMap()
+    private void centerMap(GoogleMap map)
     {
-        GoogleMap map = this.getMap();
         CameraUpdate camera = CameraUpdateFactory.newCameraPosition(
             new CameraPosition.Builder().target(HOTEL_CENTER).zoom(18F).tilt(0).bearing(180).build()
         );
@@ -98,9 +106,8 @@ final public class HotelMapFragment extends SupportMapFragment
     /**
      * Reset any overlays from the map so we can draw new floors.
      */
-    private void resetMap()
+    private void resetMap(GoogleMap map)
     {
-        GoogleMap map = this.getMap();
         map.clear();
         map.setBuildingsEnabled(true);
         map.setIndoorEnabled(false);
@@ -120,9 +127,14 @@ final public class HotelMapFragment extends SupportMapFragment
     @OnClick(R.id.map_control_first_floor)
     public void showFirstFloor()
     {
-        this.resetMap();
+        GoogleMap map = this.getMap();
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
         this.switchFirstFloor.setEnabled(false);
-        this.getMap().addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
+        map.addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
     }
 
     /**
@@ -131,9 +143,14 @@ final public class HotelMapFragment extends SupportMapFragment
     @OnClick(R.id.map_control_second_floor)
     public void showSecondFloor()
     {
-        this.resetMap();
+        GoogleMap map = this.getMap();
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
         this.switchSecondFloor.setEnabled(false);
-        this.getMap().addGroundOverlay(HotelMapPoints.getSecondFloorOverlay());
+        map.addGroundOverlay(HotelMapPoints.getSecondFloorOverlay());
     }
 
     /**
@@ -142,8 +159,13 @@ final public class HotelMapFragment extends SupportMapFragment
     @OnClick(R.id.map_control_22nd_floor)
     public void show22ndFloor()
     {
-        this.resetMap();
+        GoogleMap map = this.getMap();
+        if (null == map) {
+            return;
+        }
+
+        this.resetMap(map);
         this.switch22ndFloor.setEnabled(false);
-        this.getMap().addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
+        map.addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
     }
 }
