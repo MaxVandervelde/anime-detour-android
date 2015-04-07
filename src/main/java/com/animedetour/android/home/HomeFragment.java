@@ -18,8 +18,8 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import com.inkapplications.prism.analytics.ScreenName;
-import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -32,7 +32,7 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ScreenName("Home")
+@DisplayName(R.string.home_title)
 final public class HomeFragment extends Fragment
 {
     @Inject

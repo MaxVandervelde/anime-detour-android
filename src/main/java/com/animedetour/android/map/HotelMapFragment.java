@@ -24,8 +24,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import prism.framework.PrismFacade;
 
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ScreenName("Map")
+@DisplayName(R.string.maps_title)
 final public class HotelMapFragment extends SupportMapFragment implements OnMapReadyCallback
 {
     @InjectView(R.id.map_control_first_floor)

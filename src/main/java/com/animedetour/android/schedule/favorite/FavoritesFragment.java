@@ -27,9 +27,9 @@ import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import com.inkapplications.prism.analytics.ScreenName;
 import icepick.Icicle;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -42,7 +42,7 @@ import java.util.List;
  * @todo We can probably extract some logic between this and the DayFragment.
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ScreenName("Favorites")
+@DisplayName(R.string.favorites_title)
 final public class FavoritesFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject

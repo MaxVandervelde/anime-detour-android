@@ -24,7 +24,7 @@ import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
-import com.inkapplications.prism.analytics.ScreenName;
+import prism.framework.DisplayName;
 
 import javax.inject.Inject;
 
@@ -38,7 +38,7 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ScreenName("Settings")
+@DisplayName(R.string.settings_title)
 final public class SettingsFragment extends Fragment
 {
     /**
