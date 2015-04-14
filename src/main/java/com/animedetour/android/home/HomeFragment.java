@@ -18,7 +18,7 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
- import org.apache.commons.logging.Log;
+import org.apache.commons.logging.Log;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
