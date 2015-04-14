@@ -10,7 +10,7 @@ package com.animedetour.android.analytics;
 
 import com.animedetour.api.guest.model.Guest;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.prism.analytics.TrackedEvent;
+import com.inkapplications.android.logger.analytics.TrackedEvent;
 
 /**
  * Generates new event tracking objects for consistent use throughout the

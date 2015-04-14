@@ -1,14 +1,15 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
-import com.inkapplications.android.logger.ConsoleLogger;
+import android.content.res.Resources;
+import com.inkapplications.android.logger.console.ConsoleLogger;
 import dagger.Module;
 import dagger.Provides;
 import org.apache.commons.logging.Log;
@@ -26,8 +27,9 @@ import javax.inject.Singleton;
 @Module(library = true, complete = false)
 public class LogModule
 {
-    @Provides @Singleton Log provideLogger()
-    {
-        return new ConsoleLogger(true, "AnimeDetour");
+    @Provides @Singleton Log provideLogger(
+        Resources resources
+    ) {
+        return new ConsoleLogger(resources, true, true, "AnimeDetour");
     }
 }

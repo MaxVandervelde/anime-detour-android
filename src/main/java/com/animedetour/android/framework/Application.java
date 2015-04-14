@@ -11,8 +11,8 @@ package com.animedetour.android.framework;
 import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
+import com.inkapplications.android.logger.AutoLogger;
 import com.inkapplications.prism.ApplicationCallback;
-import com.inkapplications.prism.analytics.AutoLogger;
 import dagger.ObjectGraph;
 import org.apache.commons.logging.Log;
 import prism.framework.GraphContext;
@@ -26,7 +26,6 @@ import java.util.Map;
 
 final public class Application extends android.app.Application implements GraphContext, KernelContext
 {
-    private ObjectGraph applicationGraph;
     private PrismKernel kernel;
 
     @Inject
@@ -40,7 +39,6 @@ final public class Application extends android.app.Application implements GraphC
     {
         super.onCreate();
 
-        this.applicationGraph = ObjectGraph.create(this.getApplicationModules());
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
         this.applicationCallback.onCreate(this);
@@ -48,12 +46,6 @@ final public class Application extends android.app.Application implements GraphC
         this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
         this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
         this.registerActivityLifecycleCallbacks(new AutoLogger(this.logger));
-    }
-
-    @Override
-    public ObjectGraph getApplicationGraph()
-    {
-        return this.applicationGraph;
     }
 
     @Override
@@ -73,12 +65,13 @@ final public class Application extends android.app.Application implements GraphC
         };
     }
 
-    private Object[] getApplicationModules()
+    @Override
+    public ObjectGraph getApplicationGraph()
     {
-        return new Object[] {
+        return ObjectGraph.create(
             new prism.module.ApplicationModule(this),
-            new ApplicationModule(),
-        };
+            new ApplicationModule()
+        );
     }
 
     @Override

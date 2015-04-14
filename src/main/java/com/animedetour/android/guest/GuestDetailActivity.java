@@ -25,8 +25,8 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import prism.framework.Layout;
 
 import javax.inject.Inject;
@@ -41,7 +41,7 @@ import javax.inject.Inject;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.guest_detail)
-@ScreenName("Guest Detail")
+@DisplayName(R.string.guest_detail_title)
 final public class GuestDetailActivity extends ActionBarActivity
 {
     @InjectView(R.id.guest_avatar)

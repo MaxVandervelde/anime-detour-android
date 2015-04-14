@@ -32,8 +32,8 @@ import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import prism.framework.Layout;
 
 import javax.inject.Inject;
@@ -50,7 +50,7 @@ import java.util.Date;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.event)
-@ScreenName("Event")
+@DisplayName(R.string.event_details_title)
 final public class EventActivity extends ActionBarActivity
 {
     /**

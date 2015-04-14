@@ -20,8 +20,8 @@ import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import com.inkapplications.prism.analytics.ScreenName;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-@ScreenName("Guests")
+@DisplayName(R.string.guests_title)
 public class GuestIndexFragment extends Fragment
 {
     @Inject
