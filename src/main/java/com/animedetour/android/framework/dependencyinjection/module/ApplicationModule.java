@@ -24,11 +24,14 @@ import com.circle.android.api.OkHttpStack;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Module(
@@ -43,6 +46,7 @@ import javax.inject.Singleton;
         com.animedetour.android.framework.Application.class,
         NotificationScheduler.class,
     },
+    staticInjections = { ApplicationModule.EagerSingletons.class },
     complete = false,
     library = true
 )
@@ -82,5 +86,21 @@ final public class ApplicationModule
     @Provides @Singleton Bus provideBus()
     {
         return new Bus();
+    }
+
+    @Provides @Singleton RefWatcher provideRefWatcher(Application application)
+    {
+        return LeakCanary.install(application);
+    }
+
+    /**
+     * Services that are created immediately upon instantiation of the graph.
+     *
+     * DO NOT USE THESE SERVICES DIRECTLY!
+     * This only exists as a workaround for dagger.
+     */
+    static class EagerSingletons
+    {
+        @Inject static RefWatcher refWatcher;
     }
 }
