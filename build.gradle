@@ -77,7 +77,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.InkApplications:Prism:v1.0.0@aar'
+    compile 'com.github.InkApplications:Prism:v1.1.0@aar'
     compile 'com.inkapplications:android-simple-recycler-view:1.0.0'
     compile 'com.github.InkApplications:android-logger:v2.0.0@aar'
     compile 'com.github.InkApplications:ground-control:v0.0.4'

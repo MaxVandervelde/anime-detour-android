@@ -10,6 +10,7 @@ package com.animedetour.android.framework;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
+import com.squareup.leakcanary.RefWatcher;
 import com.squareup.otto.Bus;
 import icepick.Icepick;
 import org.apache.commons.logging.Log;
@@ -25,6 +26,9 @@ public class Fragment extends android.support.v4.app.Fragment
     @Inject
     Bus applicationBus;
 
+    @Inject
+    RefWatcher refWatcher;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -33,6 +37,7 @@ public class Fragment extends android.support.v4.app.Fragment
         PrismFacade.bootstrap(this);
         ButterKnife.inject(this, this.getView());
         this.logger.trace(this);
+        this.refWatcher.watch(this);
     }
 
     @Override public void onCreate(Bundle savedInstanceState)
