@@ -119,7 +119,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
         this.panelList.setAdapter(adapter);
 
         Subscription favoriteSubscription = this.favoriteData.findAll(
-            new FavoriteUpdateSubscriber(this, this.panelEmptyView, this.logger)
+            new FavoriteUpdateObserver(this, this.panelEmptyView, this.logger)
         );
         this.subscriptionManager.add(favoriteSubscription);
     }

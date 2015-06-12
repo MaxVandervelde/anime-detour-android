@@ -71,8 +71,8 @@ public class GuestIndexFragment extends Fragment
     {
         super.onStart();
 
-        CategoryUpdateSubscriber subscriber = new CategoryUpdateSubscriber(this.log, this.categoryList);
-        Subscription subscription = this.repository.findAllCategories(subscriber);
+        CategoryUpdateObserver observer = new CategoryUpdateObserver(this.log, this.categoryList);
+        Subscription subscription = this.repository.findAllCategories(observer);
         this.subscriptionManager.add(subscription);
     }
 

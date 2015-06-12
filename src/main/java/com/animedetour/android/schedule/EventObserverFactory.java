@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Creates new Event Update subscriber factories at runtime.
+ * Creates new Event Update observer factories at runtime.
  *
  * Since the subscribers need views that are not accessible until runtime, this
  * class will create and inject them for us.
@@ -26,21 +26,21 @@ import javax.inject.Singleton;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Singleton
-public class EventSubscriberFactory
+public class EventObserverFactory
 {
     final private Log logger;
 
     @Inject
-    public EventSubscriberFactory(Log logger)
+    public EventObserverFactory(Log logger)
     {
         this.logger = logger;
     }
 
-    public EventUpdateSubscriber create(
+    public EventUpdateObserver create(
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
         View emptyView
     ) {
-        return new EventUpdateSubscriber(panelList, listAdapter, emptyView, this.logger);
+        return new EventUpdateObserver(panelList, listAdapter, emptyView, this.logger);
     }
 }

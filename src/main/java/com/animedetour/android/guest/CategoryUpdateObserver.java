@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-class CategoryUpdateSubscriber implements Observer<List<Category>>
+class CategoryUpdateObserver implements Observer<List<Category>>
 {
     final private Log log;
     final private SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
@@ -34,7 +34,7 @@ class CategoryUpdateSubscriber implements Observer<List<Category>>
      * @param log Used when an error occurs fetching the guest list.
      * @param categoryList View which will be updated on guest-list updates.
      */
-    public CategoryUpdateSubscriber(Log log, SimpleRecyclerView<GuestWidgetView, Guest> categoryList)
+    public CategoryUpdateObserver(Log log, SimpleRecyclerView<GuestWidgetView, Guest> categoryList)
     {
         this.log = log;
         this.categoryList = categoryList;

@@ -13,20 +13,20 @@ import android.widget.ListView;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
-import rx.Subscriber;
+import rx.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Subscriber used to listen for updates to the event list.
+ * Listens to data updates of the event list for a single day.
  *
  * When an update to the events list is detected, this will notify the fragment
  * of the new data and handle any errors.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class EventUpdateSubscriber extends Subscriber<List<Event>>
+public class EventUpdateObserver implements Observer<List<Event>>
 {
     final private Log logger;
 
@@ -71,7 +71,7 @@ public class EventUpdateSubscriber extends Subscriber<List<Event>>
      */
     private String filterType = EventFilterUpdater.ALL_EVENTS;
 
-    public EventUpdateSubscriber(
+    public EventUpdateObserver(
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
         View emptyView,

@@ -45,7 +45,7 @@ final public class DayFragment extends Fragment
     SubscriptionManager subscriptionManager;
 
     @Inject
-    EventSubscriberFactory subscriberFactory;
+    EventObserverFactory subscriberFactory;
 
     @Inject
     EventViewBinder viewBinder;
@@ -62,7 +62,7 @@ final public class DayFragment extends Fragment
     @Icicle
     int scrollPosition = 0;
 
-    private EventUpdateSubscriber eventUpdateSubscriber;
+    private EventUpdateObserver eventUpdateObserver;
 
     public DayFragment() {}
 
@@ -86,7 +86,7 @@ final public class DayFragment extends Fragment
 
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.panelList.setAdapter(adapter);
-        this.eventUpdateSubscriber = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
+        this.eventUpdateObserver = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
     }
 
     @Override
@@ -104,20 +104,20 @@ final public class DayFragment extends Fragment
         super.onPause();
 
         this.subscriptionManager.unsubscribeAll();
-        this.scrollPosition = this.eventUpdateSubscriber.getScrollPosition();
+        this.scrollPosition = this.eventUpdateObserver.getScrollPosition();
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState)
     {
         super.onViewStateRestored(savedInstanceState);
-        this.eventUpdateSubscriber.setScrollPosition(this.scrollPosition);
+        this.eventUpdateObserver.setScrollPosition(this.scrollPosition);
     }
 
     @Subscribe
     public void onFilterChange(SubNavigationSelectionChange event)
     {
-        this.eventUpdateSubscriber.displayFiltered(event.getSelection());
+        this.eventUpdateObserver.displayFiltered(event.getSelection());
     }
 
     /**
@@ -139,7 +139,7 @@ final public class DayFragment extends Fragment
     {
         if (this.getActivity() instanceof SpinnerOptionContainer) {
             SpinnerOptionContainer container = (SpinnerOptionContainer) this.getActivity();
-            this.eventUpdateSubscriber.displayFiltered(container.getSpinnerSelection());
+            this.eventUpdateObserver.displayFiltered(container.getSpinnerSelection());
         }
     }
 
@@ -149,7 +149,7 @@ final public class DayFragment extends Fragment
      */
     protected void updateEvents()
     {
-        Subscription eventSubscription = this.eventData.findAllOnDay(this.day, this.eventUpdateSubscriber);
+        Subscription eventSubscription = this.eventData.findAllOnDay(this.day, this.eventUpdateObserver);
         this.subscriptionManager.add(eventSubscription);
     }
 }
