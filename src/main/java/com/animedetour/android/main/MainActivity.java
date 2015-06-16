@@ -95,6 +95,7 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
         super.onCreate(savedInstanceState);
 
         this.showSystemBarBackround();
+        this.setSupportActionBar(this.actionBar);
     }
 
     @Override

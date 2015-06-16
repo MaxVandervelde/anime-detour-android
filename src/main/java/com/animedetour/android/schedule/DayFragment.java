@@ -10,9 +10,13 @@ package com.animedetour.android.schedule;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
@@ -75,6 +79,7 @@ final public class DayFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.schedule_day, container, false);
+        this.setHasOptionsMenu(true);
 
         return view;
     }
@@ -87,6 +92,14 @@ final public class DayFragment extends Fragment
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.panelList.setAdapter(adapter);
         this.eventUpdateObserver = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.event_actions, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -105,6 +118,18 @@ final public class DayFragment extends Fragment
 
         this.subscriptionManager.unsubscribeAll();
         this.scrollPosition = this.eventUpdateObserver.getScrollPosition();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.event_actions_search:
+                Toast.makeText(getActivity(), "Search", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
