@@ -32,6 +32,7 @@ import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.android.logger.LogName;
 import org.apache.commons.logging.Log;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
@@ -51,6 +52,7 @@ import java.util.Date;
  */
 @Layout(R.layout.event)
 @DisplayName(R.string.event_details_title)
+@LogName("Event")
 final public class EventActivity extends ActionBarActivity
 {
     /**

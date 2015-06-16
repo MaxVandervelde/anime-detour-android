@@ -11,6 +11,7 @@ package com.animedetour.android.main;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.view.View;
 import com.animedetour.android.R;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import org.apache.commons.logging.Log;
+import prism.framework.DisplayName;
 
 import java.sql.SQLException;
 
@@ -154,6 +156,37 @@ public class DrawerController extends ActionBarDrawerToggle
     {
         this.closeDrawer();
         this.setTitle(titleId);
+    }
+
+    /**
+     * Close the drawer and update the title.
+     *
+     * @param titleId title of the page to be displayed in the toolbar.
+     */
+    public void closeToPage(String titleId)
+    {
+        this.closeDrawer();
+        this.setTitle(titleId);
+    }
+
+    /**
+     * Closes the drawer and updates the toolbar title to match the fragment.
+     *
+     * If there is a `DisplayName` attribute on the fragment, that will be used
+     * as the title. Otherwise, it will just use the class name as the title
+     * for a fallback.
+     *
+     * @param fragment The page class being displayed to base the title off of.
+     */
+    public void closeToPage(Class<? extends Fragment> fragment)
+    {
+        DisplayName displayName = fragment.getAnnotation(DisplayName.class);
+        if (null == displayName) {
+            this.closeToPage(fragment.getSimpleName());
+            return;
+        }
+
+        this.closeToPage(displayName.value());
     }
 
     /**

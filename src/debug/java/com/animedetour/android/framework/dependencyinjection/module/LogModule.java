@@ -30,6 +30,6 @@ public class LogModule
     @Provides @Singleton Log provideLogger(
         Resources resources
     ) {
-        return new ConsoleLogger(resources, true, true, "AnimeDetour");
+        return new ConsoleLogger(true, true, "AnimeDetour");
     }
 }
