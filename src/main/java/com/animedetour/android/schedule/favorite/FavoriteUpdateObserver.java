@@ -10,7 +10,7 @@ package com.animedetour.android.schedule.favorite;
 
 import android.view.View;
 import org.apache.commons.logging.Log;
-import rx.Subscriber;
+import rx.Observer;
 
 import java.util.List;
 
@@ -22,13 +22,13 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class FavoriteUpdateSubscriber extends Subscriber<List<Favorite>>
+public class FavoriteUpdateObserver implements Observer<List<Favorite>>
 {
     private FavoritesFragment fragment;
     private View emptyView;
     private Log logger;
 
-    public FavoriteUpdateSubscriber(
+    public FavoriteUpdateObserver(
         FavoritesFragment fragment,
         View emptyView,
         Log logger
@@ -38,10 +38,7 @@ public class FavoriteUpdateSubscriber extends Subscriber<List<Favorite>>
         this.logger = logger;
     }
 
-    @Override
-    public void onCompleted()
-    {
-    }
+    @Override public void onCompleted() {}
 
     @Override
     public void onError(Throwable e)
