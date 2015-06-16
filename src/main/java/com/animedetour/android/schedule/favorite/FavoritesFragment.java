@@ -24,6 +24,7 @@ import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.api.model.Event;
+import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -43,6 +44,7 @@ import java.util.List;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @DisplayName(R.string.favorites_title)
+@LogName("Favorites")
 final public class FavoritesFragment extends Fragment implements ViewClickListener<PanelView, Event>
 {
     @Inject

@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
+import com.inkapplications.android.logger.LogName;
 import com.squareup.otto.Bus;
 import org.joda.time.DateTime;
 import prism.framework.DisplayName;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @DisplayName(R.string.schedule_title)
+@LogName("Schedule")
 final public class ScheduleFragment extends Fragment
 {
     @InjectView(R.id.event_days)

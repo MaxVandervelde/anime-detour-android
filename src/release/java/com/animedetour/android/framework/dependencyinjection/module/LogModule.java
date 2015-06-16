@@ -36,8 +36,8 @@ public class LogModule
         Resources resources
     ) {
         CompositeLogger composite = new CompositeLogger();
-        composite.addLogger(new AnalyticsLogger(analytics, resources));
-        composite.addLogger(new ConsoleLogger(resources, false, false, "AnimeDetour"));
+        composite.addLogger(new AnalyticsLogger(analytics));
+        composite.addLogger(new ConsoleLogger(false, false, "AnimeDetour"));
 
         return composite;
     }

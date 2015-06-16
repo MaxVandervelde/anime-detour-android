@@ -18,6 +18,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
+import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import org.apache.commons.logging.Log;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @DisplayName(R.string.guests_title)
+@LogName("Guests")
 public class GuestIndexFragment extends Fragment
 {
     @Inject

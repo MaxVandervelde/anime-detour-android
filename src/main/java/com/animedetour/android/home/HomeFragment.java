@@ -17,6 +17,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.scrim.ImageScrim;
+import com.inkapplications.android.logger.LogName;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import org.apache.commons.logging.Log;
 import prism.framework.DisplayName;
@@ -33,6 +34,7 @@ import javax.inject.Inject;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @DisplayName(R.string.home_title)
+@LogName("Home")
 final public class HomeFragment extends Fragment
 {
     @Inject
