@@ -145,7 +145,7 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
     @OnClick(R.id.drawer_home)
     protected void openLandingFragment()
     {
-        this.drawerController.closeToPage(R.string.home_title);
+        this.drawerController.closeToPage(HomeFragment.class);
         this.contentFragmentTransaction(new HomeFragment());
     }
 
@@ -155,35 +155,35 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
     @OnClick(R.id.drawer_programming)
     protected void openScheduleFragment()
     {
-        this.drawerController.closeToPage(R.string.schedule_title);
+        this.drawerController.closeToPage(ScheduleFragment.class);
         this.contentFragmentTransaction(new ScheduleFragment());
     }
 
     @OnClick(R.id.drawer_favorites)
     protected void openFavorites()
     {
-        this.drawerController.closeToPage(R.string.schedule_title);
+        this.drawerController.closeToPage(FavoritesFragment.class);
         this.contentFragmentTransaction(new FavoritesFragment());
     }
 
     @OnClick(R.id.drawer_guests)
     protected void openGuests()
     {
-        this.drawerController.closeToPage(R.string.guests_title);
+        this.drawerController.closeToPage(GuestIndexFragment.class);
         this.contentFragmentTransaction(new GuestIndexFragment());
     }
 
     @OnClick(R.id.drawer_maps)
     protected void openMaps()
     {
-        this.drawerController.closeToPage(R.string.maps_title);
+        this.drawerController.closeToPage(HotelMapFragment.class);
         this.contentFragmentTransaction(new HotelMapFragment());
     }
 
     @OnClick(R.id.drawer_settings)
     protected void openSettings()
     {
-        this.drawerController.closeToPage(R.string.settings_title);
+        this.drawerController.closeToPage(SettingsFragment.class);
         this.contentFragmentTransaction(new SettingsFragment());
     }
 
