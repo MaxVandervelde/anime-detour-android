@@ -14,6 +14,8 @@ if (skipProguard) {
     logger.warn('WARNING: Skipping proguard will only work for devices running Android 21+ !!')
 }
 
+def rev = project.hasProperty("versionCode") ? project.getProperty("versionCode") : 2000;
+
 android {
     compileSdkVersion 'android-21'
     buildToolsVersion '21.1.2'
@@ -22,7 +24,7 @@ android {
         applicationId "org.animetwincities.animedetour"
         minSdkVersion  (skipProguard ? 21 : 16)
         targetSdkVersion 21
-        versionCode 1003
+        versionCode rev
         versionName "2.2.0"
         multiDexEnabled skipProguard
     }
