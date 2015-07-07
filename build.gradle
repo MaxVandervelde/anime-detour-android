@@ -14,7 +14,7 @@ if (skipProguard) {
     logger.warn('WARNING: Skipping proguard will only work for devices running Android 21+ !!')
 }
 
-def rev = project.hasProperty("versionCode") ? project.getProperty("versionCode") : 2000;
+def rev = project.hasProperty("versionCode") ? project.getProperty("versionCode") as int : 2000;
 
 android {
     compileSdkVersion 'android-21'
