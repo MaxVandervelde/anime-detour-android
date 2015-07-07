@@ -26,6 +26,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import dagger.Module;
@@ -33,6 +34,8 @@ import dagger.Provides;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
 
 @Module(
     includes = {
@@ -91,6 +94,17 @@ final public class ApplicationModule
     @Provides @Singleton RefWatcher provideRefWatcher(Application application)
     {
         return LeakCanary.install(application);
+    }
+
+    @Provides @Singleton Cache provideCache(Application application)
+    {
+        try {
+            File cacheDir = new File(application.getCacheDir(), "http");
+            long cacheSize = 80 * 1024 * 1024; // 80MB
+            return new Cache(cacheDir, cacheSize);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
