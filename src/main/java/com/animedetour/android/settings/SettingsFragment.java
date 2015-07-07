@@ -51,11 +51,14 @@ final public class SettingsFragment extends Fragment
     /**
      * Settings that should only be displayed to developers.
      */
-    @InjectViews({R.id.settings_event_generate, R.id.settings_drop_data})
+    @InjectViews({R.id.settings_event_generate, R.id.settings_drop_data, R.id.settings_fake_slowdown})
     View[] developerViews;
 
     @InjectView(R.id.settings_event_notification_switch)
     Switch eventNotifications;
+
+    @InjectView(R.id.settings_fake_slowdown_switch)
+    Switch fakeSlowdown;
 
     @InjectView(R.id.settings_version_label)
     TextView versionLabel;
@@ -83,6 +86,7 @@ final public class SettingsFragment extends Fragment
         super.onStart();
 
         this.eventNotifications.setChecked(this.preferences.receiveEventNotifications());
+        this.fakeSlowdown.setChecked(this.preferences.fakeSlowConnections());
 
         String versionFormat = this.getString(R.string.settings_application_version);
         String versionString = String.format(versionFormat, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
@@ -101,6 +105,15 @@ final public class SettingsFragment extends Fragment
     {
         this.preferences.setEventNotifications(checked);
         this.notificationManager.toggleNotifications(checked);
+    }
+
+    /**
+     * Change whether the user wants to receive notifications for events.
+     */
+    @OnCheckedChanged(R.id.settings_fake_slowdown_switch)
+    public void toggleSlowdown(boolean checked)
+    {
+        this.preferences.setFakeSlowConnections(checked);
     }
 
     /**
