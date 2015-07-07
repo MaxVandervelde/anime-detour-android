@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import butterknife.InjectView;
@@ -63,6 +64,7 @@ final public class EventSearchActivity extends ActionBarActivity
 
         this.setSupportActionBar(this.actionBar);
         this.actionBar.setTitle("");
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -76,5 +78,16 @@ final public class EventSearchActivity extends ActionBarActivity
 
         OnQueryTextListener queryListener = this.queryListenerFactory.create(adapter, emptyView);
         this.searchBar.setOnQueryTextListener(queryListener);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
