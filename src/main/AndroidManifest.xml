@@ -27,6 +27,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".schedule.serach.EventSearchActivity"
+        />
+        <activity
             android:theme="@style/Theme.AnimeDetour.TransparentHeader"
             android:name=".schedule.EventActivity"
         />

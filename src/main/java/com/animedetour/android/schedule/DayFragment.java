@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,13 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.SpinnerOptionContainer;
 import com.animedetour.android.main.SubNavigationSelectionChange;
+import com.animedetour.android.schedule.serach.EventSearchActivity;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -79,7 +80,6 @@ final public class DayFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.schedule_day, container, false);
-        this.setHasOptionsMenu(true);
 
         return view;
     }
@@ -125,7 +125,7 @@ final public class DayFragment extends Fragment
     {
         switch (item.getItemId()) {
             case R.id.event_actions_search:
-                Toast.makeText(getActivity(), "Search", Toast.LENGTH_SHORT).show();
+                this.startActivity(new Intent(getActivity(), EventSearchActivity.class));
                 return true;
         }
 

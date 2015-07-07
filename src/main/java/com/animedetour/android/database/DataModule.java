@@ -10,6 +10,7 @@ package com.animedetour.android.database;
 
 import android.app.Application;
 import com.animedetour.android.database.event.AllEventsByDayFactory;
+import com.animedetour.android.database.event.AllEventsMatchingFactory;
 import com.animedetour.android.database.event.AllEventsWorker;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.event.FetchedEventMetrics;
@@ -63,7 +64,8 @@ final public class DataModule
                 new AllEventsWorker(local, remote, metrics),
                 new AllEventsByDayFactory(local, remote, metrics),
                 new UpcomingEventsByTagFactory(local, remote, metrics),
-                new UpcomingEventByTypeFactory(local, remote, metrics)
+                new UpcomingEventByTypeFactory(local, remote, metrics),
+                new AllEventsMatchingFactory(local, remote, metrics)
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

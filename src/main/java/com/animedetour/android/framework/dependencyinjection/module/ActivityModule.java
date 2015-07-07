@@ -15,6 +15,7 @@ import com.animedetour.android.main.MainActivity;
 import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.DayFragment;
 import com.animedetour.android.schedule.EventActivity;
+import com.animedetour.android.schedule.serach.EventSearchActivity;
 import com.animedetour.android.schedule.ScheduleModule;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
@@ -37,10 +38,9 @@ import dagger.Module;
         FavoritesFragment.class,
         SettingsFragment.class,
         HotelMapFragment.class,
+        EventSearchActivity.class,
     },
     complete = false,
     library = true
 )
-final public class ActivityModule
-{
-}
+final public class ActivityModule {}
