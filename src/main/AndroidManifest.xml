@@ -28,6 +28,7 @@
         </activity>
         <activity
             android:name=".schedule.serach.EventSearchActivity"
+            android:windowSoftInputMode="adjustResize"
         />
         <activity
             android:theme="@style/Theme.AnimeDetour.TransparentHeader"

@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.schedule.serach;
 
+import android.view.View;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
@@ -34,8 +35,8 @@ public class ResultObserverFactory
         logger = log;
     }
 
-    public Observer<List<Event>> create(ItemAdapter<?, Event> adapter)
+    public Observer<List<Event>> create(ItemAdapter<?, Event> adapter, View emptyView)
     {
-        return new EventSearchResultObserver(this.logger, adapter);
+        return new EventSearchResultObserver(this.logger, adapter, emptyView);
     }
 }

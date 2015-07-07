@@ -9,6 +9,7 @@
 package com.animedetour.android.schedule.serach;
 
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
@@ -38,8 +39,8 @@ public class QueryListenerFactory
         this.eventData = eventData;
     }
 
-    public SearchView.OnQueryTextListener create(ItemAdapter<?, Event> adapter)
+    public SearchView.OnQueryTextListener create(ItemAdapter<?, Event> adapter, View emptyView)
     {
-        return new EventQueryListener(this.eventData, this.resultObserverFactory.create(adapter));
+        return new EventQueryListener(this.eventData, this.resultObserverFactory.create(adapter, emptyView));
     }
 }

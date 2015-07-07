@@ -8,6 +8,7 @@
  */
 package com.animedetour.android.schedule.serach;
 
+import android.view.View;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import org.apache.commons.logging.Log;
@@ -19,16 +20,24 @@ import java.util.List;
  * Listens for updates to search result contents and updates an item adapter
  * in order to display the result set to the user.
  *
+ * If there are no results, this triggers the empty view to display.
+ *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 public class EventSearchResultObserver implements Observer<List<Event>>
 {
     final private Log logger;
     final private ItemAdapter<?, Event> adapter;
+    final private View emptyView;
 
-    public EventSearchResultObserver(Log logger, ItemAdapter<?, Event> adapter) {
+    public EventSearchResultObserver(
+        Log logger,
+        ItemAdapter<?, Event> adapter,
+        View emptyView
+    ) {
         this.logger = logger;
         this.adapter = adapter;
+        this.emptyView = emptyView;
     }
 
     @Override public void onCompleted() {}
@@ -43,5 +52,11 @@ public class EventSearchResultObserver implements Observer<List<Event>>
     public void onNext(List<Event> events)
     {
         this.adapter.setItems(events);
+
+        if (events.isEmpty()) {
+            this.emptyView.setVisibility(View.VISIBLE);
+        } else {
+            this.emptyView.setVisibility(View.GONE);
+        }
     }
 }

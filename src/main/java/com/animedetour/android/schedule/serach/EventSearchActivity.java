@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import butterknife.InjectView;
 import com.animedetour.android.R;
@@ -46,6 +47,9 @@ final public class EventSearchActivity extends ActionBarActivity
     @InjectView(R.id.event_search_results)
     ListView results;
 
+    @InjectView(R.id.search_empty_view)
+    View emptyView;
+
     @Inject
     EventViewBinder viewBinder;
 
@@ -70,7 +74,7 @@ final public class EventSearchActivity extends ActionBarActivity
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.results.setAdapter(adapter);
 
-        OnQueryTextListener queryListener = this.queryListenerFactory.create(adapter);
+        OnQueryTextListener queryListener = this.queryListenerFactory.create(adapter, emptyView);
         this.searchBar.setOnQueryTextListener(queryListener);
     }
 }
