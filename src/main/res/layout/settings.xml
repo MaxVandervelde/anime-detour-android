@@ -72,6 +72,39 @@
         />
     </RelativeLayout>
 
+    <!-- Fake Slow Connections -->
+    <RelativeLayout
+        android:id="@+id/settings_fake_slowdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/background"
+        android:padding="8dp"
+    >
+        <Switch
+            android:id="@+id/settings_fake_slowdown_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            style="@style/body1"
+            android:id="@+id/settings_fake_slowdown_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/settings_fake_slowdown_switch"
+            android:layout_toLeftOf="@id/settings_fake_slowdown_switch"
+            android:text="@string/settings_fake_slowdown"
+            />
+    </RelativeLayout>
+
     <!-- Drop Data -->
     <RelativeLayout
         android:id="@+id/settings_drop_data"

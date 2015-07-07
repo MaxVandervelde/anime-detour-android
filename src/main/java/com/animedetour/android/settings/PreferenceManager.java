@@ -55,6 +55,28 @@ final public class PreferenceManager
     }
 
     /**
+     * Developer setting for faking slow connections.
+     *
+     * @return Whether the app should pretend that the network is slow.
+     */
+    public boolean fakeSlowConnections()
+    {
+        return this.preferences.getBoolean("fake_slow_connections", false);
+    }
+
+    /**
+     * Developer setting for faking slow connections.
+     *
+     * @param shouldSlowdown Whether the app should pretend that the network is slow.
+     */
+    public void setFakeSlowConnections(boolean shouldSlowdown)
+    {
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putBoolean("fake_slow_connections", shouldSlowdown);
+        editor.apply();
+    }
+
+    /**
      * Enables or disables developer views and settings in the app.
      *
      * @param showDeveloperSettings Whether to show dev settings to the user.
