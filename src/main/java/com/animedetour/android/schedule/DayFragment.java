@@ -8,8 +8,12 @@
  */
 package com.animedetour.android.schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -19,6 +23,7 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.main.SpinnerOptionContainer;
 import com.animedetour.android.main.SubNavigationSelectionChange;
+import com.animedetour.android.schedule.serach.EventSearchActivity;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -90,6 +95,14 @@ final public class DayFragment extends Fragment
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.event_actions, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onResume()
     {
         super.onResume();
@@ -105,6 +118,18 @@ final public class DayFragment extends Fragment
 
         this.subscriptionManager.unsubscribeAll();
         this.scrollPosition = this.eventUpdateObserver.getScrollPosition();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.event_actions_search:
+                this.startActivity(new Intent(getActivity(), EventSearchActivity.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

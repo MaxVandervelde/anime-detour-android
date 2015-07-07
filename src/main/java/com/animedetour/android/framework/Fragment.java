@@ -40,6 +40,7 @@ public class Fragment extends android.support.v4.app.Fragment
         super.onCreate(savedInstanceState);
 
         Icepick.restoreInstanceState(this, savedInstanceState);
+        this.setHasOptionsMenu(true);
     }
 
     @Override

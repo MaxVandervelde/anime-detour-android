@@ -50,6 +50,8 @@ public class EventRepository
     /** Worker for looking up a single event of a type. */
     final private CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory;
 
+    final private CriteriaWorkerFactory<List<Event>, String> allMatchingFactory;
+
     /**
      * @param subscriptionFactory Manage in-flight requests to async repos.
      * @param localAccess A local DAO for storing events.
@@ -64,7 +66,8 @@ public class EventRepository
         AllEventsWorker allEventsWorker,
         CriteriaWorkerFactory<List<Event>, DateTime> allByDayFactory,
         CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory,
-        CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory
+        CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory,
+        CriteriaWorkerFactory<List<Event>, String> allMatchingFactory
     ) {
         this.localAccess = localAccess;
         this.allEventsWorker = allEventsWorker;
@@ -72,6 +75,7 @@ public class EventRepository
         this.allByDayFactory = allByDayFactory;
         this.upcomingByTagFactory = upcomingByTagFactory;
         this.upcomingByTypeFactory = upcomingByTypeFactory;
+        this.allMatchingFactory = allMatchingFactory;
     }
 
     /**
@@ -141,6 +145,21 @@ public class EventRepository
         String key = "findUpcomingByTag:" + tag + ":" + ordinal;
         return this.subscriptionFactory.createSubscription(
             this.upcomingByTagFactory.createWorker(new TagCriteria(tag, ordinal)),
+            observer,
+            key
+        );
+    }
+
+    /**
+     * Finds events where the title matches a specified string.
+     *
+     * @param search The string to search in the title of events for.
+     */
+    public Subscription findMatching(String search, Observer<List<Event>> observer)
+    {
+        String key = "findMatching:" + search;
+        return this.subscriptionFactory.createCollectionSubscription(
+            this.allMatchingFactory.createWorker(search),
             observer,
             key
         );
