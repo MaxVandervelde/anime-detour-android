@@ -319,7 +319,12 @@ public class Event implements Serializable
     }
 
     /**
-     * @param url A URL to a relevant banner image for the event
+     * Set the event's image.
+     *
+     * If the image URL set here contains spaces, they will be URLencoded before
+     * storing them to the object (as `%20`'s.)
+     *
+     * @param url A URL to a relevant banner image for the event.
      */
     public void setMediaUrl(String url)
     {
@@ -354,11 +359,11 @@ public class Event implements Serializable
         }
 
         StringBuilder builder = new StringBuilder();
-        builder.append(tags.remove(0));
+        builder.append(tags.get(0));
 
-        for (String tag : tags) {
+        for (int c = 1; c < tags.size(); c++) {
             builder.append(",");
-            builder.append(tag);
+            builder.append(tags.get(c));
         }
 
         this.tags = builder.toString();
