@@ -40,7 +40,6 @@ final public class Application extends android.app.Application implements GraphC
 
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
-        this.kernel.setLogger(this.logger);
         this.applicationCallback.onCreate(this);
 
         this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));

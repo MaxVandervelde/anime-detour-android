@@ -52,7 +52,7 @@ final public class DataModule
     ) {
         Scheduler main = AndroidSchedulers.mainThread();
         Scheduler io = Schedulers.io();
-        SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(logger, io, main);
+        SubscriptionFactory<Event> subscriptionFactory = new SubscriptionFactory<>(io, main);
 
         try {
             Dao<Event, String> local = DaoManager.createDao(connectionSource, Event.class);
@@ -79,7 +79,7 @@ final public class DataModule
     ) {
         Scheduler main = AndroidSchedulers.mainThread();
         Scheduler io = Schedulers.io();
-        SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(logger, io, main);
+        SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(io, main);
 
         try {
             Dao<Category, Integer> localCategory = DaoManager.createDao(connectionSource, Category.class);
