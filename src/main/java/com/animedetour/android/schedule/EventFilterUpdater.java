@@ -11,7 +11,7 @@ package com.animedetour.android.schedule;
 import com.animedetour.android.main.NavigationSubContentUpdate;
 import com.animedetour.api.sched.api.model.Event;
 import com.squareup.otto.Bus;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import javax.inject.Inject;
@@ -45,14 +45,14 @@ final public class EventFilterUpdater implements Observer<List<Event>>
     final private Bus applicationBus;
 
     /** Log used when requests come back with errors. */
-    final private Log logger;
+    final private Monolog logger;
 
     /**
      * @param applicationBus Event bus to dispatch the navigation content changes onto.
      * @param logger Log used when requests come back with errors.
      */
     @Inject
-    public EventFilterUpdater(Bus applicationBus, Log logger)
+    public EventFilterUpdater(Bus applicationBus, Monolog logger)
     {
         this.applicationBus = applicationBus;
         this.logger = logger;

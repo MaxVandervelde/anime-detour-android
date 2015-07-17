@@ -10,7 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.support.annotation.ColorRes;
 import com.animedetour.android.R;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @Singleton
 public class EventPalette
 {
-    final private Log logger;
+    final private Monolog logger;
 
     /** Labels we've encountered that aren't recognized. */
     final private ArrayList<String> unknownLabels = new ArrayList<>();
@@ -56,7 +56,7 @@ public class EventPalette
     };
 
     @Inject
-    public EventPalette(Log logger)
+    public EventPalette(Monolog logger)
     {
         this.logger = logger;
     }

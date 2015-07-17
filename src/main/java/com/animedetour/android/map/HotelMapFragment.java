@@ -24,8 +24,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.inkapplications.android.logger.LogName;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.PrismFacade;
 
@@ -52,7 +52,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     Button switch22ndFloor;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

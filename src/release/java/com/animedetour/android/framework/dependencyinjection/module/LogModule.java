@@ -8,14 +8,16 @@
  */
 package com.animedetour.android.framework.dependencyinjection.module;
 
-import android.content.res.Resources;
 import com.google.android.gms.analytics.Tracker;
-import com.inkapplications.android.logger.CompositeLogger;
-import com.inkapplications.android.logger.analytics.AnalyticsLogger;
-import com.inkapplications.android.logger.console.ConsoleLogger;
+
 import dagger.Module;
 import dagger.Provides;
-import org.apache.commons.logging.Log;
+import monolog.LogLevel;
+import monolog.Monolog;
+import monolog.adapter.commons.LogHandlerAdapter;
+import monolog.handler.Handler;
+import monolog.handler.analytics.AnalyticsHandler;
+import monolog.handler.console.ConsoleHandler;
 
 import javax.inject.Singleton;
 
@@ -31,14 +33,16 @@ import javax.inject.Singleton;
 @Module(library = true, complete = false)
 public class LogModule
 {
-    @Provides @Singleton Log provideLogger(
-        Tracker analytics,
-        Resources resources
-    ) {
-        CompositeLogger composite = new CompositeLogger();
-        composite.addLogger(new AnalyticsLogger(analytics));
-        composite.addLogger(new ConsoleLogger(false, false, "AnimeDetour"));
+    @Provides @Singleton
+    public Monolog logger(Tracker analytics)
+    {
+        LogHandlerAdapter logAdapter = new LogHandlerAdapter();
 
-        return composite;
+        Handler[] handlers = new Handler[] {
+            new AnalyticsHandler(analytics),
+            new ConsoleHandler("AnimeDetour", new LogLevel[] { LogLevel.ERROR, LogLevel.FATAL }),
+        };
+
+        return new Monolog(handlers);
     }
 }

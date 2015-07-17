@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.view.scrim;
 
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,10 +24,10 @@ import javax.inject.Singleton;
 @Singleton
 public class ScrimUpdaterFactory
 {
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public ScrimUpdaterFactory(Log logger)
+    public ScrimUpdaterFactory(Monolog logger)
     {
         this.logger = logger;
     }

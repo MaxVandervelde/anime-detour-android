@@ -33,7 +33,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import dagger.Module;
 import dagger.Provides;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -48,7 +48,7 @@ final public class DataModule
     @Provides @Singleton EventRepository provideEventRepository(
         ConnectionSource connectionSource,
         ScheduleEndpoint remote,
-        Log logger
+        Monolog logger
     ) {
         Scheduler main = AndroidSchedulers.mainThread();
         Scheduler io = Schedulers.io();
@@ -75,7 +75,7 @@ final public class DataModule
     @Provides @Singleton GuestRepository provideGuestRepository(
         ConnectionSource connectionSource,
         GuestEndpoint remote,
-        Log logger
+        Monolog logger
     ) {
         Scheduler main = AndroidSchedulers.mainThread();
         Scheduler io = Schedulers.io();

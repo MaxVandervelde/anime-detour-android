@@ -18,10 +18,10 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
@@ -44,7 +44,7 @@ public class GuestIndexFragment extends Fragment
     SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
 
     @Inject
-    Log log;
+    Monolog log;
 
     @Inject
     GuestIndexBinder binder;

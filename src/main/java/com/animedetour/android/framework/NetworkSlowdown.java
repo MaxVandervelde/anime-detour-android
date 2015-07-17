@@ -7,7 +7,7 @@ package com.animedetour.android.framework;
 import com.animedetour.android.settings.PreferenceManager;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Response;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,12 +31,12 @@ import java.util.Random;
 @Singleton
 public class NetworkSlowdown implements Interceptor
 {
-    private final Log log;
+    private final Monolog log;
     private final PreferenceManager preferences;
     private final Random random = new Random();
 
     @Inject
-    public NetworkSlowdown(Log log, PreferenceManager preferences)
+    public NetworkSlowdown(Monolog log, PreferenceManager preferences)
     {
         this.log = log;
         this.preferences = preferences;

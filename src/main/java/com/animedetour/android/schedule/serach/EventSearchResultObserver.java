@@ -11,7 +11,7 @@ package com.animedetour.android.schedule.serach;
 import android.view.View;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import java.util.List;
@@ -26,12 +26,12 @@ import java.util.List;
  */
 public class EventSearchResultObserver implements Observer<List<Event>>
 {
-    final private Log logger;
+    final private Monolog logger;
     final private ItemAdapter<?, Event> adapter;
     final private View emptyView;
 
     public EventSearchResultObserver(
-        Log logger,
+        Monolog logger,
         ItemAdapter<?, Event> adapter,
         View emptyView
     ) {

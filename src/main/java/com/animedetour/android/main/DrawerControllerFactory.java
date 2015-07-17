@@ -13,7 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import com.animedetour.android.database.favorite.FavoriteRepository;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,13 +28,13 @@ public class DrawerControllerFactory
 {
     final private Activity context;
     final private FavoriteRepository favoriteData;
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
     public DrawerControllerFactory(
         Activity context,
         FavoriteRepository favoriteData,
-        Log logger
+        Monolog logger
     ) {
         this.context = context;
         this.favoriteData = favoriteData;

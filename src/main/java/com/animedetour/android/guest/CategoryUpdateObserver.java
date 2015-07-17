@@ -11,7 +11,7 @@ package com.animedetour.android.guest;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import java.util.ArrayList;
@@ -27,14 +27,14 @@ import java.util.List;
  */
 class CategoryUpdateObserver implements Observer<List<Category>>
 {
-    final private Log log;
+    final private Monolog log;
     final private SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
 
     /**
      * @param log Used when an error occurs fetching the guest list.
      * @param categoryList View which will be updated on guest-list updates.
      */
-    public CategoryUpdateObserver(Log log, SimpleRecyclerView<GuestWidgetView, Guest> categoryList)
+    public CategoryUpdateObserver(Monolog log, SimpleRecyclerView<GuestWidgetView, Guest> categoryList)
     {
         this.log = log;
         this.categoryList = categoryList;

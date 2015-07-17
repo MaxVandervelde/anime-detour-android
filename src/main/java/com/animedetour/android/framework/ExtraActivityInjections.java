@@ -13,9 +13,17 @@ import android.app.Application;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import monolog.Monolog;
 
 public class ExtraActivityInjections implements Application.ActivityLifecycleCallbacks
 {
+    final private Monolog logger;
+
+    public ExtraActivityInjections(Monolog logger)
+    {
+        this.logger = logger;
+    }
+
     @Override
     public void onActivityCreated(Activity activity, Bundle bundle)
     {
@@ -30,7 +38,10 @@ public class ExtraActivityInjections implements Application.ActivityLifecycleCal
     }
 
     @Override
-    public void onActivityStarted(Activity activity) {}
+    public void onActivityStarted(Activity activity)
+    {
+        this.logger.trace(activity);
+    }
 
     @Override
     public void onActivityResumed(Activity activity) {}

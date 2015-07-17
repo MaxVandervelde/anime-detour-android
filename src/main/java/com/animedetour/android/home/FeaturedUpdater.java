@@ -12,7 +12,7 @@ import android.view.View;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 /**
@@ -26,13 +26,13 @@ import rx.Observer;
  */
 final class FeaturedUpdater implements Observer<Event>
 {
-    final private Log logger;
+    final private Monolog logger;
     final private FeaturedControllerFactory controllerFactory;
     final private ImageScrim preview;
     final private ImageLoader imageLoader;
 
     public FeaturedUpdater(
-        Log logger,
+        Monolog logger,
         FeaturedControllerFactory controllerFactory,
         ImageLoader imageLoader,
         ImageScrim preview

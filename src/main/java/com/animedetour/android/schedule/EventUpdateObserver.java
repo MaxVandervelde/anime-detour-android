@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class EventUpdateObserver implements Observer<List<Event>>
 {
-    final private Log logger;
+    final private Monolog logger;
 
     /** View to display when there are no items in the list */
     final private View emptyView;
@@ -75,7 +75,7 @@ public class EventUpdateObserver implements Observer<List<Event>>
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
         View emptyView,
-        Log logger
+        Monolog logger
     ) {
         this.panelList = panelList;
         this.itemAdapter = listAdapter;

@@ -12,7 +12,7 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 import com.squareup.otto.Bus;
 import icepick.Icepick;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import prism.framework.PrismFacade;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public class Fragment extends android.support.v4.app.Fragment
 {
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Inject
     Bus applicationBus;

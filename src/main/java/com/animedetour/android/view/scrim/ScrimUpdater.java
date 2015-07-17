@@ -10,7 +10,7 @@ package com.animedetour.android.view.scrim;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 /**
  * Callback for volley that puts the returned bitmap into the view.
@@ -19,13 +19,13 @@ import org.apache.commons.logging.Log;
  */
 public class ScrimUpdater implements ImageLoader.ImageListener
 {
-    final private Log logger;
+    final private Monolog logger;
     final private ImageScrim scrim;
 
     /**
      * @param scrim Image view to control.
      */
-    public ScrimUpdater(Log logger, ImageScrim scrim)
+    public ScrimUpdater(Monolog logger, ImageScrim scrim)
     {
         this.logger = logger;
         this.scrim = scrim;

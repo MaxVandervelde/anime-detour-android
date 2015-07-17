@@ -24,7 +24,7 @@ import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
-import com.inkapplications.android.logger.LogName;
+import monolog.LogName;
 import prism.framework.DisplayName;
 
 import javax.inject.Inject;

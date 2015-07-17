@@ -24,12 +24,12 @@ import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import icepick.Icicle;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
@@ -51,7 +51,7 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     FavoriteRepository favoriteData;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @InjectView(R.id.panel_list)
     ListView panelList;

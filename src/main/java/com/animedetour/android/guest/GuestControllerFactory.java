@@ -10,7 +10,7 @@ package com.animedetour.android.guest;
 
 import android.app.Activity;
 import com.animedetour.api.guest.model.Guest;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,10 +28,10 @@ import javax.inject.Singleton;
 public class GuestControllerFactory
 {
     final private Activity context;
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public GuestControllerFactory(Activity context, Log logger)
+    public GuestControllerFactory(Activity context, Monolog logger)
     {
         this.context = context;
         this.logger = logger;

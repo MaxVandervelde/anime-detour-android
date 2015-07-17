@@ -19,7 +19,7 @@ import android.view.Gravity;
 import android.view.View;
 import com.animedetour.android.R;
 import com.animedetour.android.database.favorite.FavoriteRepository;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ import java.sql.SQLException;
 public class DrawerController extends ActionBarDrawerToggle
 {
     final private Resources resources;
-    final private Log logger;
+    final private Monolog logger;
     final private FavoriteRepository favoriteData;
     final private View favoritesOption;
     final private Toolbar toolbar;
@@ -46,7 +46,7 @@ public class DrawerController extends ActionBarDrawerToggle
 
     public DrawerController(
         Activity activity,
-        Log logger,
+        Monolog logger,
         FavoriteRepository favoriteData,
         DrawerLayout drawerLayout,
         Toolbar toolbar,

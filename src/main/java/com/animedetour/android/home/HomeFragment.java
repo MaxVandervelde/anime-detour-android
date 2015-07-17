@@ -17,9 +17,9 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
 import com.animedetour.android.view.scrim.ImageScrim;
-import com.inkapplications.android.logger.LogName;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
@@ -41,7 +41,7 @@ final public class HomeFragment extends Fragment
     EventRepository eventData;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @InjectView(R.id.event_banner)
     ImageScrim scrim;

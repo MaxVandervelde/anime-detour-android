@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,10 +28,10 @@ import javax.inject.Singleton;
 @Singleton
 public class EventObserverFactory
 {
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public EventObserverFactory(Log logger)
+    public EventObserverFactory(Monolog logger)
     {
         this.logger = logger;
     }

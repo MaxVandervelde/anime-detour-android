@@ -13,7 +13,7 @@ import android.content.Intent;
 import android.view.View;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.api.guest.model.Guest;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 /**
  * Handles events on the guest widgets that are displayed in the index.
@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 public class GuestWidgetController implements View.OnClickListener
 {
     final private Activity context;
-    final private Log logger;
+    final private Monolog logger;
 
     /**
      * Guest model that's bound to the widget view.
@@ -33,7 +33,7 @@ public class GuestWidgetController implements View.OnClickListener
     /**
      * @param guest Guest model that's bound to the widget view.
      */
-    public GuestWidgetController(Activity context, Log logger, Guest guest)
+    public GuestWidgetController(Activity context, Monolog logger, Guest guest)
     {
         this.context = context;
         this.logger = logger;

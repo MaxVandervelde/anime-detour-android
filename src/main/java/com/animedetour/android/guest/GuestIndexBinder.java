@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,14 +27,14 @@ import javax.inject.Singleton;
 public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
 {
     final private ImageLoader imageLoader;
-    final private Log log;
+    final private Monolog log;
     final private Context context;
     final private GuestControllerFactory controllerFactory;
 
     @Inject
     public GuestIndexBinder(
         ImageLoader imageLoader,
-        Log log,
+        Monolog log,
         Context context,
         GuestControllerFactory controllerFactory
     ) {

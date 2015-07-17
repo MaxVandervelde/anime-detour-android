@@ -19,7 +19,7 @@ import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 /**
  * Reacts to events on the home pages "featured" event banners.
@@ -34,7 +34,7 @@ public class FeaturedController implements ImageListener, OnClickListener
     final private Context context;
 
     /** Logger to log networking issues with image loading. */
-    final private Log logger;
+    final private Monolog logger;
 
     /** The featured event view that this controller is reacting to. */
     final private ImageScrim subject;
@@ -48,7 +48,7 @@ public class FeaturedController implements ImageListener, OnClickListener
      * @param preview The featured event view that this controller is reacting to.
      * @param event An event bound to the view and displayed in it.
      */
-    public FeaturedController(Context context, Log logger, ImageScrim preview, Event event)
+    public FeaturedController(Context context, Monolog logger, ImageScrim preview, Event event)
     {
         this.context = context;
         this.logger = logger;

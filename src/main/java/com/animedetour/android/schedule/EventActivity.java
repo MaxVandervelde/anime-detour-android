@@ -32,8 +32,8 @@ import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.logger.LogName;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
 
@@ -97,7 +97,7 @@ final public class EventActivity extends ActionBarActivity
     ScrimLoader loader;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Inject
     FavoriteRepository favoriteRepository;

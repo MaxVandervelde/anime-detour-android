@@ -10,7 +10,7 @@ package com.animedetour.android.guest;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 /**
  * Callback for when a guest image has been loaded.
@@ -23,13 +23,13 @@ final class GuestWidgetImageLoader implements ImageLoader.ImageListener
 {
     final private GuestWidgetView view;
     final private String url;
-    final private Log log;
+    final private Monolog log;
 
     /**
      * @param view The view to be updated with the loaded image.
      * @param log Logged to on a network error.
      */
-    public GuestWidgetImageLoader(GuestWidgetView view, String url, Log log)
+    public GuestWidgetImageLoader(GuestWidgetView view, String url, Monolog log)
     {
         this.view = view;
         this.url = url;

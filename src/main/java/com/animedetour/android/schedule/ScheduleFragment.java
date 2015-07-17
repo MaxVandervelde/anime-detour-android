@@ -17,8 +17,8 @@ import butterknife.InjectView;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.Fragment;
-import com.inkapplications.android.logger.LogName;
 import com.squareup.otto.Bus;
+import monolog.LogName;
 import org.joda.time.DateTime;
 import prism.framework.DisplayName;
 
