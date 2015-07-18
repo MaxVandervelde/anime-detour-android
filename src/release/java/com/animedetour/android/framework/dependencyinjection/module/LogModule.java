@@ -14,7 +14,6 @@ import dagger.Module;
 import dagger.Provides;
 import monolog.LogLevel;
 import monolog.Monolog;
-import monolog.adapter.commons.LogHandlerAdapter;
 import monolog.handler.Handler;
 import monolog.handler.analytics.AnalyticsHandler;
 import monolog.handler.console.ConsoleHandler;
@@ -36,8 +35,6 @@ public class LogModule
     @Provides @Singleton
     public Monolog logger(Tracker analytics)
     {
-        LogHandlerAdapter logAdapter = new LogHandlerAdapter();
-
         Handler[] handlers = new Handler[] {
             new AnalyticsHandler(analytics),
             new ConsoleHandler("AnimeDetour", new LogLevel[] { LogLevel.ERROR, LogLevel.FATAL }),
