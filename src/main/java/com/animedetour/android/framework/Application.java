@@ -12,7 +12,10 @@ import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.inkapplications.prism.ApplicationCallback;
+import com.squareup.okhttp.OkHttpClient;
 import dagger.ObjectGraph;
 import prism.framework.GraphContext;
 import prism.framework.KernelContext;
@@ -29,16 +32,23 @@ final public class Application extends android.app.Application implements GraphC
     @Inject
     ApplicationCallback applicationCallback;
 
+    @Inject
+    OkHttpClient okHttpClient;
+
     @Override
     public void onCreate()
     {
         super.onCreate();
 
-        Fresco.initialize(this);
-
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
         this.applicationCallback.onCreate(this);
+
+        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(
+            this,
+            this.okHttpClient
+        ).build();
+        Fresco.initialize(this, config);
     }
 
     @Override
