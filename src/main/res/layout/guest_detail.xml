@@ -26,11 +26,11 @@
                     android:id="@+id/guest_avatar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout_height="250dp"
+                    tools:layout_height="300dp"
                     android:background="@color/primary"
                     app:image_title="Guest"
                     app:image_textPaddingTop="72dp"
-                    app:image_height="250dp"
+                    app:image_height="300dp"
                 />
                 <TextView
                     android:id="@+id/guest_category"

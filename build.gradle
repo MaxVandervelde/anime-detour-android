@@ -125,7 +125,7 @@ dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.0'
     compile 'joda-time:joda-time:2.7'
     compile 'org.joda:joda-convert:1.7'
-    compile 'com.mcxiaoke.volley:library:1.0.7@aar'
+    compile 'com.facebook.fresco:fresco:0.5.3+'
 
     compile 'com.facebook.stetho:stetho:1.0.1'
     compile 'com.facebook.stetho:stetho-okhttp:1.0.1'

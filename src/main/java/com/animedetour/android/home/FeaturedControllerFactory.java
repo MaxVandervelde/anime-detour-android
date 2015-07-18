@@ -9,7 +9,6 @@
 package com.animedetour.android.home;
 
 import android.app.Activity;
-import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
 import monolog.Monolog;
 
@@ -35,8 +34,8 @@ public class FeaturedControllerFactory
         this.logger = logger;
     }
 
-    public FeaturedController create(ImageScrim preview, Event event)
+    public FeaturedController create(Event event)
     {
-        return new FeaturedController(this.context, this.logger, preview, event);
+        return new FeaturedController(this.context, this.logger, event);
     }
 }

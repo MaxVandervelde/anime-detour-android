@@ -10,10 +10,8 @@ package com.animedetour.android.guest;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
-import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,20 +24,12 @@ import javax.inject.Singleton;
 @Singleton
 public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
 {
-    final private ImageLoader imageLoader;
-    final private Monolog log;
     final private Context context;
     final private GuestControllerFactory controllerFactory;
 
     @Inject
-    public GuestIndexBinder(
-        ImageLoader imageLoader,
-        Monolog log,
-        Context context,
-        GuestControllerFactory controllerFactory
-    ) {
-        this.imageLoader = imageLoader;
-        this.log = log;
+    public GuestIndexBinder(Context context, GuestControllerFactory controllerFactory)
+    {
         this.context = context;
         this.controllerFactory = controllerFactory;
     }
@@ -53,14 +43,7 @@ public class GuestIndexBinder implements ItemViewBinder<GuestWidgetView, Guest>
     @Override
     public void bindView(Guest guest, GuestWidgetView view)
     {
-        view.showDefaultImage();
         view.bindGuest(guest);
-
-        this.imageLoader.get(
-            guest.getPhoto(),
-            new GuestWidgetImageLoader(view, guest.getPhoto(), this.log)
-        );
-
         GuestWidgetController controller = this.controllerFactory.create(guest);
         view.setOnClickListener(controller);
     }

@@ -8,12 +8,13 @@
     android:padding="16dp"
     tools:background="@color/background"
 >
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/guest_widget_image"
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/account_96dp"
+        app:placeholderImage="@drawable/account_96dp"
+        app:roundAsCircle="true"
         app:border_width="0dp"
     />
     <TextView

@@ -11,23 +11,17 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
 import com.animedetour.android.schedule.notification.NotificationScheduler;
-import com.animedetour.android.volley.cache.LongImageCache;
 import com.animedetour.api.ApiModule;
-import com.circle.android.api.OkHttpStack;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
@@ -55,17 +49,6 @@ import java.io.IOException;
 )
 final public class ApplicationModule
 {
-    @Provides @Singleton ImageLoader provideImageLoader(
-        Application context,
-        OkHttpClient client
-    ) {
-        RequestQueue queue = Volley.newRequestQueue(context, new OkHttpStack(client));
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
-
-        return new ImageLoader(queue, new LongImageCache(cacheSize));
-    }
-
     @Provides @Singleton Tracker provideAnalytics(Application context)
     {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);

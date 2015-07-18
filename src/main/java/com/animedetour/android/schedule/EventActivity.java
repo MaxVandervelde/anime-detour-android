@@ -30,7 +30,6 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
-import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
 import monolog.LogName;
 import monolog.Monolog;
@@ -92,9 +91,6 @@ final public class EventActivity extends ActionBarActivity
 
     @InjectView(R.id.event_container)
     ScrollView detailsContainer;
-
-    @Inject
-    ScrimLoader loader;
 
     @Inject
     Monolog logger;
@@ -270,7 +266,7 @@ final public class EventActivity extends ActionBarActivity
         }
 
         this.bannerView.expandImage();
-        this.loader.loadImage(this.bannerView, this.event.getMediaUrl());
+        this.bannerView.setImage(this.event.getMediaUrl());
     }
 
     /**

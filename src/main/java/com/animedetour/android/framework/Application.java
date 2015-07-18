@@ -11,6 +11,7 @@ package com.animedetour.android.framework;
 import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.inkapplications.prism.ApplicationCallback;
 import dagger.ObjectGraph;
 import monolog.Monolog;
@@ -37,6 +38,8 @@ final public class Application extends android.app.Application implements GraphC
     public void onCreate()
     {
         super.onCreate();
+
+        Fresco.initialize(this);
 
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);

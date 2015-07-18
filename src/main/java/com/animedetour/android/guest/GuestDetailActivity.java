@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.InjectView;
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.R;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.fader.ToolbarFader;
@@ -63,9 +62,6 @@ final public class GuestDetailActivity extends ActionBarActivity
 
     @Inject
     ToolbarFaderFactory faderFactory;
-
-    @Inject
-    ImageLoader imageLoader;
 
     @Inject
     Monolog log;
@@ -118,12 +114,7 @@ final public class GuestDetailActivity extends ActionBarActivity
         this.category.setText(this.guest.getCategory().getName());
         this.avatar.setTitle(this.guest.getFullName());
         this.avatar.expandImage();
-
-        GuestDetailsImageLoader loaderCallback = new GuestDetailsImageLoader(this.avatar, this.log);
-        this.imageLoader.get(this.guest.getPhoto(), loaderCallback);
-        if (null != this.guest.getFullPhoto()) {
-            this.imageLoader.get(this.guest.getFullPhoto(), loaderCallback);
-        }
+        this.avatar.setImage(this.guest.getFullPhoto());
 
         ToolbarFader fader = this.faderFactory.create(this.avatar, this.detailsContainer, this.actionBar);
         this.detailsContainer.getViewTreeObserver().addOnScrollChangedListener(fader);
