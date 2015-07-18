@@ -14,10 +14,8 @@ import com.animedetour.android.framework.dependencyinjection.module.ApplicationM
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.inkapplications.prism.ApplicationCallback;
 import dagger.ObjectGraph;
-import monolog.Monolog;
 import prism.framework.GraphContext;
 import prism.framework.KernelContext;
-import prism.framework.LifecycleSubscriber;
 import prism.framework.PrismKernel;
 
 import javax.inject.Inject;
@@ -27,9 +25,6 @@ import java.util.Map;
 final public class Application extends android.app.Application implements GraphContext, KernelContext
 {
     private PrismKernel kernel;
-
-    @Inject
-    Monolog logger;
 
     @Inject
     ApplicationCallback applicationCallback;
@@ -44,9 +39,6 @@ final public class Application extends android.app.Application implements GraphC
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
         this.applicationCallback.onCreate(this);
-
-        this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
-        this.registerActivityLifecycleCallbacks(new ExtraActivityInjections(this.logger));
     }
 
     @Override

@@ -12,10 +12,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import monolog.LogName;
@@ -35,7 +35,7 @@ import javax.inject.Inject;
  */
 @DisplayName(R.string.home_title)
 @LogName("Home")
-final public class HomeFragment extends Fragment
+final public class HomeFragment extends BaseFragment
 {
     @Inject
     EventRepository eventData;
@@ -43,10 +43,10 @@ final public class HomeFragment extends Fragment
     @Inject
     Monolog logger;
 
-    @InjectView(R.id.event_banner)
+    @Bind(R.id.event_banner)
     ImageScrim scrim;
 
-    @InjectView(R.id.event_banner2)
+    @Bind(R.id.event_banner2)
     ImageScrim scrim2;
 
     @Inject

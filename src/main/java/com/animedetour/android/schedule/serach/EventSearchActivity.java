@@ -9,15 +9,15 @@
 package com.animedetour.android.schedule.serach;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
+import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.api.model.Event;
@@ -37,18 +37,18 @@ import javax.inject.Inject;
  */
 @LogName("Event Search")
 @Layout(R.layout.event_search)
-final public class EventSearchActivity extends ActionBarActivity
+final public class EventSearchActivity extends BaseActivity
 {
-    @InjectView(R.id.event_search_action_bar)
+    @Bind(R.id.event_search_action_bar)
     Toolbar actionBar;
 
-    @InjectView(R.id.event_search_bar)
+    @Bind(R.id.event_search_bar)
     SearchView searchBar;
 
-    @InjectView(R.id.event_search_results)
+    @Bind(R.id.event_search_results)
     ListView results;
 
-    @InjectView(R.id.search_empty_view)
+    @Bind(R.id.search_empty_view)
     View emptyView;
 
     @Inject

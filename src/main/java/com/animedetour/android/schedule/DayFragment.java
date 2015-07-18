@@ -17,10 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.main.SpinnerOptionContainer;
 import com.animedetour.android.main.SubNavigationSelectionChange;
 import com.animedetour.android.schedule.serach.EventSearchActivity;
@@ -41,7 +41,7 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-final public class DayFragment extends Fragment
+final public class DayFragment extends BaseFragment
 {
     @Inject
     EventRepository eventData;
@@ -55,10 +55,10 @@ final public class DayFragment extends Fragment
     @Inject
     EventViewBinder viewBinder;
 
-    @InjectView(R.id.panel_list)
+    @Bind(R.id.panel_list)
     ListView panelList;
 
-    @InjectView(R.id.panel_empty_view)
+    @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
     @Icicle

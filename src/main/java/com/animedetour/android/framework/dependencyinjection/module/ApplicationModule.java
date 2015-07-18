@@ -29,7 +29,6 @@ import dagger.Provides;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
-import java.io.IOException;
 
 @Module(
     includes = {
@@ -81,13 +80,9 @@ final public class ApplicationModule
 
     @Provides @Singleton Cache provideCache(Application application)
     {
-        try {
-            File cacheDir = new File(application.getCacheDir(), "http");
-            long cacheSize = 80 * 1024 * 1024; // 80MB
-            return new Cache(cacheDir, cacheSize);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        File cacheDir = new File(application.getCacheDir(), "http");
+        long cacheSize = 80 * 1024 * 1024; // 80MB
+        return new Cache(cacheDir, cacheSize);
     }
 
     /**

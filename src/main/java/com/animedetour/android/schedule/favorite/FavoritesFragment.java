@@ -14,11 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
@@ -45,7 +45,7 @@ import java.util.List;
  */
 @DisplayName(R.string.favorites_title)
 @LogName("Favorites")
-final public class FavoritesFragment extends Fragment implements ViewClickListener<PanelView, Event>
+final public class FavoritesFragment extends BaseFragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
     FavoriteRepository favoriteData;
@@ -53,13 +53,13 @@ final public class FavoritesFragment extends Fragment implements ViewClickListen
     @Inject
     Monolog logger;
 
-    @InjectView(R.id.panel_list)
+    @Bind(R.id.panel_list)
     ListView panelList;
 
     @Icicle
     int scrollPosition = 0;
 
-    @InjectView(R.id.panel_empty_view)
+    @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
     @Inject

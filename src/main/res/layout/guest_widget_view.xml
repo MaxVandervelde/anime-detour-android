@@ -15,7 +15,6 @@
         android:layout_centerHorizontal="true"
         app:placeholderImage="@drawable/account_96dp"
         app:roundAsCircle="true"
-        app:border_width="0dp"
     />
     <TextView
         style="@style/caption"
