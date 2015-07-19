@@ -10,9 +10,7 @@ package com.animedetour.android.schedule.favorite;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.Bind;
 import com.animedetour.android.R;
@@ -23,7 +21,7 @@ import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;

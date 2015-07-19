@@ -9,7 +9,7 @@
 package com.animedetour.api;
 
 import com.animedetour.api.guest.GuestEndpoint;
-import com.animedetour.api.sched.api.ScheduleEndpoint;
+import com.animedetour.api.sched.ScheduleEndpoint;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;

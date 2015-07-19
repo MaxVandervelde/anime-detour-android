@@ -10,7 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import com.animedetour.api.sched.api.model.Event;
+import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
