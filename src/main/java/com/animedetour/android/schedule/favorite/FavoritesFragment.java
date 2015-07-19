@@ -45,7 +45,7 @@ import java.util.List;
 @DisplayName(R.string.favorites_title)
 @LogName("Favorites")
 @Layout(R.layout.schedule_day)
-final public class FavoritesFragment extends BaseFragment implements ViewClickListener<PanelView, Event>
+final public class FavoritesFragment extends BaseFragment
 {
     @Inject
     FavoriteRepository favoriteData;
@@ -64,6 +64,9 @@ final public class FavoritesFragment extends BaseFragment implements ViewClickLi
 
     @Inject
     SubscriptionManager subscriptionManager;
+
+    @Inject
+    EventViewBinder eventViewBinder;
 
     @Inject
     EventPalette palette;
@@ -93,22 +96,12 @@ final public class FavoritesFragment extends BaseFragment implements ViewClickLi
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onViewClicked(Event selected, PanelView view)
-    {
-        this.logger.trace(EventFactory.eventDetails(selected));
-
-        Intent intent = EventActivity.createIntent(this.getActivity(), selected);
-        this.startActivity(intent);
-    }
-
     /**
      * Setup the panel list view handlers and data request/subscriptions.
      */
     protected void setupPanelList()
     {
-        EventViewBinder eventViewBinder = new EventViewBinder(this.getActivity(), this.palette, this);
-        FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(eventViewBinder);
+        FavoriteViewBinder favoriteViewBinder = new FavoriteViewBinder(this.eventViewBinder);
         this.adapter = new ItemAdapter<>(favoriteViewBinder);
         this.panelList.setAdapter(adapter);
 

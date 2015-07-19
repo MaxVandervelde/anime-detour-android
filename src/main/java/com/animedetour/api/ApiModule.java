@@ -27,22 +27,24 @@ import javax.inject.Singleton;
 @SuppressWarnings("UnusedDeclaration")
 final public class ApiModule
 {
-    @Provides @Singleton ScheduleEndpoint provideScheduleEndpoint(
-        RestAdapter adapter
-    ) {
+    @Provides
+    @Singleton
+    public ScheduleEndpoint scheduleEndoint(RestAdapter adapter)
+    {
         return adapter.create(ScheduleEndpoint.class);
     }
 
-    @Provides @Singleton GuestEndpoint provideGuestEndpoint(
-        RestAdapter adapter
-    ) {
+    @Provides
+    @Singleton
+    public GuestEndpoint guestEndpoint(RestAdapter adapter)
+    {
         return adapter.create(GuestEndpoint.class);
     }
 
-    @Provides @Singleton RestAdapter provideRestAdapter(
-        final Monolog logger,
-        OkHttpClient client
-    ) {
+    @Provides
+    @Singleton
+    public RestAdapter restAdapter(Monolog logger, OkHttpClient client)
+    {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint("http://animedetour.com");
 
@@ -50,14 +52,7 @@ final public class ApiModule
         mapper.registerModule(new JodaModule());
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         builder.setConverter(new JacksonConverter(mapper));
-
-        builder.setLog(
-            new RestAdapter.Log() {
-                @Override public void log(String message) {
-                    logger.debug(message);
-                }
-            }
-        );
+        builder.setLog(new RestLogAdapter(logger));
         builder.setLogLevel(RestAdapter.LogLevel.BASIC);
 
         builder.setClient(new OkClient(client));
