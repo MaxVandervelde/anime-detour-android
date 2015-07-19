@@ -11,18 +11,18 @@ package com.animedetour.android.schedule;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
+import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
 import com.animedetour.android.view.FinishClickListener;
@@ -30,10 +30,9 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
-import com.animedetour.android.view.scrim.ScrimLoader;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.logger.LogName;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
 
@@ -53,7 +52,7 @@ import java.util.Date;
 @Layout(R.layout.event)
 @DisplayName(R.string.event_details_title)
 @LogName("Event")
-final public class EventActivity extends ActionBarActivity
+final public class EventActivity extends BaseActivity
 {
     /**
      * Name of the intent-extra that the event is serialized into.
@@ -63,41 +62,38 @@ final public class EventActivity extends ActionBarActivity
     /**
      * View for the top banner on the page that can display an image & title.
      */
-    @InjectView(R.id.event_banner)
+    @Bind(R.id.event_banner)
     ImageScrim bannerView;
 
     /**
      * Main content section of the event.
      */
-    @InjectView(R.id.event_text)
+    @Bind(R.id.event_text)
     TextView descriptionView;
 
-    @InjectView(R.id.event_speakers)
+    @Bind(R.id.event_speakers)
     TextView speakers;
 
-    @InjectView(R.id.event_type)
+    @Bind(R.id.event_type)
     TextView eventType;
 
-    @InjectView(R.id.event_type_container)
+    @Bind(R.id.event_type_container)
     View eventTypeContainer;
 
-    @InjectView(R.id.event_details)
+    @Bind(R.id.event_details)
     TextView eventDetails;
 
-    @InjectView(R.id.event_action_bar)
+    @Bind(R.id.event_action_bar)
     Toolbar actionBar;
 
-    @InjectView(R.id.event_add)
+    @Bind(R.id.event_add)
     StarFloatingActionButton addButton;
 
-    @InjectView(R.id.event_container)
+    @Bind(R.id.event_container)
     ScrollView detailsContainer;
 
     @Inject
-    ScrimLoader loader;
-
-    @Inject
-    Log logger;
+    Monolog logger;
 
     @Inject
     FavoriteRepository favoriteRepository;
@@ -270,7 +266,7 @@ final public class EventActivity extends ActionBarActivity
         }
 
         this.bannerView.expandImage();
-        this.loader.loadImage(this.bannerView, this.event.getMediaUrl());
+        this.bannerView.setImage(this.event.getMediaUrl());
     }
 
     /**

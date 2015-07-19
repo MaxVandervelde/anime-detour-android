@@ -12,15 +12,15 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 import com.squareup.otto.Bus;
 import icepick.Icepick;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import prism.framework.PrismFacade;
 
 import javax.inject.Inject;
 
-public class Fragment extends android.support.v4.app.Fragment
+public class BaseFragment extends android.support.v4.app.Fragment
 {
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Inject
     Bus applicationBus;
@@ -31,7 +31,7 @@ public class Fragment extends android.support.v4.app.Fragment
         super.onActivityCreated(savedInstanceState);
 
         PrismFacade.bootstrap(this);
-        ButterKnife.inject(this, this.getView());
+        ButterKnife.bind(this, this.getView());
         this.logger.trace(this);
     }
 
@@ -68,6 +68,6 @@ public class Fragment extends android.support.v4.app.Fragment
     public void onDestroyView()
     {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 }

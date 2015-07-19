@@ -13,7 +13,7 @@ import android.content.Intent;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,10 +27,10 @@ import javax.inject.Singleton;
 public class PanelViewController implements ViewClickListener<PanelView, Event>
 {
     final private Activity context;
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public PanelViewController(Activity context, Log logger)
+    public PanelViewController(Activity context, Monolog logger)
     {
         this.context = context;
         this.logger = logger;

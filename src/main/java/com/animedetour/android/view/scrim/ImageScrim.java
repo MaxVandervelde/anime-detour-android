@@ -10,14 +10,15 @@ package com.animedetour.android.view.scrim;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
+import android.graphics.LightingColorFilter;
+import android.graphics.PointF;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.animedetour.android.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * Image with text Scrim
@@ -31,17 +32,12 @@ public class ImageScrim extends FrameLayout
     /**
      * The main image displayed
      */
-    private ImageView background;
+    final private SimpleDraweeView background;
 
     /**
      * The title text overlayed on the image
      */
-    private TextView title;
-
-    /**
-     * Text protection scrim
-     */
-    private View scrim;
+    final private TextView title;
 
     /**
      * Height to set the view to when the image is set
@@ -51,7 +47,13 @@ public class ImageScrim extends FrameLayout
     public ImageScrim(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        this.inflateView(context);
+        LayoutInflater.from(context).inflate(R.layout.view_image_scrim, this);
+
+        this.background = (SimpleDraweeView) this.findViewById(R.id.banner);
+        this.background.setColorFilter(new LightingColorFilter(0xffaaaaaa, 0x000000));
+        this.background.getHierarchy().setActualImageFocusPoint(new PointF(.5f, .38f));
+
+        this.title = (TextView) this.findViewById(R.id.title);
 
         TypedArray attributes = context.getTheme().obtainStyledAttributes(
             attrs,
@@ -66,7 +68,6 @@ public class ImageScrim extends FrameLayout
         int textPadding = attributes.getDimensionPixelSize(R.styleable.ImageScrim_image_textPaddingTop, 0);
 
         if (0 != src) {
-            this.scrim.setVisibility(VISIBLE);
             this.background.setImageResource(src);
             this.getLayoutParams().height = this.imageHeight;
         }
@@ -89,21 +90,13 @@ public class ImageScrim extends FrameLayout
         this.background.getLayoutParams().height = this.imageHeight;
     }
 
-    /**
-     * Set the main image
-     *
-     * @param drawable The image to display
-     */
-    public void setImage(Bitmap drawable)
+    public void setImage(String uri)
     {
-        if (null == drawable) {
-            this.background.setImageResource(0);
-            this.scrim.setVisibility(INVISIBLE);
-            return;
+        if (null == uri) {
+            this.background.setImageURI(null);
+        } else {
+            this.background.setImageURI(Uri.parse(uri));
         }
-
-        this.background.setImageBitmap(drawable);
-        this.scrim.setVisibility(VISIBLE);
     }
 
     /**
@@ -114,18 +107,5 @@ public class ImageScrim extends FrameLayout
     public void setTitle(String title)
     {
         this.title.setText(title);
-    }
-
-    /**
-     * Inflate the main view layout and bind needed elements
-     */
-    private void inflateView(Context context)
-    {
-        LayoutInflater.from(context).inflate(R.layout.view_image_scrim, this);
-
-        this.background = (ImageView) this.findViewById(R.id.banner);
-        this.title = (TextView) this.findViewById(R.id.title);
-        this.scrim = this.findViewById(R.id.scrim);
-        this.scrim.setVisibility(INVISIBLE);
     }
 }

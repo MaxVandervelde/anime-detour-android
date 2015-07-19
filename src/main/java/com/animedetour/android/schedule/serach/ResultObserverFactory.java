@@ -11,7 +11,7 @@ package com.animedetour.android.schedule.serach;
 import android.view.View;
 import com.animedetour.api.sched.api.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import javax.inject.Inject;
@@ -27,10 +27,10 @@ import java.util.List;
 @Singleton
 public class ResultObserverFactory
 {
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public ResultObserverFactory(Log log)
+    public ResultObserverFactory(Monolog log)
     {
         logger = log;
     }

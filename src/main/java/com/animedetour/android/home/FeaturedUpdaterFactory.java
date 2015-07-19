@@ -8,9 +8,8 @@
  */
 package com.animedetour.android.home;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.animedetour.android.view.scrim.ImageScrim;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,23 +25,18 @@ import javax.inject.Singleton;
 @Singleton
 public class FeaturedUpdaterFactory
 {
-    final private Log logger;
+    final private Monolog logger;
     final private FeaturedControllerFactory controllerFactory;
-    final private ImageLoader imageLoader;
 
     @Inject
-    public FeaturedUpdaterFactory(
-        Log logger,
-        FeaturedControllerFactory controllerFactory,
-        ImageLoader imageLoader
-    ) {
+    public FeaturedUpdaterFactory(Monolog logger, FeaturedControllerFactory controllerFactory)
+    {
         this.logger = logger;
         this.controllerFactory = controllerFactory;
-        this.imageLoader = imageLoader;
     }
 
     public FeaturedUpdater create(ImageScrim preview)
     {
-        return new FeaturedUpdater(this.logger, this.controllerFactory, this.imageLoader, preview);
+        return new FeaturedUpdater(this.logger, this.controllerFactory, preview);
     }
 }

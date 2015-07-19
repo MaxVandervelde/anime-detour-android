@@ -9,9 +9,8 @@
 package com.animedetour.android.home;
 
 import android.app.Activity;
-import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.api.sched.api.model.Event;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,17 +25,17 @@ import javax.inject.Singleton;
 public class FeaturedControllerFactory
 {
     final private Activity context;
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public FeaturedControllerFactory(Activity context, Log logger)
+    public FeaturedControllerFactory(Activity context, Monolog logger)
     {
         this.context = context;
         this.logger = logger;
     }
 
-    public FeaturedController create(ImageScrim preview, Event event)
+    public FeaturedController create(Event event)
     {
-        return new FeaturedController(this.context, this.logger, preview, event);
+        return new FeaturedController(this.context, this.logger, event);
     }
 }

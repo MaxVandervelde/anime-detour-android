@@ -12,7 +12,7 @@ import com.animedetour.android.database.LocalDatabase;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.api.sched.api.model.Event;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import org.joda.time.DateTime;
 
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class DeveloperShims
     final private FavoriteRepository favoriteData;
     final private LocalDatabase database;
     final private PreferenceManager preferences;
-    final private Log logger;
+    final private Monolog logger;
     final private Random random = new Random();
 
     @Inject
@@ -43,7 +43,8 @@ public class DeveloperShims
         EventRepository eventData,
         FavoriteRepository favoriteData,
         LocalDatabase database,
-        PreferenceManager preferences, Log logger
+        PreferenceManager preferences,
+        Monolog logger
     ) {
         this.eventData = eventData;
         this.favoriteData = favoriteData;

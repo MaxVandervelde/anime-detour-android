@@ -11,22 +11,21 @@ package com.animedetour.android.guest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import butterknife.InjectView;
-import com.android.volley.toolbox.ImageLoader;
+import butterknife.Bind;
 import com.animedetour.android.R;
+import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.android.logger.LogName;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
 
@@ -44,31 +43,28 @@ import javax.inject.Inject;
 @Layout(R.layout.guest_detail)
 @DisplayName(R.string.guest_detail_title)
 @LogName("Guest Detail")
-final public class GuestDetailActivity extends ActionBarActivity
+final public class GuestDetailActivity extends BaseActivity
 {
-    @InjectView(R.id.guest_avatar)
+    @Bind(R.id.guest_avatar)
     ImageScrim avatar;
 
-    @InjectView(R.id.guest_bio)
+    @Bind(R.id.guest_bio)
     TextView bio;
 
-    @InjectView(R.id.guest_category)
+    @Bind(R.id.guest_category)
     TextView category;
 
-    @InjectView(R.id.guest_action_bar)
+    @Bind(R.id.guest_action_bar)
     Toolbar actionBar;
 
-    @InjectView(R.id.guest_scroll)
+    @Bind(R.id.guest_scroll)
     ScrollView detailsContainer;
 
     @Inject
     ToolbarFaderFactory faderFactory;
 
     @Inject
-    ImageLoader imageLoader;
-
-    @Inject
-    Log log;
+    Monolog log;
 
     /**
      * Argument flag for the serialized guest object extra to be passed into the
@@ -118,12 +114,7 @@ final public class GuestDetailActivity extends ActionBarActivity
         this.category.setText(this.guest.getCategory().getName());
         this.avatar.setTitle(this.guest.getFullName());
         this.avatar.expandImage();
-
-        GuestDetailsImageLoader loaderCallback = new GuestDetailsImageLoader(this.avatar, this.log);
-        this.imageLoader.get(this.guest.getPhoto(), loaderCallback);
-        if (null != this.guest.getFullPhoto()) {
-            this.imageLoader.get(this.guest.getFullPhoto(), loaderCallback);
-        }
+        this.avatar.setImage(this.guest.getFullPhoto());
 
         ToolbarFader fader = this.faderFactory.create(this.avatar, this.detailsContainer, this.actionBar);
         this.detailsContainer.getViewTreeObserver().addOnScrollChangedListener(fader);

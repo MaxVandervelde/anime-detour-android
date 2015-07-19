@@ -13,12 +13,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.android.framework.Fragment;
-import com.inkapplications.android.logger.LogName;
+import com.animedetour.android.framework.BaseFragment;
 import com.squareup.otto.Bus;
+import monolog.LogName;
 import org.joda.time.DateTime;
 import prism.framework.DisplayName;
 
@@ -35,9 +35,9 @@ import java.util.List;
  */
 @DisplayName(R.string.schedule_title)
 @LogName("Schedule")
-final public class ScheduleFragment extends Fragment
+final public class ScheduleFragment extends BaseFragment
 {
-    @InjectView(R.id.event_days)
+    @Bind(R.id.event_days)
     ViewPager pager;
 
     @Inject

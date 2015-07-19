@@ -3,6 +3,12 @@ Change Log
 
 This file summarizes the changes between releases of the application.
 
+v2.2.0
+---------------------
+ * Add Ability to search
+ * Fix for OkHTTP Cache issues.
+ * Fix image scrim issues and placeholder images around guests page
+
 v2.1.0
 ---------------------
  * Added filtering to events.

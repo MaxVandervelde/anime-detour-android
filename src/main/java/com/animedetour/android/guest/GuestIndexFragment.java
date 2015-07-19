@@ -13,15 +13,15 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.api.guest.model.Guest;
-import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
@@ -35,16 +35,16 @@ import java.util.ArrayList;
  */
 @DisplayName(R.string.guests_title)
 @LogName("Guests")
-public class GuestIndexFragment extends Fragment
+public class GuestIndexFragment extends BaseFragment
 {
     @Inject
     GuestRepository repository;
 
-    @InjectView(R.id.guest_category_index)
+    @Bind(R.id.guest_category_index)
     SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
 
     @Inject
-    Log log;
+    Monolog log;
 
     @Inject
     GuestIndexBinder binder;

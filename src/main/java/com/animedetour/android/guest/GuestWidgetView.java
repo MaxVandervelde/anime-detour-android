@@ -9,14 +9,14 @@
 package com.animedetour.android.guest;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.animedetour.android.R;
 import com.animedetour.api.guest.model.Guest;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * A small widget view to represent a guest.
@@ -30,14 +30,12 @@ public class GuestWidgetView extends FrameLayout
     /**
      * The avatar for the guest.
      */
-    final private ImageView image;
+    final private SimpleDraweeView image;
 
     /**
      * The displayed name of the guest.
      */
     final private TextView name;
-
-    private Guest displayedGuest;
 
     public GuestWidgetView(Context context)
     {
@@ -54,7 +52,7 @@ public class GuestWidgetView extends FrameLayout
         super(context, attrs, defStyleAttr);
 
         LayoutInflater.from(context).inflate(R.layout.guest_widget_view, this);
-        this.image = (ImageView) this.findViewById(R.id.guest_widget_image);
+        this.image = (SimpleDraweeView) this.findViewById(R.id.guest_widget_image);
         this.name = (TextView) this.findViewById(R.id.guest_widget_name);
     }
 
@@ -67,15 +65,7 @@ public class GuestWidgetView extends FrameLayout
     public void bindGuest(Guest guest)
     {
         this.setName(guest.getFullName());
-        this.displayedGuest = guest;
-    }
-
-    /**
-     * @return The guest that is currently displayed in the view.
-     */
-    public Guest getDisplayedGuest()
-    {
-        return displayedGuest;
+        this.setImageUri(guest.getFullPhoto());
     }
 
     /**
@@ -86,21 +76,8 @@ public class GuestWidgetView extends FrameLayout
         this.name.setText(name);
     }
 
-    /**
-     * @param image Avatar of the guest.
-     */
-    public void setImage(Bitmap image)
+    public void setImageUri(String uri)
     {
-        this.image.setImageBitmap(image);
-    }
-
-    /**
-     * Reset the guest's avatar to a default icon.
-     *
-     * This could be called on error, or to reset the view to a default state.
-     */
-    public void showDefaultImage()
-    {
-        this.image.setImageResource(R.drawable.account_96dp);
+        this.image.setImageURI(Uri.parse(uri));
     }
 }

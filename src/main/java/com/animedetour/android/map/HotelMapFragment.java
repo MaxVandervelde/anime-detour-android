@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import com.animedetour.android.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -24,8 +24,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.inkapplications.android.logger.LogName;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.PrismFacade;
 
@@ -42,17 +42,17 @@ import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
 @LogName("Map")
 final public class HotelMapFragment extends SupportMapFragment implements OnMapReadyCallback
 {
-    @InjectView(R.id.map_control_first_floor)
+    @Bind(R.id.map_control_first_floor)
     Button switchFirstFloor;
 
-    @InjectView(R.id.map_control_second_floor)
+    @Bind(R.id.map_control_second_floor)
     Button switchSecondFloor;
 
-    @InjectView(R.id.map_control_22nd_floor)
+    @Bind(R.id.map_control_22nd_floor)
     Button switch22ndFloor;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -72,7 +72,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         super.onViewCreated(view, savedInstanceState);
 
         PrismFacade.bootstrap(this);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         this.logger.trace(this);
     }
 

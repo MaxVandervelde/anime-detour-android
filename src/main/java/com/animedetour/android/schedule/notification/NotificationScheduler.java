@@ -12,7 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import com.animedetour.android.framework.Application;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import prism.framework.PrismKernel;
 
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ public class NotificationScheduler extends BroadcastReceiver
     EventNotificationManager notificationManager;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
     @Override
     public void onReceive(Context context, Intent intent)

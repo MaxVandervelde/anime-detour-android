@@ -14,22 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import butterknife.InjectView;
+import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.favorite.FavoriteRepository;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.schedule.EventActivity;
 import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.api.model.Event;
-import com.inkapplications.android.logger.LogName;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import icepick.Icicle;
-import org.apache.commons.logging.Log;
+import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.DisplayName;
 import rx.Subscription;
 
@@ -45,21 +45,21 @@ import java.util.List;
  */
 @DisplayName(R.string.favorites_title)
 @LogName("Favorites")
-final public class FavoritesFragment extends Fragment implements ViewClickListener<PanelView, Event>
+final public class FavoritesFragment extends BaseFragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
     FavoriteRepository favoriteData;
 
     @Inject
-    Log logger;
+    Monolog logger;
 
-    @InjectView(R.id.panel_list)
+    @Bind(R.id.panel_list)
     ListView panelList;
 
     @Icicle
     int scrollPosition = 0;
 
-    @InjectView(R.id.panel_empty_view)
+    @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
     @Inject

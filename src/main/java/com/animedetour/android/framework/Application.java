@@ -11,13 +11,14 @@ package com.animedetour.android.framework;
 import android.app.Activity;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
-import com.inkapplications.android.logger.AutoLogger;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.inkapplications.prism.ApplicationCallback;
+import com.squareup.okhttp.OkHttpClient;
 import dagger.ObjectGraph;
-import org.apache.commons.logging.Log;
 import prism.framework.GraphContext;
 import prism.framework.KernelContext;
-import prism.framework.LifecycleSubscriber;
 import prism.framework.PrismKernel;
 
 import javax.inject.Inject;
@@ -29,10 +30,10 @@ final public class Application extends android.app.Application implements GraphC
     private PrismKernel kernel;
 
     @Inject
-    Log logger;
+    ApplicationCallback applicationCallback;
 
     @Inject
-    ApplicationCallback applicationCallback;
+    OkHttpClient okHttpClient;
 
     @Override
     public void onCreate()
@@ -41,12 +42,13 @@ final public class Application extends android.app.Application implements GraphC
 
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);
-        this.kernel.setLogger(this.logger);
         this.applicationCallback.onCreate(this);
 
-        this.registerActivityLifecycleCallbacks(new LifecycleSubscriber(this));
-        this.registerActivityLifecycleCallbacks(new ExtraActivityInjections());
-        this.registerActivityLifecycleCallbacks(new AutoLogger(this.logger));
+        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(
+            this,
+            this.okHttpClient
+        ).build();
+        Fresco.initialize(this, config);
     }
 
     @Override

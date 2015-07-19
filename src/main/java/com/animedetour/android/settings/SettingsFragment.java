@@ -15,16 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.InjectView;
-import butterknife.InjectViews;
+import butterknife.Bind;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
-import com.animedetour.android.framework.Fragment;
+import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
-import com.inkapplications.android.logger.LogName;
+import monolog.LogName;
 import prism.framework.DisplayName;
 
 import javax.inject.Inject;
@@ -41,7 +40,7 @@ import javax.inject.Inject;
  */
 @DisplayName(R.string.settings_title)
 @LogName("Settings")
-final public class SettingsFragment extends Fragment
+final public class SettingsFragment extends BaseFragment
 {
     /**
      * Keeps track of clicks on the version number so we can display dev settings.
@@ -51,16 +50,16 @@ final public class SettingsFragment extends Fragment
     /**
      * Settings that should only be displayed to developers.
      */
-    @InjectViews({R.id.settings_event_generate, R.id.settings_drop_data, R.id.settings_fake_slowdown})
+    @Bind({R.id.settings_event_generate, R.id.settings_drop_data, R.id.settings_fake_slowdown})
     View[] developerViews;
 
-    @InjectView(R.id.settings_event_notification_switch)
+    @Bind(R.id.settings_event_notification_switch)
     Switch eventNotifications;
 
-    @InjectView(R.id.settings_fake_slowdown_switch)
+    @Bind(R.id.settings_fake_slowdown_switch)
     Switch fakeSlowdown;
 
-    @InjectView(R.id.settings_version_label)
+    @Bind(R.id.settings_version_label)
     TextView versionLabel;
 
     @Inject

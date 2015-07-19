@@ -9,10 +9,13 @@
 package com.animedetour.android.framework.dependencyinjection.module;
 
 import android.content.res.Resources;
-import com.inkapplications.android.logger.console.ConsoleLogger;
 import dagger.Module;
 import dagger.Provides;
-import org.apache.commons.logging.Log;
+import monolog.LogLevel;
+import monolog.Monolog;
+import monolog.handler.Handler;
+import monolog.handler.console.ConsoleHandler;
+import monolog.handler.crashy.CrashyHandler;
 
 import javax.inject.Singleton;
 
@@ -27,9 +30,14 @@ import javax.inject.Singleton;
 @Module(library = true, complete = false)
 public class LogModule
 {
-    @Provides @Singleton Log provideLogger(
+    @Provides @Singleton Monolog provideLogger(
         Resources resources
     ) {
-        return new ConsoleLogger(true, true, "AnimeDetour");
+        Handler[] handlers = new Handler[] {
+            new ConsoleHandler("AnimeDetour", LogLevel.ALL),
+            new CrashyHandler(new LogLevel[] { LogLevel.ERROR, LogLevel.FATAL}),
+        };
+
+        return new Monolog(handlers, false);
     }
 }

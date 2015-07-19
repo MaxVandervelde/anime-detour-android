@@ -9,7 +9,7 @@
 package com.animedetour.android.schedule.favorite;
 
 import android.view.View;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import rx.Observer;
 
 import java.util.List;
@@ -26,12 +26,12 @@ public class FavoriteUpdateObserver implements Observer<List<Favorite>>
 {
     private FavoritesFragment fragment;
     private View emptyView;
-    private Log logger;
+    private Monolog logger;
 
     public FavoriteUpdateObserver(
         FavoritesFragment fragment,
         View emptyView,
-        Log logger
+        Monolog logger
     ) {
         this.fragment = fragment;
         this.emptyView = emptyView;

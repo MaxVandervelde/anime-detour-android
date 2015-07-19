@@ -16,7 +16,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.squareup.okhttp.OkHttpClient;
 import dagger.Module;
 import dagger.Provides;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.JacksonConverter;
@@ -40,7 +40,7 @@ final public class ApiModule
     }
 
     @Provides @Singleton RestAdapter provideRestAdapter(
-        final Log logger,
+        final Monolog logger,
         OkHttpClient client
     ) {
         RestAdapter.Builder builder = new RestAdapter.Builder();

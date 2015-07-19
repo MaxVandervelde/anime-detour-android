@@ -13,16 +13,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 import com.animedetour.android.R;
+import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
 import com.animedetour.android.map.HotelMapFragment;
@@ -44,7 +44,7 @@ import javax.inject.Inject;
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Layout(R.layout.main)
-final public class MainActivity extends ActionBarActivity implements SpinnerOptionContainer
+final public class MainActivity extends BaseActivity implements SpinnerOptionContainer
 {
     /**
      * Storage of the current page title.
@@ -66,16 +66,16 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
     /**
      * View of the main sliding left drawer
      */
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @InjectView(R.id.main_action_bar)
+    @Bind(R.id.main_action_bar)
     Toolbar actionBar;
 
-    @InjectView(R.id.drawer_favorites)
+    @Bind(R.id.drawer_favorites)
     View favoritesOption;
 
-    @InjectView(R.id.spinner_nav)
+    @Bind(R.id.spinner_nav)
     Spinner spinner;
 
     @Inject
@@ -133,7 +133,7 @@ final public class MainActivity extends ActionBarActivity implements SpinnerOpti
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState)
+    public void onSaveInstanceState(Bundle outState)
     {
         this.spinnerSelection = this.spinner.getSelectedItemPosition();
         this.pageTitle = this.drawerController.getPageTitle();

@@ -10,7 +10,7 @@ package com.animedetour.android.settings;
 
 import android.content.SharedPreferences;
 import com.animedetour.android.analytics.EventFactory;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,10 +24,10 @@ import javax.inject.Singleton;
 final public class PreferenceManager
 {
     final private SharedPreferences preferences;
-    final private Log logger;
+    final private Monolog logger;
 
     @Inject
-    public PreferenceManager(SharedPreferences preferences, Log logger)
+    public PreferenceManager(SharedPreferences preferences, Monolog logger)
     {
         this.preferences = preferences;
         this.logger = logger;

@@ -17,7 +17,7 @@ import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.settings.PreferenceManager;
 import com.animedetour.api.sched.api.model.Event;
-import org.apache.commons.logging.Log;
+import monolog.Monolog;
 import org.joda.time.DateTime;
 
 import javax.inject.Inject;
@@ -32,7 +32,7 @@ import java.sql.SQLException;
 @Singleton
 public class EventNotificationManager
 {
-    final private Log logger;
+    final private Monolog logger;
     final private PreferenceManager preferenceManager;
     final private FavoriteRepository favoriteData;
     final private AlarmManager alarmManager;
@@ -40,7 +40,7 @@ public class EventNotificationManager
 
     @Inject
     public EventNotificationManager(
-        Log logger,
+        Monolog logger,
         PreferenceManager preferenceManager,
         FavoriteRepository favoriteData,
         AlarmManager alarmManager,
