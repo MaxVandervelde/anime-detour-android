@@ -31,6 +31,7 @@ import icepick.Icicle;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -45,6 +46,7 @@ import java.util.List;
  */
 @DisplayName(R.string.favorites_title)
 @LogName("Favorites")
+@Layout(R.layout.schedule_day)
 final public class FavoritesFragment extends BaseFragment implements ViewClickListener<PanelView, Event>
 {
     @Inject
@@ -69,14 +71,6 @@ final public class FavoritesFragment extends BaseFragment implements ViewClickLi
     EventPalette palette;
 
     private ItemAdapter<PanelView, Favorite> adapter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.schedule_day, container, false);
-
-        return view;
-    }
 
     @Override
     public void onStart()

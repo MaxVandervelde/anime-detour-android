@@ -30,6 +30,7 @@ import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.otto.Subscribe;
 import icepick.Icicle;
 import org.joda.time.DateTime;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ import javax.inject.Inject;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
+@Layout(R.layout.schedule_day)
 final public class DayFragment extends BaseFragment
 {
     @Inject
@@ -74,14 +76,6 @@ final public class DayFragment extends BaseFragment
     public DayFragment(DateTime day)
     {
         this.day = day;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.schedule_day, container, false);
-
-        return view;
     }
 
     @Override
