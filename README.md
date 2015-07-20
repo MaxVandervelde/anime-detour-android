@@ -7,8 +7,8 @@ Requirements
 ------------
 
 This project requires Java 1.7 and the Android SDK including:
- * Android 21 SDK
- * Build Tools 21.0.3
+ * Android 22 SDK
+ * Build Tools 22.0.1
  * Android Support Repository
  * Android Support Library
  * Google Repository
@@ -23,7 +23,7 @@ in the `gradle.properties` file. A stub of this file can be found in
 and change the password inside the copied file.
 If you are not creating a release, you can leave the temporary password in place.
 
-### Debug ###
+### Development / Debug ###
 
 The debug / development version of the application can be installed by just 
 running the command:
