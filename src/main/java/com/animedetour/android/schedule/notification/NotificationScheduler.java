@@ -11,7 +11,7 @@ package com.animedetour.android.schedule.notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.animedetour.android.framework.Application;
+import com.animedetour.android.framework.DetourApplication;
 import monolog.Monolog;
 import prism.framework.PrismKernel;
 
@@ -36,7 +36,7 @@ public class NotificationScheduler extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Application application = (Application) context.getApplicationContext();
+        DetourApplication application = (DetourApplication) context.getApplicationContext();
         PrismKernel prismKernel = new PrismKernel(application);
         prismKernel.bootstrap(this);
 
