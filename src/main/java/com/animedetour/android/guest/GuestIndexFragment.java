@@ -10,9 +10,6 @@ package com.animedetour.android.guest;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
@@ -23,6 +20,7 @@ import com.inkapplications.groundcontrol.SubscriptionManager;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -35,6 +33,7 @@ import java.util.ArrayList;
  */
 @DisplayName(R.string.guests_title)
 @LogName("Guests")
+@Layout(R.layout.guest_category_index)
 public class GuestIndexFragment extends BaseFragment
 {
     @Inject
@@ -51,14 +50,6 @@ public class GuestIndexFragment extends BaseFragment
 
     @Inject
     SubscriptionManager subscriptionManager;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.guest_category_index, container, false);
-
-        return view;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)

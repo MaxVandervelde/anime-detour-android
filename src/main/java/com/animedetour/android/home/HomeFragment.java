@@ -8,10 +8,6 @@
  */
 package com.animedetour.android.home;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
@@ -21,6 +17,7 @@ import com.inkapplications.groundcontrol.SubscriptionManager;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 import rx.Subscription;
 
 import javax.inject.Inject;
@@ -35,6 +32,7 @@ import javax.inject.Inject;
  */
 @DisplayName(R.string.home_title)
 @LogName("Home")
+@Layout(R.layout.landing)
 final public class HomeFragment extends BaseFragment
 {
     @Inject
@@ -54,14 +52,6 @@ final public class HomeFragment extends BaseFragment
 
     @Inject
     FeaturedUpdaterFactory updaterFactory;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.landing, container, false);
-
-        return view;
-    }
 
     @Override
     public void onResume()

@@ -10,9 +10,6 @@ package com.animedetour.android.schedule;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
@@ -21,6 +18,7 @@ import com.squareup.otto.Bus;
 import monolog.LogName;
 import org.joda.time.DateTime;
 import prism.framework.DisplayName;
+import prism.framework.Layout;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ import java.util.List;
  */
 @DisplayName(R.string.schedule_title)
 @LogName("Schedule")
+@Layout(R.layout.schedule_pager)
 final public class ScheduleFragment extends BaseFragment
 {
     @Bind(R.id.event_days)
@@ -48,14 +47,6 @@ final public class ScheduleFragment extends BaseFragment
 
     @Inject
     EventFilterUpdater filterUpdater;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.schedule_pager, container, false);
-
-        return view;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
