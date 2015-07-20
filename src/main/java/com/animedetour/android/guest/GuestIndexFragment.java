@@ -10,9 +10,6 @@ package com.animedetour.android.guest;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
