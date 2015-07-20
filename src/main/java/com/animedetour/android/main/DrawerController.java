@@ -12,10 +12,10 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
 import com.animedetour.android.R;
 import com.animedetour.android.database.favorite.FavoriteRepository;
@@ -89,7 +89,7 @@ public class DrawerController extends ActionBarDrawerToggle
     {
         super.syncState();
 
-        if (this.layout.isDrawerOpen(Gravity.START)) {
+        if (this.layout.isDrawerOpen(GravityCompat.START)) {
             this.toolbar.setTitle(R.string.app_name);
         } else {
             this.toolbar.setTitle(this.title);
@@ -208,7 +208,7 @@ public class DrawerController extends ActionBarDrawerToggle
      */
     public void closeDrawer()
     {
-        this.layout.closeDrawer(Gravity.START);
+        this.layout.closeDrawer(GravityCompat.START);
     }
 
     /**
