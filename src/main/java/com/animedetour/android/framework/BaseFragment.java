@@ -21,6 +21,14 @@ import prism.framework.PrismFacade;
 
 import javax.inject.Inject;
 
+/**
+ * A boilerplate fragment pre-configured to run framework utilities.
+ *
+ * Do not put logic in this class, it is not an acceptable place for reusable
+ * code as not *all* fragments have to extend from this class.
+ *
+ * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
+ */
 public class BaseFragment extends android.support.v4.app.Fragment
 {
     @Inject
@@ -50,7 +58,8 @@ public class BaseFragment extends android.support.v4.app.Fragment
         return super.getView();
     }
 
-    @Override public void onCreate(Bundle savedInstanceState)
+    @Override
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
@@ -72,7 +81,8 @@ public class BaseFragment extends android.support.v4.app.Fragment
         this.applicationBus.unregister(this);
     }
 
-    @Override public void onSaveInstanceState(Bundle outState)
+    @Override
+    public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
 
