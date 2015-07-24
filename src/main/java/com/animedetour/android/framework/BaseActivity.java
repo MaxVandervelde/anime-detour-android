@@ -36,6 +36,7 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle bundle)
     {
+        super.onSaveInstanceState(bundle);
         Icepick.saveInstanceState(this, bundle);
     }
 }
