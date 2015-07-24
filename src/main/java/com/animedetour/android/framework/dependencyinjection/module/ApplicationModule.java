@@ -14,6 +14,7 @@ import android.content.Context;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
+import com.animedetour.android.framework.DetourApplication;
 import com.animedetour.android.schedule.notification.NotificationScheduler;
 import com.animedetour.api.ApiModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -39,7 +40,7 @@ import java.io.File;
         LogModule.class,
     },
     injects = {
-        com.animedetour.android.framework.Application.class,
+        DetourApplication.class,
         NotificationScheduler.class,
     },
     staticInjections = { ApplicationModule.EagerSingletons.class },

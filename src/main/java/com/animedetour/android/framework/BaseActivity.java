@@ -17,6 +17,14 @@ import prism.framework.PrismFacade;
 
 import javax.inject.Inject;
 
+/**
+ * A boilerplate activity pre-configured to run framework utilities.
+ *
+ * Do not put logic in this class, it is not an acceptable place for reusable
+ * code as not *all* activities have to extend from this class.
+ *
+ * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
+ */
 public class BaseActivity extends AppCompatActivity
 {
     @Inject

@@ -13,7 +13,7 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/Theme.AnimeDetour"
-        android:name=".framework.Application"
+        android:name=".framework.DetourApplication"
     >
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyBdBsLmgR18zQ1DxiGIBNEDvwU1jbzzuxY"/>

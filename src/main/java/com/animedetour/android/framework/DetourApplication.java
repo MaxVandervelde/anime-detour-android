@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,7 +25,21 @@ import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-final public class Application extends android.app.Application implements GraphContext, KernelContext
+/**
+ * Main application class for the Android app.
+ *
+ * This class is used for initializing global singletons and bootstrapped
+ * frameworks.
+ * It also functions as the primary graph container for Dependency Injection
+ * modules.
+ *
+ * It is not advised to cast an application context to this class or use it
+ * directly.
+ *
+ * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
+ */
+final public class DetourApplication extends android.app.Application
+    implements GraphContext, KernelContext
 {
     private PrismKernel kernel;
 
