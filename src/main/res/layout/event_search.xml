@@ -33,6 +33,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
         />
+        <ListView
+            android:background="@color/background_dim"
+            android:id="@+id/event_search_filters"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        />
         <RelativeLayout
             android:id="@+id/search_empty_view"
             android:orientation="vertical"

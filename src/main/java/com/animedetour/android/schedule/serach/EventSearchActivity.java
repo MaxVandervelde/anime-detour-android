@@ -17,12 +17,14 @@ import android.view.View;
 import android.widget.ListView;
 import butterknife.Bind;
 import com.animedetour.android.R;
+import com.animedetour.android.database.event.type.EventTypeRepository;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.LogName;
+import monolog.Monolog;
 import prism.framework.Layout;
 
 import javax.inject.Inject;
@@ -32,6 +34,8 @@ import javax.inject.Inject;
  *
  * This has a search bar for the user to type in and filters down the events
  * by their search criteria.
+ * If the user has not typed anything in the search bar, it will display the
+ * user filters that they can search by.
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
@@ -48,6 +52,9 @@ final public class EventSearchActivity extends BaseActivity
     @Bind(R.id.event_search_results)
     ListView results;
 
+    @Bind(R.id.event_search_filters)
+    ListView filters;
+
     @Bind(R.id.search_empty_view)
     View emptyView;
 
@@ -56,6 +63,12 @@ final public class EventSearchActivity extends BaseActivity
 
     @Inject
     QueryListenerFactory queryListenerFactory;
+
+    @Inject
+    EventTypeRepository filterData;
+
+    @Inject
+    Monolog logger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -75,8 +88,22 @@ final public class EventSearchActivity extends BaseActivity
         this.searchBar.requestFocusFromTouch();
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.results.setAdapter(adapter);
+        final ItemAdapter<FilterItemView, String> filterAdapter = new ItemAdapter<>(new FilterViewBinder(this));
+        this.filters.setAdapter(filterAdapter);
+        this.filterData.findAllCategories(
+            new EventTypeObserver(
+                this.logger,
+                this.emptyView,
+                filterAdapter
+            )
+        );
 
-        OnQueryTextListener queryListener = this.queryListenerFactory.create(adapter, emptyView);
+        OnQueryTextListener queryListener = this.queryListenerFactory.create(
+            adapter,
+            this.emptyView,
+            this.results,
+            this.filters
+        );
         this.searchBar.setOnQueryTextListener(queryListener);
     }
 
