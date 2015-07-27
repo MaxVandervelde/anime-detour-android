@@ -88,14 +88,11 @@ final public class EventSearchActivity extends BaseActivity
         this.searchBar.requestFocusFromTouch();
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.results.setAdapter(adapter);
-        final ItemAdapter<FilterItemView, String> filterAdapter = new ItemAdapter<>(new FilterViewBinder(this));
+        FilterViewBinder filterBinder = new FilterViewBinder(this, this.searchBar);
+        ItemAdapter<FilterItemView, String> filterAdapter = new ItemAdapter<>(filterBinder);
         this.filters.setAdapter(filterAdapter);
         this.filterData.findAllCategories(
-            new EventTypeObserver(
-                this.logger,
-                this.emptyView,
-                filterAdapter
-            )
+            new EventTypeObserver(this.logger, this.emptyView, filterAdapter)
         );
 
         OnQueryTextListener queryListener = this.queryListenerFactory.create(

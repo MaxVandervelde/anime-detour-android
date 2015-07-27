@@ -9,12 +9,10 @@
 package com.animedetour.android.schedule.serach;
 
 import android.content.Context;
-import android.view.View;
+import android.support.v7.widget.SearchView;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
-import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 
 /**
  * Creates and binds filter item views to the available filter data set.
@@ -24,10 +22,12 @@ import com.inkapplications.android.widget.recyclerview.ViewClickListener;
 public class FilterViewBinder implements ItemViewBinder<FilterItemView, String>
 {
     final private Context context;
+    final private FilterSelectionListener selectionListener;
 
-    public FilterViewBinder(Context context)
+    public FilterViewBinder(Context context, SearchView searchView)
     {
         this.context = context;
+        this.selectionListener = new FilterSelectionListener(searchView);
     }
 
     @Override
@@ -37,15 +37,9 @@ public class FilterViewBinder implements ItemViewBinder<FilterItemView, String>
     }
 
     @Override
-    public void bindView(String o, FilterItemView view)
+    public void bindView(String type, FilterItemView view)
     {
-        view.setTitle(o);
-        view.setOnClickListener(new ItemBoundClickListener<>(o,
-            new ViewClickListener<View, String>() {
-                @Override public void onViewClicked(String s, View view) {
-                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                }
-            }
-        ));
+        view.setTitle(type);
+        view.setOnClickListener(new ItemBoundClickListener<>(type, this.selectionListener));
     }
 }

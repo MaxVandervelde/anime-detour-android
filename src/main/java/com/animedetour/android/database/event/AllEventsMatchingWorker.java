@@ -18,8 +18,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Looks up a list of all locally stored events by a specified date after
- * syncing with the API.
+ * Looks up a list of all locally stored events that match a search query from
+ * the user.
+ *
+ * Events are matched *roughly* by name, and will match if the exact query
+ * matches the event type, to allow for filtering.
  *
  * Events will be any that *start* on the specified date and ordered by start
  * time.
@@ -49,7 +52,8 @@ public class AllEventsMatchingWorker extends SyncEventsWorker
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         builder.orderBy("start", true);
         builder.orderBy("name", true);
-        builder.where().like("name","%" + this.criteria + "%");
+        builder.where().like("name","%" + this.criteria + "%")
+                .or().eq("eventType", this.criteria);
 
         PreparedQuery<Event> query = builder.prepare();
         List<Event> result = this.localAccess.query(query);
