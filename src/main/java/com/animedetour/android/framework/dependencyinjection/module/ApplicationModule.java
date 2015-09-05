@@ -11,6 +11,7 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
@@ -66,6 +67,13 @@ final public class ApplicationModule
     public AlarmManager alarmManager(Application context)
     {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    public InputMethodManager inputMethodManager(Application context)
+    {
+        return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Provides

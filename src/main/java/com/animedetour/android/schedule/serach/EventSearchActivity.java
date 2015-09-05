@@ -97,6 +97,7 @@ final public class EventSearchActivity extends BaseActivity
 
         OnQueryTextListener queryListener = this.queryListenerFactory.create(
             adapter,
+            this.searchBar,
             this.emptyView,
             this.results,
             this.filters
