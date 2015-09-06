@@ -10,12 +10,15 @@ package com.animedetour.android.schedule.serach;
 
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
+import rx.Observer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * Creates instances of the query listener to be used for watching search
@@ -29,18 +32,43 @@ public class QueryListenerFactory
 {
     final private ResultObserverFactory resultObserverFactory;
     final private EventRepository eventData;
+    final private InputMethodManager inputManager;
 
     @Inject
     public QueryListenerFactory(
         ResultObserverFactory resultObserverFactory,
-        EventRepository eventData
+        EventRepository eventData,
+        InputMethodManager inputManager
     ) {
         this.resultObserverFactory = resultObserverFactory;
         this.eventData = eventData;
+        this.inputManager = inputManager;
     }
 
-    public SearchView.OnQueryTextListener create(ItemAdapter<?, Event> adapter, View emptyView)
-    {
-        return new EventQueryListener(this.eventData, this.resultObserverFactory.create(adapter, emptyView));
+    /**
+     * @param adapter Adapter for displaying search result views.
+     * @param emptyResultsView View to display when there are no results for
+     *                         the search query.
+     * @param results View that the search results will be displayed in.
+     * @param emptySearchView View to display when the search query is empty.
+     * @return Listener to be bound to the search box.
+     */
+    public SearchView.OnQueryTextListener create(
+        ItemAdapter<?, Event> adapter,
+        View searchBar,
+        View emptyResultsView,
+        View results,
+        View emptySearchView
+    ) {
+        Observer<List<Event>> observer = this.resultObserverFactory.create(adapter, emptyResultsView);
+
+        return new EventQueryListener(
+            this.inputManager,
+            this.eventData,
+            observer,
+            searchBar,
+            results,
+            emptySearchView
+        );
     }
 }

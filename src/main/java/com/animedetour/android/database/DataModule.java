@@ -15,6 +15,8 @@ import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.event.FetchedEventMetrics;
 import com.animedetour.android.database.event.UpcomingEventByTypeFactory;
 import com.animedetour.android.database.event.UpcomingEventsByTagFactory;
+import com.animedetour.android.database.event.type.AllEventTypesWorker;
+import com.animedetour.android.database.event.type.EventTypeRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
 import com.animedetour.android.database.guest.AllCategoriesWorker;
@@ -106,6 +108,24 @@ final public class DataModule
             GetAllFavoritesWorker collectionWorker = new GetAllFavoritesWorker(local, eventLocal);
 
             return new FavoriteRepository(local, collectionWorker);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Provides
+    @Singleton
+    public EventTypeRepository eventTypeRepository(ConnectionSource connectionSource)
+    {
+        Scheduler main = AndroidSchedulers.mainThread();
+        Scheduler io = Schedulers.io();
+        SubscriptionFactory<String> subscriptionFactory = new SubscriptionFactory<>(io, main);
+
+        try {
+            Dao<Event, String> local = DaoManager.createDao(connectionSource, Event.class);
+            AllEventTypesWorker worker = new AllEventTypesWorker(local);
+
+            return new EventTypeRepository(subscriptionFactory, worker);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
