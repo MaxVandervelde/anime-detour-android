@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<lint>
+    <issue id="InvalidPackage">
+        <ignore regexp="java\.awt.*" />
+        <ignore regexp="javax\.swing.*" />
+    </issue>
+</lint>
