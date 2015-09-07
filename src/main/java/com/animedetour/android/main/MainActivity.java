@@ -31,7 +31,7 @@ import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.settings.SettingsFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import icepick.Icicle;
+import icepick.State;
 import prism.framework.Layout;
 
 import javax.inject.Inject;
@@ -52,7 +52,8 @@ final public class MainActivity extends BaseActivity implements SpinnerOptionCon
      * This is used for when the drawer is opened/closed and the title is
      * swapped with the application title
      */
-    @Icicle String pageTitle;
+    @State
+    String pageTitle;
 
     /**
      * Storage of the current spinner selected option, if available.
@@ -60,7 +61,7 @@ final public class MainActivity extends BaseActivity implements SpinnerOptionCon
      * This is used to maintain state in the navigation spinner when the
      * application is paused in instances like rotation.
      */
-    @Icicle
+    @State
     int spinnerSelection;
 
     /**
