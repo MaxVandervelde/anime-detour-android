@@ -20,7 +20,7 @@ import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import icepick.Icicle;
+import icepick.State;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
@@ -51,7 +51,7 @@ final public class FavoritesFragment extends BaseFragment
     @Bind(R.id.panel_list)
     ListView panelList;
 
-    @Icicle
+    @State
     int scrollPosition = 0;
 
     @Bind(R.id.panel_empty_view)

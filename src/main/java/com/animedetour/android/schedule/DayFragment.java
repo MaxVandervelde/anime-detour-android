@@ -26,7 +26,7 @@ import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
 import com.squareup.otto.Subscribe;
-import icepick.Icicle;
+import icepick.State;
 import org.joda.time.DateTime;
 import prism.framework.Layout;
 import rx.Subscription;
@@ -61,10 +61,10 @@ final public class DayFragment extends BaseFragment
     @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
-    @Icicle
+    @State
     DateTime day;
 
-    @Icicle
+    @State
     int scrollPosition = 0;
 
     private EventUpdateObserver eventUpdateObserver;
