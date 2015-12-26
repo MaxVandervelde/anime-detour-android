@@ -19,13 +19,10 @@ import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.BaseFragment;
-import com.animedetour.android.main.SpinnerOptionContainer;
-import com.animedetour.android.main.SubNavigationSelectionChange;
 import com.animedetour.android.schedule.serach.EventSearchActivity;
 import com.animedetour.api.sched.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import com.squareup.otto.Subscribe;
 import icepick.State;
 import org.joda.time.DateTime;
 import prism.framework.Layout;
@@ -98,8 +95,6 @@ final public class DayFragment extends BaseFragment
     public void onResume()
     {
         super.onResume();
-
-        this.initializeFilter();
         this.updateEvents();
     }
 
@@ -129,35 +124,6 @@ final public class DayFragment extends BaseFragment
     {
         super.onViewStateRestored(savedInstanceState);
         this.eventUpdateObserver.setScrollPosition(this.scrollPosition);
-    }
-
-    @Subscribe
-    public void onFilterChange(SubNavigationSelectionChange event)
-    {
-        this.eventUpdateObserver.displayFiltered(event.getSelection());
-    }
-
-    /**
-     * Set up the events to be filtered on a type that is specified by the
-     * spinner selection in the main navigation.
-     *
-     * Assuming the attached activity has a spinner, this changes the displayed
-     * filter to whatever is selected. It is intended to be called during the
-     * start of the fragment so that upon initialization, rotation, or resume
-     * of the activity, these filters remain in-tact.
-     *
-     * Since the selection might change while this fragment is paused, the
-     * selection cannot be stored here. So, we store it in the parent activity
-     * under a container interface.
-     *
-     * @todo Look into refactoring this so that we don't have to check/cast the activity.
-     */
-    private void initializeFilter()
-    {
-        if (this.getActivity() instanceof SpinnerOptionContainer) {
-            SpinnerOptionContainer container = (SpinnerOptionContainer) this.getActivity();
-            this.eventUpdateObserver.displayFiltered(container.getSpinnerSelection());
-        }
     }
 
     /**
