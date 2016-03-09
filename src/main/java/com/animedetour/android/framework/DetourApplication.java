@@ -9,12 +9,14 @@
 package com.animedetour.android.framework;
 
 import android.app.Activity;
+import com.animedetour.android.database.persiseter.ImplodedListPersister;
 import com.animedetour.android.framework.dependencyinjection.module.ActivityModule;
 import com.animedetour.android.framework.dependencyinjection.module.ApplicationModule;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.inkapplications.prism.ApplicationCallback;
+import com.j256.ormlite.field.DataPersisterManager;
 import com.squareup.okhttp.OkHttpClient;
 import dagger.ObjectGraph;
 import prism.framework.GraphContext;
@@ -53,6 +55,8 @@ final public class DetourApplication extends android.app.Application
     public void onCreate()
     {
         super.onCreate();
+
+        DataPersisterManager.registerDataPersisters(new ImplodedListPersister());
 
         this.kernel = new PrismKernel(this);
         this.kernel.bootstrap(this);

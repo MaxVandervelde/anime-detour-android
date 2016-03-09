@@ -8,8 +8,8 @@
  */
 package com.animedetour.android.database.favorite;
 
+import com.animedetour.android.model.Event;
 import com.animedetour.android.schedule.favorite.Favorite;
-import com.animedetour.api.sched.model.Event;
 import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;

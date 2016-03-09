@@ -9,7 +9,7 @@
 package com.animedetour.android.schedule;
 
 import com.animedetour.android.main.NavigationSubContentUpdate;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.squareup.otto.Bus;
 import monolog.Monolog;
 import rx.Observer;
@@ -63,10 +63,10 @@ final public class EventFilterUpdater implements Observer<List<Event>>
         types.add(ALL_EVENTS);
 
         for (Event event : events) {
-            if (null == event.getEventType()) {
+            if (null == event.getCategory()) {
                 continue;
             }
-            types.add(event.getEventType());
+            types.add(event.getCategory());
         }
 
         this.applicationBus.post(new NavigationSubContentUpdate(types));

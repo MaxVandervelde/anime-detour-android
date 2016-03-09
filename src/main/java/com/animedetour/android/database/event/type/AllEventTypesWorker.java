@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.database.event.type;
 
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.inkapplications.groundcontrol.SingleYieldWorker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -37,14 +37,14 @@ public class AllEventTypesWorker extends SingleYieldWorker<List<String>>
     public List<String> lookupLocal() throws SQLException
     {
         QueryBuilder<Event, String> query = this.localAccess.queryBuilder();
-        query.selectColumns("eventType");
+        query.selectColumns("category");
         query.distinct();
 
         List<Event> events = query.query();
         List<String> result = new ArrayList<>();
 
         for (Event event : events) {
-            result.add(event.getEventType());
+            result.add(event.getCategory());
         }
 
         return result;

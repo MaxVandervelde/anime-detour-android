@@ -14,9 +14,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.animedetour.android.database.favorite.FavoriteRepository;
+import com.animedetour.android.model.Event;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.settings.PreferenceManager;
-import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 import org.joda.time.DateTime;
 
@@ -67,7 +67,7 @@ public class EventNotificationManager
             return;
         }
 
-        DateTime notificationTime = event.getStartDateTime().minusMinutes(15);
+        DateTime notificationTime = event.getStart().minusMinutes(15);
         if (notificationTime.isBeforeNow()) {
             return;
         }

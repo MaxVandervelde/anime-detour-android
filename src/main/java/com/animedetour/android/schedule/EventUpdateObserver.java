@@ -10,7 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.view.View;
 import android.widget.ListView;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.Monolog;
 import rx.Observer;
@@ -117,7 +117,7 @@ public class EventUpdateObserver implements Observer<List<Event>>
         }
 
         for (Event event : this.events) {
-            String type = event.getEventType();
+            String type = event.getCategory();
             if (null ==  type || false == type.equals(filterType)) {
                 continue;
             }

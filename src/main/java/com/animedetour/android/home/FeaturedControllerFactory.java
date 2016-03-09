@@ -9,7 +9,7 @@
 package com.animedetour.android.home;
 
 import android.app.Activity;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import monolog.Monolog;
 
 import javax.inject.Inject;

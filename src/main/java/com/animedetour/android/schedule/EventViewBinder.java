@@ -10,7 +10,7 @@ package com.animedetour.android.schedule;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 
@@ -61,7 +61,7 @@ public class EventViewBinder implements ItemViewBinder<PanelView, Event>
         view.reset();
         view.bind(event);
 
-        String eventType = event.getEventType();
+        String eventType = event.getCategory();
         view.setLabelColor(this.eventPalette.getColor(eventType));
 
         view.setOnClickListener(new ItemBoundClickListener<>(event, this.clickListener));

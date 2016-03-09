@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.animedetour.android.R;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -131,15 +131,15 @@ public class PanelView extends RelativeLayout
      */
     public void bind(Event event)
     {
-        String timeRange = this.getTimeRangeString(event.getStartDateTime(), event.getEndDateTime());
+        String timeRange = this.getTimeRangeString(event.getStart(), event.getEnd());
         String inPreposition = this.getContext().getString(R.string.in_preposition);
-        String venue = event.getVenue();
+        String venue = event.getRoom();
         String fullDescription = timeRange + " " + inPreposition + " " + venue;
 
         this.setDescription(fullDescription);
         this.setTitle(event.getName());
 
-        if (event.getStartDateTime().isBeforeNow()) {
+        if (event.getStart().isBeforeNow()) {
             this.fadeOverlay.setVisibility(VISIBLE);
         } else {
             this.fadeOverlay.setVisibility(GONE);
