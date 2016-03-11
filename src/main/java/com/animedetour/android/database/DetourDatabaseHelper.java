@@ -10,10 +10,10 @@ package com.animedetour.android.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import com.animedetour.android.model.Event;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
-import com.animedetour.api.sched.model.Event;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -28,14 +28,13 @@ import java.sql.SQLException;
  *
  * This is used by ORMlite for creating the initial database connections.
  *
- * @todo BEFORE ANY MORE UPGRADES TO FAVORITES - a migration setup must be made.
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
 @Singleton
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     @Inject
     public DetourDatabaseHelper(Context context)
@@ -59,13 +58,25 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion)
     {
+        if (oldVersion < 7) {
+            this.reCreate();
+        }
+    }
+
+    /**
+     * Drop all information and re-create the tables.
+     */
+    private void reCreate()
+    {
         try {
+            TableUtils.dropTable(connectionSource, Favorite.class, true);
             TableUtils.dropTable(connectionSource, Event.class, true);
             TableUtils.dropTable(connectionSource, Guest.class, true);
             TableUtils.dropTable(connectionSource, Category.class, true);
             TableUtils.createTable(connectionSource, Event.class);
             TableUtils.createTable(connectionSource, Category.class);
             TableUtils.createTable(connectionSource, Guest.class);
+            TableUtils.createTable(connectionSource, Favorite.class);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -133,6 +133,8 @@ dependencies {
     compile 'org.joda:joda-convert:1.8.1'
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile "com.facebook.fresco:imagepipeline-okhttp:0.8.1"
+    compile 'org.javatuples:javatuples:1.2'
+    compile 'com.google.guava:guava:18.0'
 
     compile 'com.facebook.stetho:stetho:1.2.0'
     compile 'com.facebook.stetho:stetho-okhttp:1.2.0'

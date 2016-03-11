@@ -12,7 +12,7 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import com.animedetour.android.database.event.EventRepository;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import rx.Observer;
 

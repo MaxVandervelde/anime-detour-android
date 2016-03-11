@@ -71,9 +71,9 @@ final public class ScheduleFragment extends BaseFragment
     final protected List<DateTime> getDays()
     {
         ArrayList<DateTime> days = new ArrayList<>();
-        days.add(new DateTime("2015-03-27"));
-        days.add(new DateTime("2015-03-28"));
-        days.add(new DateTime("2015-03-29"));
+        days.add(new DateTime("2016-04-22"));
+        days.add(new DateTime("2016-04-23"));
+        days.add(new DateTime("2016-04-24"));
 
         return days;
     }

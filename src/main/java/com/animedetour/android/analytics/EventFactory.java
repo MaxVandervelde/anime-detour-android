@@ -8,8 +8,8 @@
  */
 package com.animedetour.android.analytics;
 
+import com.animedetour.android.model.Event;
 import com.animedetour.api.guest.model.Guest;
-import com.animedetour.api.sched.model.Event;
 import monolog.handler.analytics.TrackedEvent;
 
 /**

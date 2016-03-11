@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.animedetour.android.analytics.EventFactory;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.database.favorite.FavoriteRepository;
 import com.animedetour.android.framework.BaseActivity;
+import com.animedetour.android.model.Event;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.android.schedule.notification.EventNotificationManager;
 import com.animedetour.android.view.FinishClickListener;
@@ -30,7 +32,7 @@ import com.animedetour.android.view.StarFloatingActionButton;
 import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.android.view.scrim.ImageScrim;
-import com.animedetour.api.sched.model.Event;
+import com.google.common.base.Joiner;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
@@ -155,7 +157,7 @@ final public class EventActivity extends BaseActivity
         }
         this.bannerView.setTitle(this.event.getName());
 
-        String type = this.event.getEventType();
+        String type = this.event.getCategory();
         this.eventType.setText(type);
         int colorRes = this.eventPalette.getDimColor(type);
         int color = this.getResources().getColor(colorRes);
@@ -163,8 +165,8 @@ final public class EventActivity extends BaseActivity
         int bannerColorRes = this.eventPalette.getColor(type);
         int bannerColor = this.getResources().getColor(bannerColorRes);
         this.bannerView.setBackgroundColor(bannerColor);
-        if (null != this.event.getSpeakers()) {
-            this.speakers.setText(Html.fromHtml(this.event.getSpeakers()));
+        if (null != this.event.getHosts()) {
+            this.speakers.setText(Joiner.on(",").join(this.event.getHosts()));
         } else {
             this.speakers.setText("");
         }
@@ -249,9 +251,9 @@ final public class EventActivity extends BaseActivity
     protected String getEventDetailsString()
     {
         String format = this.getString(R.string.panel_details);
-        Date start = this.event.getStartDateTime().toDate();
-        Date end = this.event.getEndDateTime().toDate();
-        String location = this.event.getVenue();
+        Date start = this.event.getStart().toDate();
+        Date end = this.event.getEnd().toDate();
+        String location = this.event.getRoom();
 
         return String.format(format, start, end, location);
     }
@@ -261,12 +263,12 @@ final public class EventActivity extends BaseActivity
      */
     protected void updateBannerImage()
     {
-        if (null == this.event.getMediaUrl()) {
+        if (null == this.event.getBanner()) {
             return;
         }
 
         this.bannerView.expandImage();
-        this.bannerView.setImage(this.event.getMediaUrl());
+        this.bannerView.setImage(this.event.getBanner());
     }
 
     /**

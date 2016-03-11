@@ -16,8 +16,12 @@ import com.animedetour.android.BuildConfig;
 import com.animedetour.android.R;
 import com.animedetour.android.database.DataModule;
 import com.animedetour.android.framework.DetourApplication;
+import com.animedetour.android.model.Event;
+import com.animedetour.android.model.transformer.ApiEventTransformer;
+import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.android.schedule.notification.NotificationScheduler;
 import com.animedetour.api.ApiModule;
+import com.animedetour.api.sched.model.ApiEvent;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.inkapplications.groundcontrol.SubscriptionManager;
@@ -27,6 +31,8 @@ import com.squareup.okhttp.Cache;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
+import org.javatuples.Pair;
+import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -104,6 +110,13 @@ final public class ApplicationModule
         File cacheDir = new File(application.getCacheDir(), "http");
         long cacheSize = 80 * 1024 * 1024; // 80MB
         return new Cache(cacheDir, cacheSize);
+    }
+
+    @Provides
+    @Singleton
+    public Transformer<Pair<ApiEvent, DateTime>, Event> apiEventTransformer(ApiEventTransformer eventTransformer)
+    {
+        return eventTransformer;
     }
 
     /**

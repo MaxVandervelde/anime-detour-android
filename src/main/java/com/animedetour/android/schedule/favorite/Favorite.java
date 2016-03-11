@@ -8,7 +8,7 @@
  */
 package com.animedetour.android.schedule.favorite;
 
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.android.model.Event;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 

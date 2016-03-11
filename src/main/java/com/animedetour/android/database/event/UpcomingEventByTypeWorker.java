@@ -8,13 +8,17 @@
  */
 package com.animedetour.android.database.event;
 
+import com.animedetour.android.model.Event;
+import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.api.sched.ScheduleEndpoint;
-import com.animedetour.api.sched.model.Event;
+import com.animedetour.api.sched.model.ApiEvent;
+import com.inkapplications.PairMerge;
 import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import rx.Subscriber;
 
@@ -31,19 +35,19 @@ public class UpcomingEventByTypeWorker implements Worker<Event>
 {
     final private Dao<Event, String> localAccess;
     final private ScheduleEndpoint remoteAccess;
-    final private FetchedEventMetrics fetchedEventMetrics;
     final private TypeCriteria criteria;
+    final private Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer;
 
     public UpcomingEventByTypeWorker(
         Dao<Event, String> localAccess,
         ScheduleEndpoint remoteAccess,
-        FetchedEventMetrics fetchedEventMetrics,
+        Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer,
         TypeCriteria type
     ) {
         this.localAccess = localAccess;
         this.remoteAccess = remoteAccess;
-        this.fetchedEventMetrics = fetchedEventMetrics;
         this.criteria = type;
+        this.eventTransformer = eventTransformer;
     }
 
     @Override
@@ -66,14 +70,10 @@ public class UpcomingEventByTypeWorker implements Worker<Event>
         Event currentEvents = this.lookupLocal();
         subscriber.onNext(currentEvents);
 
-        if (false == this.fetchedEventMetrics.dataIsStale()) {
-            return;
-        }
+        List<ApiEvent> apiEvents = this.remoteAccess.getSchedule();
+        List<Pair<ApiEvent, DateTime>> fetchedEvents = PairMerge.mergeRight(apiEvents, new DateTime());
 
-        Event mostRecent = this.fetchedEventMetrics.getMostRecentUpdated();
-        long since = mostRecent == null ? 0 : mostRecent.getFetched().getMillis();
-
-        List<Event> events = this.remoteAccess.getSchedule(since);
+        List<Event> events = this.eventTransformer.bulkTransform(fetchedEvents);
         this.saveLocal(events);
 
         Event newEvent = this.lookupLocal();
@@ -94,7 +94,7 @@ public class UpcomingEventByTypeWorker implements Worker<Event>
     {
         QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
         Where<Event, String> where = builder.where();
-        where.eq("eventType", this.criteria.getType());
+        where.eq("category", this.criteria.getType());
         where.and();
         where.gt("start", new DateTime());
         builder.orderBy("start", true);

@@ -9,8 +9,8 @@
 package com.animedetour.android.home;
 
 import android.view.View;
+import com.animedetour.android.model.Event;
 import com.animedetour.android.view.scrim.ImageScrim;
-import com.animedetour.api.sched.model.Event;
 import monolog.Monolog;
 import rx.Observer;
 
@@ -62,12 +62,12 @@ final class FeaturedUpdater implements Observer<Event>
         this.preview.setTitle(event.getName());
         this.preview.setOnClickListener(controller);
 
-        if (null == event.getMediaUrl()) {
+        if (null == event.getBanner()) {
             return;
         }
 
         this.preview.setImage(null);
         this.preview.expandImage();
-        this.preview.setImage(event.getMediaUrl());
+        this.preview.setImage(event.getBanner());
     }
 }
