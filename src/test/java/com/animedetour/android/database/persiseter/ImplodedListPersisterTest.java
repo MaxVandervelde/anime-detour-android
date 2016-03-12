@@ -19,6 +19,10 @@ public class ImplodedListPersisterTest
 {
     private final ImplodedListPersister subject = new ImplodedListPersister();
 
+    /**
+     * Make sure the perister can convert the comma-separated values as they
+     * are in the database into a proper java list.
+     */
     @Test
     public void testSqlArgToJava() throws Exception
     {
@@ -31,6 +35,10 @@ public class ImplodedListPersisterTest
         assertEquals("baz", result.get(2));
     }
 
+    /**
+     * Make sure the persister can convert a java list into a proper
+     * comma-separated value string to be inserted into the database.
+     */
     @Test
     public void testJavaToSqlArg() throws Exception
     {
@@ -38,5 +46,17 @@ public class ImplodedListPersisterTest
         String result = (String) this.subject.javaToSqlArg(null, arguments);
 
         assertEquals("foo,bar,baz", result);
+    }
+
+    /**
+     * Objects that are already strings should be allowed to be passed directly
+     * into the database unchanged.
+     */
+    @Test
+    public void testSearchArgToSqlArg() throws Exception
+    {
+        String result = (String) this.subject.javaToSqlArg(null, "%test%");
+
+        assertEquals("%test%", result);
     }
 }
