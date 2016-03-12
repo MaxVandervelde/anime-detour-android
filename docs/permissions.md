@@ -7,9 +7,8 @@ The goal of this document is to track the purpose of each permission request.
 Network & Storage
 -----------------
 
-The permissions `INTERNET`, `ACCESS_NETWORK_STATE`, and `WRITE_EXTERNAL_STORAGE`
-are required for fetching event, guest, and other convention data from the
-website and storing a local copy so that they may be accessed offline
+The permissions `INTERNET`and `ACCESS_NETWORK_STATE` are required for fetching
+event, guest, and other convention data from the website.
 
 Run at Startup
 --------------
