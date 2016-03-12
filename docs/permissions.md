@@ -18,10 +18,3 @@ The `RECEIVE_BOOT_COMPLETED` permission is required in order to re-schedule
 notification alarms for panels when the device is rebooted. Android does not
 persist these scheduled alarms when the device is powered off, so we must
 do this at every boot.
-
-Course Location
----------------
-
-The `ACCESS_COARSE_LOCATION` permission is requested so that the app may
-determine when the user is not at the convention in order to provide directions
-only when contextually relevant.
