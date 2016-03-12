@@ -20,6 +20,11 @@ import java.util.List;
 /**
  * Persists a List of Strings to a comma separated string in the database.
  *
+ * When converting to the SQL string type, if a string is provided as an
+ * argument instead of a list the argument will not be modified. This happens
+ * during search queries to the database, since those will be matched on a
+ * string from the application as well.
+ *
  * @author Maxwell Vandervelde <Max@MaxVandervelde.com>
  */
 public class ImplodedListPersister extends StringType
@@ -50,6 +55,10 @@ public class ImplodedListPersister extends StringType
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) throws SQLException
     {
+        if (javaObject instanceof String) {
+            return javaObject;
+        }
+
         if (false == javaObject instanceof List) {
             throw new RuntimeException("Persistence requires that this field be a list");
         }
