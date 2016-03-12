@@ -95,7 +95,7 @@ repositories {
 dependencies {
     compile 'com.github.InkApplications:android-monolog:v0.1.0'
     compile 'com.github.InkApplications:Prism:v1.1.0@aar'
-    compile 'com.inkapplications:android-simple-recycler-view:1.0.0'
+    compile 'com.github.InkApplications:android-simple-recycler-view:v1.0.2'
     compile 'com.github.InkApplications:ground-control:v0.2.0'
 
     compile 'com.android.support:support-v4:23.0.1'

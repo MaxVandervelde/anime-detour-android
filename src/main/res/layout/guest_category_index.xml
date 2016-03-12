@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.inkapplications.android.widget.recyclerview.SimpleRecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/guest_category_index"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@color/background"
-/>
+    android:layout_width="match_parent">
+
+    <com.inkapplications.android.widget.recyclerview.SimpleRecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/guest_category_index"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/background"
+        />
+
+    <include android:id="@+id/guest_category_empty_view" layout="@layout/guests_empty" />
+</LinearLayout>
