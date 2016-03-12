@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_highlight"
->
+    >
     <ImageView
         android:id="@+id/heading_image"
         android:src="@drawable/cat_food_empty"
@@ -18,7 +17,7 @@
         android:paddingRight="24dp"
         android:paddingTop="8dp"
         android:paddingBottom="4dp"
-    />
+        />
     <TextView
         android:id="@+id/title"
         android:gravity="center"
@@ -28,7 +27,7 @@
         style="@style/headline"
         android:textColor="@color/foreground_inverse"
         android:text="@string/list_empty_title"
-    />
+        />
     <TextView
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -38,6 +37,6 @@
         android:layout_height="wrap_content"
         style="@style/subhead"
         android:textColor="@color/foreground_inverse"
-        android:text="@string/schedule_empty_subhead"
-    />
+        android:text="@string/guest_empty_subhead"
+        />
 </RelativeLayout>

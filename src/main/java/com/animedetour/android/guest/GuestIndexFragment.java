@@ -10,21 +10,25 @@ package com.animedetour.android.guest;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import butterknife.Bind;
+import android.view.View;
+
 import com.animedetour.android.R;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.api.guest.model.Guest;
 import com.inkapplications.android.widget.recyclerview.SimpleRecyclerView;
 import com.inkapplications.groundcontrol.SubscriptionManager;
+
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
 import rx.Subscription;
-
-import javax.inject.Inject;
-import java.util.ArrayList;
 
 /**
  * Displays a grid of the guests at Detour.
@@ -41,6 +45,9 @@ public class GuestIndexFragment extends BaseFragment
 
     @Bind(R.id.guest_category_index)
     SimpleRecyclerView<GuestWidgetView, Guest> categoryList;
+
+    @Bind(R.id.guest_category_empty_view)
+    View emptyView;
 
     @Inject
     Monolog log;
@@ -64,7 +71,8 @@ public class GuestIndexFragment extends BaseFragment
     {
         super.onStart();
 
-        CategoryUpdateObserver observer = new CategoryUpdateObserver(this.log, this.categoryList);
+        CategoryUpdateObserver observer = new CategoryUpdateObserver(this.log,
+                this.categoryList, this.emptyView);
         Subscription subscription = this.repository.findAllCategories(observer);
         this.subscriptionManager.add(subscription);
     }
