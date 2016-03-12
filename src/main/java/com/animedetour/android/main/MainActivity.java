@@ -16,8 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
-import butterknife.Bind;
-import butterknife.OnClick;
+
 import com.animedetour.android.R;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
@@ -26,10 +25,13 @@ import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
 import com.animedetour.android.settings.SettingsFragment;
-import icepick.State;
-import prism.framework.Layout;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.OnClick;
+import icepick.State;
+import prism.framework.Layout;
 
 /**
  * Main containing Activity
@@ -72,7 +74,7 @@ final public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
 
-        this.showSystemBarBackround();
+        this.showSystemBarBackground();
         this.setSupportActionBar(this.actionBar);
     }
 
@@ -110,7 +112,7 @@ final public class MainActivity extends BaseActivity
     protected void openLandingFragment()
     {
         this.drawerController.closeToPage(HomeFragment.class);
-        this.contentFragmentTransaction(new HomeFragment());
+        this.contentFragmentTransaction(new HomeFragment(), "home");
     }
 
     /**
@@ -120,35 +122,35 @@ final public class MainActivity extends BaseActivity
     protected void openScheduleFragment()
     {
         this.drawerController.closeToPage(ScheduleFragment.class);
-        this.contentFragmentTransaction(new ScheduleFragment());
+        this.contentFragmentTransaction(new ScheduleFragment(), "schedule");
     }
 
     @OnClick(R.id.drawer_favorites)
     protected void openFavorites()
     {
         this.drawerController.closeToPage(FavoritesFragment.class);
-        this.contentFragmentTransaction(new FavoritesFragment());
+        this.contentFragmentTransaction(new FavoritesFragment(), "favorites");
     }
 
     @OnClick(R.id.drawer_guests)
     protected void openGuests()
     {
         this.drawerController.closeToPage(GuestIndexFragment.class);
-        this.contentFragmentTransaction(new GuestIndexFragment());
+        this.contentFragmentTransaction(new GuestIndexFragment(), "guests");
     }
 
     @OnClick(R.id.drawer_maps)
     protected void openMaps()
     {
         this.drawerController.closeToPage(HotelMapFragment.class);
-        this.contentFragmentTransaction(new HotelMapFragment());
+        this.contentFragmentTransaction(new HotelMapFragment(), "map");
     }
 
     @OnClick(R.id.drawer_settings)
     protected void openSettings()
     {
         this.drawerController.closeToPage(SettingsFragment.class);
-        this.contentFragmentTransaction(new SettingsFragment());
+        this.contentFragmentTransaction(new SettingsFragment(), "settings");
     }
 
     /**
@@ -156,19 +158,32 @@ final public class MainActivity extends BaseActivity
      *
      * @param newFragment The fragment to add to the main content view
      */
-    protected void contentFragmentTransaction(Fragment newFragment)
+    protected void contentFragmentTransaction(Fragment newFragment, String tag)
     {
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
-        transaction.replace(R.id.content_frame, newFragment);
+        transaction.replace(R.id.content_frame, newFragment, tag);
         transaction.commit();
     }
 
     @TargetApi(21)
-    private void showSystemBarBackround()
+    private void showSystemBarBackground()
     {
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        //If we're on a fragment other than home, return to the home fragment.
+        //If we're on the home fragment, function normally.
+        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("home");
+        if (homeFragment != null) {
+            super.onBackPressed();
+        } else {
+            openLandingFragment();
         }
     }
 }
