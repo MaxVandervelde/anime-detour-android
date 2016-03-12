@@ -34,7 +34,7 @@ import java.sql.SQLException;
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     @Inject
     public DetourDatabaseHelper(Context context)
@@ -58,7 +58,7 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion)
     {
-        if (oldVersion < 7) {
+        if (oldVersion < 8) {
             this.reCreate();
         }
     }

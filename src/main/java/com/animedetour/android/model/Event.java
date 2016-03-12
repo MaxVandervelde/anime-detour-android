@@ -37,7 +37,7 @@ public class Event implements Serializable
     final private String id;
 
     /** A short title/name of the event to be referenced as througout the app. */
-    @DatabaseField
+    @DatabaseField(index = true)
     final private String name;
 
     /** The time that the event starts. */
@@ -49,7 +49,7 @@ public class Event implements Serializable
     final private DateTime end;
 
     /** The Type specified for the event. */
-    @DatabaseField
+    @DatabaseField(index = true)
     final private String category;
 
     /**
