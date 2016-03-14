@@ -45,9 +45,6 @@ final public class ScheduleFragment extends BaseFragment
     @Inject
     EventRepository eventData;
 
-    @Inject
-    EventFilterUpdater filterUpdater;
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -59,7 +56,6 @@ final public class ScheduleFragment extends BaseFragment
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
-        this.eventData.findAll(this.filterUpdater);
     }
 
     /**

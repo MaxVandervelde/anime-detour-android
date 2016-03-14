@@ -15,7 +15,6 @@ import com.inkapplications.android.widget.listview.ItemAdapter;
 import monolog.Monolog;
 import rx.Observer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,19 +57,6 @@ public class EventUpdateObserver implements Observer<List<Event>>
      */
     private boolean restored = false;
 
-    /**
-     * The most recent collection of events received.
-     *
-     * This is needed to be used as a reference when changing filters for what
-     * is displayed in the list.
-     */
-    private List<Event> events = new ArrayList<>();
-
-    /**
-     * Currently displayed filter. (default: all)
-     */
-    private String filterType = EventFilterUpdater.ALL_EVENTS;
-
     public EventUpdateObserver(
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
@@ -97,34 +83,7 @@ public class EventUpdateObserver implements Observer<List<Event>>
     @Override
     public void onNext(List<Event> events)
     {
-        this.events = events;
-        this.displayFiltered(this.filterType);
-    }
-
-    /**
-     * Change the events displayed by a specified type filter.
-     *
-     * @param filterType The Event type to only display events of.
-     */
-    public void displayFiltered(String filterType)
-    {
-        this.filterType = filterType;
-        ArrayList<Event> filtered = new ArrayList<>();
-
-        if (null == filterType || filterType.equals(EventFilterUpdater.ALL_EVENTS)) {
-            this.displayEvents(this.events);
-            return;
-        }
-
-        for (Event event : this.events) {
-            String type = event.getCategory();
-            if (null ==  type || false == type.equals(filterType)) {
-                continue;
-            }
-            filtered.add(event);
-        }
-
-        this.displayEvents(filtered);
+        this.displayEvents(events);
     }
 
     /**

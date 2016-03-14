@@ -176,36 +176,11 @@ public class EventRepository
     }
 
     /**
-     * Get All Events on a specific day.
-     *
-     * @return Events that occur on that day (by start time)
-     */
-    public List<Event> getAllOnDay(DateTime day) throws SQLException
-    {
-        return this.allByDayFactory.createWorker(day).lookupLocal();
-    }
-
-    /**
      * Get a specific event by its ID.
      */
     public Event get(String id) throws SQLException
     {
         return this.localAccess.queryForId(id);
-    }
-
-    /**
-     * Fetches the most recently updated event according to fetch time.
-     */
-    public Event getMostRecentUpdated() throws SQLException
-    {
-        QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
-        builder.orderBy("fetched", false);
-
-
-        PreparedQuery<Event> query = builder.prepare();
-        Event result = this.localAccess.queryForFirst(query);
-
-        return result;
     }
 
     public void persist(Event event) throws SQLException
