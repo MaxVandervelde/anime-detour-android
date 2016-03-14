@@ -127,7 +127,7 @@ public class EventUpdateObserver implements Observer<List<Event>>
         }
 
         this.restored = true;
-        this.panelList.smoothScrollToPosition(this.scrollPosition);
+        this.panelList.setSelection(this.scrollPosition);
     }
 
     /**
