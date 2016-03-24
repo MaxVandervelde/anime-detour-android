@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        tools:background="@color/label_attendee_panel"
+                        tools:background="@color/label_panel"
                     >
                         <TextView
                             android:id="@+id/event_type"
