@@ -37,15 +37,15 @@ public class Event implements Serializable
     final private String id;
 
     /** A short title/name of the event to be referenced as througout the app. */
-    @DatabaseField(index = true)
+    @DatabaseField(index = true, indexName = "event_name_start_end")
     final private String name;
 
     /** The time that the event starts. */
-    @DatabaseField(index = true, dataType = DataType.DATE_TIME)
+    @DatabaseField(index = true, indexName = "event_name_start_end", dataType = DataType.DATE_TIME)
     final private DateTime start;
 
     /** The time that the event will end. */
-    @DatabaseField(index = true, dataType = DataType.DATE_TIME)
+    @DatabaseField(index = true, indexName = "event_name_start_end", dataType = DataType.DATE_TIME)
     final private DateTime end;
 
     /** The Type specified for the event. */

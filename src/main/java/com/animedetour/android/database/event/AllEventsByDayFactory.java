@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-final public class AllEventsByDayFactory implements CriteriaWorkerFactory<List<Event>, DateTime>
+final public class AllEventsByDayFactory implements CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>>
 {
     final private Dao<Event, String> localAccess;
     final private ScheduleEndpoint remoteAccess;
@@ -41,13 +41,22 @@ final public class AllEventsByDayFactory implements CriteriaWorkerFactory<List<E
         this.eventTransformer = eventTransformer;
     }
 
-    public Worker<List<Event>> createWorker(DateTime criteria)
+    /**
+     *
+     * @param criteria Tuple consisting of: The date to finds event on, and
+     *                 whether to include ended events in that list.
+     * @return
+     */
+    public Worker<List<Event>> createWorker(Pair<DateTime, Boolean> criteria)
     {
+        DateTime eventDay = criteria.getValue0();
+        Boolean includePast = criteria.getValue1();
+
         return new AllEventsByDayWorker(
             this.localAccess,
             this.remoteAccess,
             this.eventTransformer,
-            criteria
+            new Pair<>(eventDay, includePast)
         );
     }
 }

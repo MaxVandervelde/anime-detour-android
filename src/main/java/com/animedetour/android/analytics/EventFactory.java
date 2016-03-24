@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -46,6 +46,12 @@ final public class EventFactory
     {
         long value = enabled ? 1 : 0;
         return new TrackedEvent("Settings", "Notifications", null, value);
+    }
+
+    public static TrackedEvent togglePastEvents(boolean show)
+    {
+        long value = show ? 1 : 0;
+        return new TrackedEvent("Event", "Toggle Past", null, value);
     }
 
     public static TrackedEvent developerEnabled()
