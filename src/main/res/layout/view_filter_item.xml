@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_filter_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout_height="wrap_content"
-    tools:background="@color/background"
     android:layout_margin="8dp"
     app:elevation="1dp"
     app:cardCornerRadius="0dp"
@@ -20,12 +20,14 @@
         android:paddingRight="16dp"
         android:theme="@style/Theme.AppCompat.Light"
         android:background="?attr/selectableItemBackground"
+        tools:background="@color/background_inverse"
     >
         <TextView
             style="@style/headline"
             android:id="@+id/view_filter_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/foreground_inverse"
             tools:text="Category Title"
         />
     </RelativeLayout>

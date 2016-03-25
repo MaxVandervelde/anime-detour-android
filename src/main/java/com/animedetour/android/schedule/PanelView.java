@@ -57,6 +57,12 @@ public class PanelView extends RelativeLayout
      */
     private TextView ageWarning;
 
+    /**
+     * An icon to indicate that this panel will be ASL interpreted for the hard
+     * of hearing.
+     */
+    private View hoh;
+
     private View color;
 
     /**
@@ -100,6 +106,7 @@ public class PanelView extends RelativeLayout
         this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
         this.color = this.findViewById(R.id.view_panel_color_label);
         this.ageWarning = (TextView) this.findViewById(R.id.view_panel_age_warning);
+        this.hoh = this.findViewById(R.id.icon_hoh);
     }
 
     /**
@@ -159,6 +166,12 @@ public class PanelView extends RelativeLayout
             this.ageWarning.setVisibility(VISIBLE);
         } else {
             this.ageWarning.setVisibility(GONE);
+        }
+
+        if (event.getTags().contains("asl")) {
+            this.hoh.setVisibility(VISIBLE);
+        } else {
+            this.hoh.setVisibility(GONE);
         }
     }
 

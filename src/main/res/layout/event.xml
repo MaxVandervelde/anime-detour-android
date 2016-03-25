@@ -74,6 +74,26 @@
                         android:layout_height="wrap_content"
                         tools:text="Wed, 11:00AM-1:45PM in Room B"
                     />
+                    <LinearLayout
+                        android:id="@+id/event_hoh_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:gravity="center"
+                    >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_hearing_black_24dp"
+                            android:layout_margin="8dp"
+                        />
+                        <TextView
+                            style="@style/body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="This event will be ASL interpreted"
+                        />
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/event_text"
                         style="@style/body1"

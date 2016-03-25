@@ -96,6 +96,9 @@ final public class EventActivity extends BaseActivity
     @Bind(R.id.event_age_warning)
     TextView ageWarning;
 
+    @Bind(R.id.event_hoh_message)
+    View hohMessage;
+
     @Inject
     Monolog logger;
 
@@ -169,6 +172,12 @@ final public class EventActivity extends BaseActivity
             this.ageWarning.setVisibility(View.VISIBLE);
         } else {
             this.ageWarning.setVisibility(View.GONE);
+        }
+
+        if (this.event.getTags().contains("asl")) {
+            this.hohMessage.setVisibility(View.VISIBLE);
+        } else {
+            this.hohMessage.setVisibility(View.GONE);
         }
 
         String type = this.event.getCategory();
