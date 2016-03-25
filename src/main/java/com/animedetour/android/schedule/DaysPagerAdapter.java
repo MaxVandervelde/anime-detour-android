@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014,2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.animedetour.android.R;
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class DaysPagerAdapter extends FragmentPagerAdapter
 {
     /** List of days to display in the pager */
     private List<DateTime> days;
+
+    /** List of fragments managed by this adapter so far. */
+    private List<DayFragment> fragments = new ArrayList<>();
 
     private Context context;
 
@@ -47,7 +51,10 @@ public class DaysPagerAdapter extends FragmentPagerAdapter
     public Fragment getItem(int i)
     {
         DateTime day = this.days.get(i);
-        return new DayFragment(day);
+        DayFragment dayFragment = new DayFragment(day);
+        this.fragments.add(dayFragment);
+
+        return dayFragment;
     }
 
     @Override
@@ -63,5 +70,13 @@ public class DaysPagerAdapter extends FragmentPagerAdapter
         Date day = this.days.get(position).toDate();
 
         return String.format(format, day);
+    }
+
+    /**
+     * @return A list of fragments currently managed by this adapter so far.
+     */
+    public List<DayFragment> getFragments()
+    {
+        return fragments;
     }
 }

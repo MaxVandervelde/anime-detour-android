@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,8 +13,7 @@ import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
 import com.inkapplications.groundcontrol.SubscriptionFactory;
 import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
+import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import rx.Observer;
 import rx.Subscription;
@@ -42,7 +41,7 @@ public class EventRepository
     final private Worker<List<Event>> allEventsWorker;
 
     /** Worker for looking up a list of events by their start time. */
-    final private CriteriaWorkerFactory<List<Event>, DateTime> allByDayFactory;
+    final private CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>> allByDayFactory;
 
     /** Worker for looking up a single event with a tag. */
     final private CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory;
@@ -64,7 +63,7 @@ public class EventRepository
         SubscriptionFactory<Event> subscriptionFactory,
         Dao<Event, String> localAccess,
         AllEventsWorker allEventsWorker,
-        CriteriaWorkerFactory<List<Event>, DateTime> allByDayFactory,
+        CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>> allByDayFactory,
         CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory,
         CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory,
         CriteriaWorkerFactory<List<Event>, String> allMatchingFactory
@@ -98,13 +97,14 @@ public class EventRepository
      * This is run by the START time of the event
      *
      * @param day The day to lookup events for
+     * @param includePast Whether to include events that have ended in the lookup
      * @return an observable that will update with events data
      */
-    public Subscription findAllOnDay(DateTime day, Observer<List<Event>> observer)
+    public Subscription findAllOnDay(DateTime day, boolean includePast, Observer<List<Event>> observer)
     {
         String key = "findAllOnDay:" + day.getDayOfYear();
         return this.subscriptionFactory.createCollectionSubscription(
-            this.allByDayFactory.createWorker(day),
+            this.allByDayFactory.createWorker(new Pair<>(day, includePast)),
             observer,
             key
         );
@@ -176,36 +176,11 @@ public class EventRepository
     }
 
     /**
-     * Get All Events on a specific day.
-     *
-     * @return Events that occur on that day (by start time)
-     */
-    public List<Event> getAllOnDay(DateTime day) throws SQLException
-    {
-        return this.allByDayFactory.createWorker(day).lookupLocal();
-    }
-
-    /**
      * Get a specific event by its ID.
      */
     public Event get(String id) throws SQLException
     {
         return this.localAccess.queryForId(id);
-    }
-
-    /**
-     * Fetches the most recently updated event according to fetch time.
-     */
-    public Event getMostRecentUpdated() throws SQLException
-    {
-        QueryBuilder<Event, String> builder = this.localAccess.queryBuilder();
-        builder.orderBy("fetched", false);
-
-
-        PreparedQuery<Event> query = builder.prepare();
-        Event result = this.localAccess.queryForFirst(query);
-
-        return result;
     }
 
     public void persist(Event event) throws SQLException

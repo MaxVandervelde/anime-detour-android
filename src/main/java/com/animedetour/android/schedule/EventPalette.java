@@ -37,22 +37,16 @@ public class EventPalette
 
     /** colors that can be used if an event without an identifiable type is found. */
     final private static int[] unknowns = new int[] {
-        R.color.label_unknown,
         R.color.label_unknown2,
         R.color.label_unknown3,
         R.color.label_unknown4,
-        R.color.label_unknown5,
-        R.color.label_unknown6,
     };
 
     /** colors that can be used if an event without an identifiable type is found. */
     final private static int[] unknownDims = new int[] {
-        R.color.label_unknown_dim,
         R.color.label_unknown2_dim,
         R.color.label_unknown3_dim,
         R.color.label_unknown4_dim,
-        R.color.label_unknown5_dim,
-        R.color.label_unknown6_dim,
     };
 
     @Inject
@@ -74,32 +68,44 @@ public class EventPalette
     @ColorRes
     final public int getColor(String type)
     {
-        if (type.equals("Anime Detour Panel")) {
-            return R.color.label_official;
+        if (type.equals("Hours of Operation")) {
+            return R.color.label_hours;
         }
 
-        if (type.equals("Attendee Panel")) {
-            return R.color.label_attendee_panel;
+        if (type.equals("Panel")) {
+            return R.color.label_panel;
         }
 
-        if (type.equals("Gaming")) {
-            return R.color.label_gaming;
+        if (type.equals("Video Gaming")) {
+            return R.color.label_videogame;
         }
 
-        if (type.equals("Guest Panel")) {
-            return R.color.label_guest_panel;
+        if (type.equals("Event")) {
+            return R.color.label_event;
         }
 
-        if (type.equals("Movie Premiere")) {
-            return R.color.label_movie_premiere;
+        if (type.equals("Guest Signing")) {
+            return R.color.label_guestsigning;
         }
 
-        if (type.equals("Photo Shoot")) {
-            return R.color.label_photo_shoot;
+        if (type.equals("Tabletop Gaming")) {
+            return R.color.label_tabletopgame;
         }
 
         if (type.equals("Video")) {
             return R.color.label_video;
+        }
+
+        if (type.equals("Cosplay Photoshoot")) {
+            return R.color.label_photoshoot;
+        }
+
+        if (type.equals("Workshop")) {
+            return R.color.label_workshop;
+        }
+
+        if (type.equals("Room Party")) {
+            return R.color.label_roomparty;
         }
 
         return this.getUnknowncolor(type);
@@ -118,32 +124,44 @@ public class EventPalette
     @ColorRes
     final public int getDimColor(String type)
     {
-        if (type.equals("Anime Detour Panel")) {
-            return R.color.label_official_dim;
+        if (type.equals("Hours of Operation")) {
+            return R.color.label_hours_dim;
         }
 
-        if (type.equals("Attendee Panel")) {
-            return R.color.label_attendee_panel_dim;
+        if (type.equals("Panel")) {
+            return R.color.label_panel_dim;
         }
 
-        if (type.equals("Gaming")) {
-            return R.color.label_gaming_dim;
+        if (type.equals("Video Gaming")) {
+            return R.color.label_videogame_dim;
         }
 
-        if (type.equals("Guest Panel")) {
-            return R.color.label_guest_panel_dim;
+        if (type.equals("Event")) {
+            return R.color.label_event_dim;
         }
 
-        if (type.equals("Movie Premiere")) {
-            return R.color.label_movie_premiere_dim;
+        if (type.equals("Guest Signing")) {
+            return R.color.label_guestsigning_dim;
         }
 
-        if (type.equals("Photo Shoot")) {
-            return R.color.label_photo_shoot_dim;
+        if (type.equals("Tabletop Gaming")) {
+            return R.color.label_tabletopgame_dim;
         }
 
         if (type.equals("Video")) {
             return R.color.label_video_dim;
+        }
+
+        if (type.equals("Cosplay Photoshoot")) {
+            return R.color.label_photoshoot_dim;
+        }
+
+        if (type.equals("Workshop")) {
+            return R.color.label_workshop_dim;
+        }
+
+        if (type.equals("Room Party")) {
+            return R.color.label_roomparty_dim;
         }
 
         return this.getDimUnknowncolor(type);

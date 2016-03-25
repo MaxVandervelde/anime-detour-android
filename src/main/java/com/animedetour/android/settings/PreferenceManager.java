@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -52,6 +52,26 @@ final public class PreferenceManager
     public boolean receiveEventNotifications()
     {
         return this.preferences.getBoolean("notify_events", true);
+    }
+
+    /**
+     * Toggle whether the user should be shown ended events in event lists.
+     */
+    public void togglePastEvents()
+    {
+        boolean current = this.showPastEvents();
+        SharedPreferences.Editor editor = this.preferences.edit();
+        editor.putBoolean("show_past_events", !current);
+        editor.apply();
+        this.logger.trace(EventFactory.togglePastEvents(!current));
+    }
+
+    /**
+     * @return Whether the user should be shown ended events in event lists.
+     */
+    public boolean showPastEvents()
+    {
+        return this.preferences.getBoolean("show_past_events", false);
     }
 
     /**

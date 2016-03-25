@@ -1,19 +1,25 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 package com.animedetour.android.schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import butterknife.Bind;
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.BaseFragment;
+import com.animedetour.android.schedule.serach.EventSearchActivity;
+import com.animedetour.android.settings.PreferenceManager;
 import com.squareup.otto.Bus;
 import monolog.LogName;
 import org.joda.time.DateTime;
@@ -46,20 +52,60 @@ final public class ScheduleFragment extends BaseFragment
     EventRepository eventData;
 
     @Inject
-    EventFilterUpdater filterUpdater;
+    PreferenceManager preferences;
+
+    private DaysPagerAdapter pagerAdapter;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
 
-        DaysPagerAdapter pagerAdapter = new DaysPagerAdapter(
+        this.pagerAdapter = new DaysPagerAdapter(
             this.getActivity(),
             this.getChildFragmentManager(),
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
-        this.eventData.findAll(this.filterUpdater);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.event_actions, menu);
+        menu.findItem(R.id.event_actions_show_past).setChecked(this.preferences.showPastEvents());
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.event_actions_search:
+                this.startActivity(new Intent(getActivity(), EventSearchActivity.class));
+                return true;
+            case R.id.event_actions_show_past:
+                this.preferences.togglePastEvents();
+                item.setChecked(this.preferences.showPastEvents());
+                this.notifyVisibilityChanged();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Send a message to each sub fragment to refresh events.
+     */
+    private void notifyVisibilityChanged()
+    {
+        for (DayFragment fragment : this.pagerAdapter.getFragments()) {
+            if (false == fragment.isResumed()) {
+                continue;
+            }
+            fragment.updateEvents();
+        }
     }
 
     /**
