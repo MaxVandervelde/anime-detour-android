@@ -94,6 +94,9 @@ final public class EventActivity extends BaseActivity
     @Bind(R.id.event_container)
     ScrollView detailsContainer;
 
+    @Bind(R.id.event_age_warning)
+    TextView ageWarning;
+
     @Inject
     Monolog logger;
 
@@ -156,6 +159,18 @@ final public class EventActivity extends BaseActivity
             this.descriptionView.setText("");
         }
         this.bannerView.setTitle(this.event.getName());
+
+        if (this.event.getTags().contains("21+")) {
+            String warning = this.getString(R.string.event_age_warning, "21+");
+            this.ageWarning.setText(warning);
+            this.ageWarning.setVisibility(View.VISIBLE);
+        } else if (this.event.getTags().contains("18+")) {
+            String warning = this.getString(R.string.event_age_warning, "18+");
+            this.ageWarning.setText(warning);
+            this.ageWarning.setVisibility(View.VISIBLE);
+        } else {
+            this.ageWarning.setVisibility(View.GONE);
+        }
 
         String type = this.event.getCategory();
         this.eventType.setText(type);

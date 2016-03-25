@@ -82,6 +82,15 @@
                         android:layout_height="wrap_content"
                         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex nec felis fermentum euismod quis id eros. Etiam sit amet diam et massa malesuada blandit. Duis lectus nisl, rutrum non scelerisque ac, bibendum aliquam ligula. Morbi tempor nisl lectus, a sodales felis aliquet eget. Nunc nec ipsum libero. Vivamus ultrices nunc eget orci pharetra pellentesque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id nulla quam. Nam nec tempus elit. Aenean quis erat eu turpis sodales mattis. Etiam tempor ultricies nisi, vitae aliquet ligula vestibulum vitae. Nunc tincidunt dictum dolor, condimentum imperdiet nisl blandit et. Nulla facilisi. Praesent et est lorem."
                     />
+                    <TextView
+                        android:id="@+id/event_age_warning"
+                        style="@style/body1"
+                        android:padding="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/danger_dim"
+                        tools:text="Parts of this event may be restricted to ages of 21+ \nYou may be required to show your ID at the door"
+                    />
                 </LinearLayout>
                 <com.animedetour.android.view.StarFloatingActionButton
                     android:id="@+id/event_add"
