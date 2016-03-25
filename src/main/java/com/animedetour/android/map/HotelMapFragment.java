@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import monolog.LogName;
 import monolog.Monolog;
 import prism.framework.DisplayName;
@@ -32,6 +33,7 @@ import prism.framework.PrismFacade;
 import javax.inject.Inject;
 
 import static com.animedetour.android.map.HotelMapPoints.HOTEL_CENTER;
+import static com.animedetour.android.map.HotelMapPoints.SHERATON_CENTER;
 
 /**
  * Google Maps display with Hotel floor plans overlayed.
@@ -50,6 +52,9 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
 
     @Bind(R.id.map_control_22nd_floor)
     Button switch22ndFloor;
+
+    @Bind(R.id.map_control_sheraton)
+    Button switchSheraton;
 
     @Inject
     Monolog logger;
@@ -88,7 +93,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     public void onMapReady(GoogleMap map)
     {
         this.resetMap(map);
-        this.centerMap(map);
+        this.centerMap(map, HOTEL_CENTER, false);
 
         this.switchFirstFloor.setEnabled(false);
         map.addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
@@ -97,12 +102,17 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
     /**
      * Center the map camera on the hotel and zoom appropriately.
      */
-    private void centerMap(GoogleMap map)
+    private void centerMap(GoogleMap map, LatLng location, boolean animate)
     {
         CameraUpdate camera = CameraUpdateFactory.newCameraPosition(
-            new CameraPosition.Builder().target(HOTEL_CENTER).zoom(18F).tilt(0).bearing(180).build()
+            new CameraPosition.Builder().target(location).zoom(18F).tilt(0).bearing(180).build()
         );
-        map.moveCamera(camera);
+
+        if (animate) {
+            map.animateCamera(camera);
+        } else {
+            map.moveCamera(camera);
+        }
     }
 
     /**
@@ -121,6 +131,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         this.switchFirstFloor.setEnabled(true);
         this.switchSecondFloor.setEnabled(true);
         this.switch22ndFloor.setEnabled(true);
+        this.switchSheraton.setEnabled(true);
     }
 
     /**
@@ -135,6 +146,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         }
 
         this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
         this.switchFirstFloor.setEnabled(false);
         map.addGroundOverlay(HotelMapPoints.getFirstFloorOverlay());
     }
@@ -151,6 +163,7 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         }
 
         this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
         this.switchSecondFloor.setEnabled(false);
         map.addGroundOverlay(HotelMapPoints.getSecondFloorOverlay());
     }
@@ -167,7 +180,22 @@ final public class HotelMapFragment extends SupportMapFragment implements OnMapR
         }
 
         this.resetMap(map);
+        this.centerMap(map, HOTEL_CENTER, true);
         this.switch22ndFloor.setEnabled(false);
         map.addGroundOverlay(HotelMapPoints.get22ndFloorOverlay());
+    }
+
+    @OnClick(R.id.map_control_sheraton)
+    public void showSheraton()
+    {
+        GoogleMap map = this.getMap();
+        if (null == map) {
+            return;
+        }
+
+        this.centerMap(map, SHERATON_CENTER, true);
+        this.resetMap(map);
+        this.switchSheraton.setEnabled(false);
+        map.addGroundOverlay(HotelMapPoints.getSheratonOverlay());
     }
 }
