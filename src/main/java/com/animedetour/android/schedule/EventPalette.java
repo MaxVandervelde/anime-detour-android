@@ -76,7 +76,7 @@ public class EventPalette
             return R.color.label_panel;
         }
 
-        if (type.equals("Video Gaming")) {
+        if (type.equals("Electronic Gaming")) {
             return R.color.label_videogame;
         }
 
@@ -132,7 +132,7 @@ public class EventPalette
             return R.color.label_panel_dim;
         }
 
-        if (type.equals("Video Gaming")) {
+        if (type.equals("Electronic Gaming")) {
             return R.color.label_videogame_dim;
         }
 
