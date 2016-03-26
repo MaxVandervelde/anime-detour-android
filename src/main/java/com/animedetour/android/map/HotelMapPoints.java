@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,6 +29,12 @@ final class HotelMapPoints
      * Center point of the hotel to base overlay images on and to focus the map on.
      */
     final public static LatLng HOTEL_CENTER = new LatLng(44.8619752, -93.3530438);
+
+    /**
+     * Center point of the Sheraton overflow hotel to base overlay images and
+     * to focus the map on for those floors.
+     */
+    final public static LatLng SHERATON_CENTER = new LatLng(44.860440, -93.354369);
 
     /**
      * Positioning options for the first floor map image to overlay on the map.
@@ -65,6 +71,19 @@ final class HotelMapPoints
         options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_floor_22));
         options.position(HOTEL_CENTER, 160);
         options.bearing(180);
+
+        return options;
+    }
+
+    /**
+     * Positioning options for the Sheraton map image to overlay on the map.
+     */
+    public static GroundOverlayOptions getSheratonOverlay()
+    {
+        GroundOverlayOptions options = new GroundOverlayOptions();
+        options.image(BitmapDescriptorFactory.fromResource(R.drawable.map_sheraton));
+        options.position(SHERATON_CENTER, 68);
+        options.bearing(280);
 
         return options;
     }
