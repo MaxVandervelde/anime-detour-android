@@ -9,8 +9,11 @@
 package com.animedetour.android.schedule.serach;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.ColorRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.animedetour.android.R;
@@ -50,5 +53,18 @@ public class FilterItemView extends FrameLayout
      */
     public void setTitle(CharSequence title) {
         this.title.setText(title);
+    }
+
+    /**
+     * Change the background of the card that the label is shown in.
+     *
+     * @param resourceId an unresolved color resource.
+     */
+    public void setColor(@ColorRes int resourceId)
+    {
+        Resources resources = this.getResources();
+        int color = resources.getColor(resourceId);
+        View card = this.findViewById(R.id.view_filter_card);
+        card.setBackgroundColor(color);
     }
 }

@@ -20,6 +20,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.database.event.type.EventTypeRepository;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.model.Event;
+import com.animedetour.android.schedule.EventPalette;
 import com.animedetour.android.schedule.EventViewBinder;
 import com.animedetour.android.schedule.PanelView;
 import com.inkapplications.android.widget.listview.ItemAdapter;
@@ -68,6 +69,9 @@ final public class EventSearchActivity extends BaseActivity
     EventTypeRepository filterData;
 
     @Inject
+    EventPalette palette;
+
+    @Inject
     Monolog logger;
 
     @Override
@@ -88,7 +92,7 @@ final public class EventSearchActivity extends BaseActivity
         this.searchBar.requestFocusFromTouch();
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.results.setAdapter(adapter);
-        FilterViewBinder filterBinder = new FilterViewBinder(this, this.searchBar);
+        FilterViewBinder filterBinder = new FilterViewBinder(this, this.searchBar, this.palette);
         ItemAdapter<FilterItemView, String> filterAdapter = new ItemAdapter<>(filterBinder);
         this.filters.setAdapter(filterAdapter);
         this.filterData.findAllCategories(

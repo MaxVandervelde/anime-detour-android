@@ -11,6 +11,7 @@ package com.animedetour.android.schedule.serach;
 import android.content.Context;
 import android.support.v7.widget.SearchView;
 import android.view.ViewGroup;
+import com.animedetour.android.schedule.EventPalette;
 import com.inkapplications.android.widget.recyclerview.ItemBoundClickListener;
 import com.inkapplications.android.widget.recyclerview.ItemViewBinder;
 
@@ -23,11 +24,13 @@ public class FilterViewBinder implements ItemViewBinder<FilterItemView, String>
 {
     final private Context context;
     final private FilterSelectionListener selectionListener;
+    final private EventPalette palette;
 
-    public FilterViewBinder(Context context, SearchView searchView)
+    public FilterViewBinder(Context context, SearchView searchView, EventPalette palette)
     {
         this.context = context;
         this.selectionListener = new FilterSelectionListener(searchView);
+        this.palette = palette;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class FilterViewBinder implements ItemViewBinder<FilterItemView, String>
     public void bindView(String type, FilterItemView view)
     {
         view.setTitle(type);
+        view.setColor(this.palette.getDimColor(type));
         view.setOnClickListener(new ItemBoundClickListener<>(type, this.selectionListener));
     }
 }
