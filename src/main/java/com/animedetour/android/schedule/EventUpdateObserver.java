@@ -108,8 +108,8 @@ public class EventUpdateObserver implements Observer<List<Event>>
      */
     private void displayEvents(List<Event> events)
     {
-        this.toggleEmptyView(events.isEmpty());
         this.itemAdapter.setItems(events);
+        this.toggleEmptyView(events.isEmpty());
 
         if (false == events.isEmpty()) {
             this.restoreState();
