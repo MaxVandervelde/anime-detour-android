@@ -14,21 +14,25 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import butterknife.Bind;
+
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.BaseFragment;
 import com.animedetour.android.schedule.serach.EventSearchActivity;
 import com.animedetour.android.settings.PreferenceManager;
 import com.squareup.otto.Bus;
-import monolog.LogName;
-import org.joda.time.DateTime;
-import prism.framework.DisplayName;
-import prism.framework.Layout;
 
-import javax.inject.Inject;
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import monolog.LogName;
+import prism.framework.DisplayName;
+import prism.framework.Layout;
 
 /**
  * Schedule fragment
@@ -67,6 +71,9 @@ final public class ScheduleFragment extends BaseFragment
             this.getDays()
         );
         this.pager.setAdapter(pagerAdapter);
+        //Set limit according to number of days we have so that we don't ever need to fully reload
+        //any fragments in the pager.
+        this.pager.setOffscreenPageLimit(this.getDays().size() - 1);
     }
 
     @Override
