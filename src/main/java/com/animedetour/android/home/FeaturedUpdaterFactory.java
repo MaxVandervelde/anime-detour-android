@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -35,8 +35,8 @@ public class FeaturedUpdaterFactory
         this.controllerFactory = controllerFactory;
     }
 
-    public FeaturedUpdater create(ImageScrim preview)
+    public FeaturedUpdater create(ImageScrim preview, ImageScrim priview2)
     {
-        return new FeaturedUpdater(this.logger, this.controllerFactory, preview);
+        return new FeaturedUpdater(this.logger, this.controllerFactory, preview, priview2);
     }
 }

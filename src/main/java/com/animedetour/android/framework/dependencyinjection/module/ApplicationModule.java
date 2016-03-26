@@ -31,8 +31,6 @@ import com.squareup.okhttp.Cache;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
-import org.javatuples.Pair;
-import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -114,7 +112,7 @@ final public class ApplicationModule
 
     @Provides
     @Singleton
-    public Transformer<Pair<ApiEvent, DateTime>, Event> apiEventTransformer(ApiEventTransformer eventTransformer)
+    public Transformer<ApiEvent, Event> apiEventTransformer(ApiEventTransformer eventTransformer)
     {
         return eventTransformer;
     }

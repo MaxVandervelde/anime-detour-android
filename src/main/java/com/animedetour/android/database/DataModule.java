@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,6 +21,7 @@ import com.animedetour.android.database.favorite.GetAllFavoritesWorker;
 import com.animedetour.android.database.guest.AllCategoriesWorker;
 import com.animedetour.android.database.guest.GuestRepository;
 import com.animedetour.android.model.Event;
+import com.animedetour.android.model.MetaData;
 import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.GuestEndpoint;
@@ -36,8 +37,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import dagger.Module;
 import dagger.Provides;
 import monolog.Monolog;
-import org.javatuples.Pair;
-import org.joda.time.DateTime;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -54,7 +53,7 @@ final public class DataModule
     public EventRepository eventRepository(
         ConnectionSource connectionSource,
         ScheduleEndpoint remote,
-        Transformer<Pair<ApiEvent, DateTime>, Event> apiEventTransformer,
+        Transformer<ApiEvent, Event> apiEventTransformer,
         Monolog logger
     ) {
         Scheduler main = AndroidSchedulers.mainThread();
@@ -63,15 +62,16 @@ final public class DataModule
 
         try {
             Dao<Event, String> local = DaoManager.createDao(connectionSource, Event.class);
+            Dao<MetaData, Integer> metaData = DaoManager.createDao(connectionSource, MetaData.class);
 
             return new EventRepository(
                 subscriptionFactory,
                 local,
-                new AllEventsWorker(local, remote, apiEventTransformer),
-                new AllEventsByDayFactory(local, remote, apiEventTransformer),
+                new AllEventsWorker(local, remote, metaData, logger, apiEventTransformer),
+                new AllEventsByDayFactory(local, metaData, remote, apiEventTransformer, logger),
                 new UpcomingEventsByTagFactory(local, remote, apiEventTransformer),
-                new UpcomingEventByTypeFactory(local, remote, apiEventTransformer),
-                new AllEventsMatchingFactory(local, remote, apiEventTransformer)
+                new UpcomingEventByTypeFactory(local, metaData, remote, apiEventTransformer, logger),
+                new AllEventsMatchingFactory(local, metaData, remote, apiEventTransformer, logger)
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -90,11 +90,13 @@ final public class DataModule
         SubscriptionFactory<Category> subscriptionFactory = new SubscriptionFactory<>(io, main);
 
         try {
-            Dao<Category, Integer> localCategory = DaoManager.createDao(connectionSource, Category.class);
+            Dao<Category, String> localCategory = DaoManager.createDao(connectionSource, Category.class);
             Dao<Guest, String> localGuest = DaoManager.createDao(connectionSource, Guest.class);
+            Dao<MetaData, Integer> metaData = DaoManager.createDao(connectionSource, MetaData.class);
+
             return new GuestRepository(
                 subscriptionFactory,
-                new AllCategoriesWorker(connectionSource, localCategory, localGuest, remote)
+                new AllCategoriesWorker(localCategory, localGuest, metaData, remote, logger)
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -10,8 +10,6 @@ package com.animedetour.android.model.transformer;
 
 import com.animedetour.android.model.Event;
 import com.animedetour.api.sched.model.ApiEvent;
-import com.inkapplications.PairMerge;
-import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
@@ -43,9 +41,8 @@ public class ApiEventTransformerTest
             "description",
             "banner"
         );
-        Pair<ApiEvent, DateTime> beforeFetched = new Pair<>(before, new DateTime("2018-06-24T18:17:16-06:00"));
 
-        Event after = this.transformer.transform(beforeFetched);
+        Event after = this.transformer.transform(before);
 
         assertEquals("id", after.getId());
         assertEquals("name", after.getName());
@@ -65,8 +62,6 @@ public class ApiEventTransformerTest
         assertEquals(17 - 2, end.getHourOfDay());
         assertEquals(16, end.getMinuteOfHour());
         assertEquals(15, end.getSecondOfMinute());
-
-        assertEquals(new DateTime("2018-06-24T18:17:16-06:00"), after.getFetched());
     }
 
     /**
@@ -89,12 +84,10 @@ public class ApiEventTransformerTest
             "room",
             Arrays.asList("host 1", "host 2"),
             "description",
-            "banner",
-            new DateTime("2018-06-24T18:17:16-06:00").withZone(DateTimeZone.forOffsetHours(-6))
+            "banner"
         );
 
-        Pair<ApiEvent, DateTime> result = this.transformer.reverseTransform(before);
-        ApiEvent after = result.getValue0();
+        ApiEvent after =  this.transformer.reverseTransform(before);
 
         assertEquals("2016-04-21T16:15:14-06:00", after.start);
         assertEquals("2017-05-23T17:16:15-02:00", after.end);
@@ -108,7 +101,6 @@ public class ApiEventTransformerTest
         assertEquals("host 2", after.hosts.get(1));
         assertEquals("description", after.description);
         assertEquals("banner", after.banner);
-        assertEquals(new DateTime("2018-06-24T18:17:16-06:00").withZone(DateTimeZone.forOffsetHours(-6)), result.getValue1());
     }
 
     /**
@@ -124,9 +116,8 @@ public class ApiEventTransformerTest
         ApiEvent second = new ApiEvent("id-2", null, null, null, null, null, null, null, null, null);
 
         List<ApiEvent> events = Arrays.asList(first, second);
-        List<Pair<ApiEvent, DateTime>> fetchedEvents = PairMerge.mergeRight(events, null);
 
-        List<Event> result = this.transformer.bulkTransform(fetchedEvents);
+        List<Event> result = this.transformer.bulkTransform(events);
 
         assertEquals("id-1", result.get(0).getId());
         assertEquals("id-2", result.get(1).getId());
@@ -141,15 +132,15 @@ public class ApiEventTransformerTest
     @Test
     public void testBulkTransformFrom()
     {
-        Event first = new Event("id-1", null, null, null, null, null, null, null, null, null, null);
-        Event second = new Event("id-2", null, null, null, null, null, null, null, null, null, null);
+        Event first = new Event("id-1", null, null, null, null, null, null, null, null, null);
+        Event second = new Event("id-2", null, null, null, null, null, null, null, null, null);
 
         List<Event> events = Arrays.asList(first, second);
 
-        List<Pair<ApiEvent, DateTime>> result = this.transformer.bulkReverseTransform(events);
+        List<ApiEvent> result = this.transformer.bulkReverseTransform(events);
 
-        assertEquals("id-1", result.get(0).getValue0().id);
-        assertEquals("id-2", result.get(1).getValue0().id);
+        assertEquals("id-1", result.get(0).id);
+        assertEquals("id-2", result.get(1).id);
     }
 
     /**
@@ -168,11 +159,10 @@ public class ApiEventTransformerTest
             "room",
             Arrays.asList("host 1", "host 2"),
             "description",
-            "banner",
-            new DateTime("2018-06-24T18:17:16-00:00")
+            "banner"
         );
 
-        Pair<ApiEvent, DateTime> forwards = this.transformer.reverseTransform(before);
+        ApiEvent forwards = this.transformer.reverseTransform(before);
         Event after = this.transformer.transform(forwards);
 
         assertEquals(before, after);

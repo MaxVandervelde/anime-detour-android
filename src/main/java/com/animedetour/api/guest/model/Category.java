@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,38 +25,15 @@ import java.util.Collection;
 public class Category implements Serializable
 {
     /**
-     * A locally generated ID by the database. This should not exist unless the
-     * entity has been saved locally.
-     */
-    @DatabaseField(generatedId = true)
-    private Integer id;
-
-    /**
      * The name of the group of guests. ex. "Guests of Honor"
      */
-    @DatabaseField
+    @DatabaseField(id = true)
     @JsonProperty("categoryname")
     private String name;
 
     @ForeignCollectionField(eager = true)
     @JsonProperty("guests")
     private Collection<Guest> guests;
-
-    /**
-     * @return The locally generated ID by the database or null if not locally saved.
-     */
-    final public Integer getId()
-    {
-        return this.id;
-    }
-
-    /**
-     * @param id The locally generated ID by the database.
-     */
-    public void setId(Integer id)
-    {
-        this.id = id;
-    }
 
     /**
      * @return The title of the grouping of guests. ex. "Guests of Honor"
@@ -88,11 +65,30 @@ public class Category implements Serializable
     }
 
     @Override
-    public String toString()
-    {
-        return "Category{"
-            + "id=" + id
-            + ", name='" + name + '\''
-            + '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (name != null ? !name.equals(category.name) : category.name != null)
+            return false;
+        return guests != null ? guests.equals(category.guests) : category.guests == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (guests != null ? guests.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+            "name='" + name + '\'' +
+            ", guests=" + guests +
+            '}';
     }
 }

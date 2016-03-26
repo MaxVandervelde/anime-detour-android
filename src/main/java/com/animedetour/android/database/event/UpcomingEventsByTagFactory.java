@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,8 +15,6 @@ import com.animedetour.api.sched.model.ApiEvent;
 import com.inkapplications.groundcontrol.CriteriaWorkerFactory;
 import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
-import org.javatuples.Pair;
-import org.joda.time.DateTime;
 
 /**
  * Creates new workers to lookup events by tag so that we can pass criteria to it.
@@ -27,12 +25,12 @@ final public class UpcomingEventsByTagFactory implements CriteriaWorkerFactory<E
 {
     final private Dao<Event, String> localAccess;
     final private ScheduleEndpoint remoteAccess;
-    final private Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer;
+    final private Transformer<ApiEvent, Event> eventTransformer;
 
     public UpcomingEventsByTagFactory(
         Dao<Event, String> localAccess,
         ScheduleEndpoint remoteAccess,
-        Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer
+        Transformer<ApiEvent, Event> eventTransformer
     ) {
         this.localAccess = localAccess;
         this.remoteAccess = remoteAccess;

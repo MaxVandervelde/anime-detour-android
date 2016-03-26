@@ -9,14 +9,14 @@
 package com.animedetour.android.database.event;
 
 import com.animedetour.android.model.Event;
+import com.animedetour.android.model.MetaData;
 import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.api.sched.ScheduleEndpoint;
 import com.animedetour.api.sched.model.ApiEvent;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
-import org.javatuples.Pair;
-import org.joda.time.DateTime;
+import monolog.Monolog;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -35,9 +35,11 @@ public class AllEventsWorker extends SyncEventsWorker
     public AllEventsWorker(
         Dao<Event, String> localAccess,
         ScheduleEndpoint remoteAccess,
-        Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer
+        Dao<MetaData, Integer> metaData,
+        Monolog logger,
+        Transformer<ApiEvent, Event> eventTransformer
     ) {
-        super(localAccess, remoteAccess, eventTransformer);
+        super(localAccess, metaData, remoteAccess, eventTransformer, logger);
 
         this.localAccess = localAccess;
     }

@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,6 +11,7 @@ package com.animedetour.android.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.animedetour.android.model.Event;
+import com.animedetour.android.model.MetaData;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
@@ -34,7 +35,7 @@ import java.sql.SQLException;
 final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
     private static final String DATABASE_NAME = "detour.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     @Inject
     public DetourDatabaseHelper(Context context)
@@ -46,6 +47,7 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource)
     {
         try {
+            TableUtils.createTable(connectionSource, MetaData.class);
             TableUtils.createTable(connectionSource, Event.class);
             TableUtils.createTable(connectionSource, Favorite.class);
             TableUtils.createTable(connectionSource, Category.class);
@@ -58,7 +60,7 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion)
     {
-        if (oldVersion < 8) {
+        if (oldVersion < 9) {
             this.reCreate();
         }
     }
@@ -73,6 +75,8 @@ final class DetourDatabaseHelper extends OrmLiteSqliteOpenHelper
             TableUtils.dropTable(connectionSource, Event.class, true);
             TableUtils.dropTable(connectionSource, Guest.class, true);
             TableUtils.dropTable(connectionSource, Category.class, true);
+            TableUtils.dropTable(connectionSource, MetaData.class, true);
+            TableUtils.createTable(connectionSource, MetaData.class);
             TableUtils.createTable(connectionSource, Event.class);
             TableUtils.createTable(connectionSource, Category.class);
             TableUtils.createTable(connectionSource, Guest.class);

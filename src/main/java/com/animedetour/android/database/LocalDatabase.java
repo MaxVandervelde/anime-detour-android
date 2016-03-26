@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,6 +9,7 @@
 package com.animedetour.android.database;
 
 import com.animedetour.android.model.Event;
+import com.animedetour.android.model.MetaData;
 import com.animedetour.android.schedule.favorite.Favorite;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
@@ -46,5 +47,6 @@ public class LocalDatabase
         TableUtils.clearTable(this.connectionSource, Event.class);
         TableUtils.clearTable(this.connectionSource, Guest.class);
         TableUtils.clearTable(this.connectionSource, Category.class);
+        TableUtils.clearTable(this.connectionSource, MetaData.class);
     }
 }

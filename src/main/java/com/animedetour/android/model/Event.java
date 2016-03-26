@@ -88,10 +88,6 @@ public class Event implements Serializable
     @DatabaseField
     final private String banner;
 
-    /** The timestamp that this event data was retrieved from the remote API. */
-    @DatabaseField(index = true, dataType = DataType.DATE_TIME)
-    final private DateTime fetched;
-
     /**
      * Create a default object with allowed nulls/default values.
      */
@@ -107,7 +103,6 @@ public class Event implements Serializable
         this.hosts = new ArrayList<>();
         this.description = null;
         this.banner = null;
-        this.fetched = null;
     }
 
     /**
@@ -123,7 +118,6 @@ public class Event implements Serializable
      * @param hosts A list of people running/speaking at the event.
      * @param description Detailed information about the event content.
      * @param banner Optional media image to decorate the event with.
-     * @param fetched Timestamp that the event data was retrieved from the API.
      */
     public Event(
         String id,
@@ -135,8 +129,7 @@ public class Event implements Serializable
         String room,
         List<String> hosts,
         String description,
-        String banner,
-        DateTime fetched
+        String banner
     ) {
         this.id = id;
         this.name = name;
@@ -148,7 +141,6 @@ public class Event implements Serializable
         this.hosts = hosts == null ? new ArrayList<String>() : new ArrayList<>(hosts);
         this.description = description;
         this.banner = banner;
-        this.fetched = fetched;
     }
 
     /**
@@ -231,28 +223,8 @@ public class Event implements Serializable
         return this.banner;
     }
 
-    /**
-     * @return Timestamp that the event data was retrieved from the API.
-     */
-    final public DateTime getFetched()
-    {
-        return this.fetched;
-    }
-
-    /**
-     * Create a new Event object with a different fetched time.
-     *
-     * @param newFetched The fetched time to change to.
-     * @return A new object with the different fetched time.
-     */
-    public Event withFetched(DateTime newFetched)
-    {
-        return new Event(id, name, start, end, category, tags, room, hosts, description, banner, newFetched);
-    }
-
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -273,15 +245,12 @@ public class Event implements Serializable
         if (!hosts.equals(event.hosts)) return false;
         if (description != null ? !description.equals(event.description) : event.description != null)
             return false;
-        if (banner != null ? !banner.equals(event.banner) : event.banner != null)
-            return false;
-        return fetched != null ? fetched.equals(event.fetched) : event.fetched == null;
+        return banner != null ? banner.equals(event.banner) : event.banner == null;
 
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (start != null ? start.hashCode() : 0);
@@ -292,13 +261,11 @@ public class Event implements Serializable
         result = 31 * result + hosts.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (banner != null ? banner.hashCode() : 0);
-        result = 31 * result + (fetched != null ? fetched.hashCode() : 0);
         return result;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Event{" +
             "id='" + id + '\'' +
             ", name='" + name + '\'' +
@@ -310,7 +277,6 @@ public class Event implements Serializable
             ", hosts=" + hosts +
             ", description='" + description + '\'' +
             ", banner='" + banner + '\'' +
-            ", fetched=" + fetched +
             '}';
     }
 }

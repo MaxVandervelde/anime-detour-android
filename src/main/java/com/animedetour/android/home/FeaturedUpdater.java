@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,6 +14,8 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import monolog.Monolog;
 import rx.Observer;
 
+import java.util.List;
+
 /**
  * Updates the featured event view when new data about events is received.
  *
@@ -23,20 +25,23 @@ import rx.Observer;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-final class FeaturedUpdater implements Observer<Event>
+final class FeaturedUpdater implements Observer<List<Event>>
 {
     final private Monolog logger;
     final private FeaturedControllerFactory controllerFactory;
     final private ImageScrim preview;
+    final private ImageScrim preview2;
 
     public FeaturedUpdater(
         Monolog logger,
         FeaturedControllerFactory controllerFactory,
-        ImageScrim preview
+        ImageScrim preview,
+        ImageScrim preview2
     ) {
         this.logger = logger;
         this.controllerFactory = controllerFactory;
         this.preview = preview;
+        this.preview2 = preview2;
     }
 
     @Override
@@ -49,25 +54,34 @@ final class FeaturedUpdater implements Observer<Event>
     }
 
     @Override
-    public void onNext(Event event)
+    public void onNext(List<Event> events)
+    {
+        Event event = events.size() >= 1 ? events.get(0) : null;
+        Event event2 = events.size() >= 2 ? events.get(1) : null;
+
+        this.bind(event, this.preview);
+        this.bind(event2, this.preview2);
+    }
+
+    private void bind(Event event, ImageScrim preview)
     {
         if (null == event) {
-            this.preview.setVisibility(View.GONE);
+            preview.setVisibility(View.GONE);
             return;
         }
 
         FeaturedController controller = this.controllerFactory.create(event);
 
-        this.preview.setVisibility(View.VISIBLE);
-        this.preview.setTitle(event.getName());
-        this.preview.setOnClickListener(controller);
+        preview.setVisibility(View.VISIBLE);
+        preview.setTitle(event.getName());
+        preview.setOnClickListener(controller);
 
         if (null == event.getBanner()) {
             return;
         }
 
-        this.preview.setImage(null);
-        this.preview.expandImage();
-        this.preview.setImage(event.getBanner());
+        preview.setImage(null);
+        preview.expandImage();
+        preview.setImage(event.getBanner());
     }
 }
