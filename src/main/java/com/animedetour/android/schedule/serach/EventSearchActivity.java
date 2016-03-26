@@ -107,6 +107,7 @@ final public class EventSearchActivity extends BaseActivity
             this.filters
         );
         this.searchBar.setOnQueryTextListener(queryListener);
+        queryListener.onQueryTextChange(this.searchBar.getQuery().toString());
     }
 
     @Override
