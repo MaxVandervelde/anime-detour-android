@@ -69,7 +69,7 @@ final public class DataModule
                 local,
                 new AllEventsWorker(local, remote, metaData, logger, apiEventTransformer),
                 new AllEventsByDayFactory(local, metaData, remote, apiEventTransformer, logger),
-                new UpcomingEventsByTagFactory(local, remote, apiEventTransformer),
+                new UpcomingEventsByTagFactory(local, metaData, remote, apiEventTransformer, logger),
                 new UpcomingEventByTypeFactory(local, metaData, remote, apiEventTransformer, logger),
                 new AllEventsMatchingFactory(local, metaData, remote, apiEventTransformer, logger)
             );

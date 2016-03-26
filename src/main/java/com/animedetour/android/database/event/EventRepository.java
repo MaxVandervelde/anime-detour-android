@@ -44,7 +44,7 @@ public class EventRepository
     final private CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>> allByDayFactory;
 
     /** Worker for looking up a single event with a tag. */
-    final private CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory;
+    final private CriteriaWorkerFactory<List<Event>, String> upcomingByTagFactory;
 
     /** Worker for looking up a single event of a type. */
     final private CriteriaWorkerFactory<List<Event>, String> upcomingByTypeFactory;
@@ -64,7 +64,7 @@ public class EventRepository
         Dao<Event, String> localAccess,
         AllEventsWorker allEventsWorker,
         CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>> allByDayFactory,
-        CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory,
+        CriteriaWorkerFactory<List<Event>, String> upcomingByTagFactory,
         CriteriaWorkerFactory<List<Event>, String> upcomingByTypeFactory,
         CriteriaWorkerFactory<List<Event>, String> allMatchingFactory
     ) {
@@ -115,8 +115,8 @@ public class EventRepository
      */
     public Subscription findFeatured(Observer<List<Event>> observer)
     {
-        return this.findUpcomingByType(
-            "Anime Detour Panel",
+        return this.findUpcomingByTag(
+            "official",
             observer
         );
     }
@@ -139,11 +139,11 @@ public class EventRepository
      *
      * @param tag The tag to search for events containing.
      */
-    public Subscription findUpcomingByTag(String tag, long ordinal, Observer<Event> observer)
+    public Subscription findUpcomingByTag(String tag, Observer<List<Event>> observer)
     {
-        String key = "findUpcomingByTag:" + tag + ":" + ordinal;
-        return this.subscriptionFactory.createSubscription(
-            this.upcomingByTagFactory.createWorker(new TagCriteria(tag, ordinal)),
+        String key = "findUpcomingByTag:" + tag;
+        return this.subscriptionFactory.createCollectionSubscription(
+            this.upcomingByTagFactory.createWorker(tag),
             observer,
             key
         );
