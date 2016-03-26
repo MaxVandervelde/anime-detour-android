@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014,2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -52,6 +52,11 @@ public class PanelView extends RelativeLayout
      */
     private View fadeOverlay;
 
+    /**
+     * A label to quickly indicate a minimum age for the event.
+     */
+    private TextView ageWarning;
+
     private View color;
 
     /**
@@ -94,6 +99,7 @@ public class PanelView extends RelativeLayout
         this.fadeOverlay = this.findViewById(R.id.view_panel_overlay);
         this.starred = (ImageView) this.findViewById(R.id.view_panel_starred);
         this.color = this.findViewById(R.id.view_panel_color_label);
+        this.ageWarning = (TextView) this.findViewById(R.id.view_panel_age_warning);
     }
 
     /**
@@ -143,6 +149,16 @@ public class PanelView extends RelativeLayout
             this.fadeOverlay.setVisibility(VISIBLE);
         } else {
             this.fadeOverlay.setVisibility(GONE);
+        }
+
+        if (event.getTags().contains("18+")) {
+            this.ageWarning.setText("18+");
+            this.ageWarning.setVisibility(VISIBLE);
+        } else if (event.getTags().contains("21+")) {
+            this.ageWarning.setText("21+");
+            this.ageWarning.setVisibility(VISIBLE);
+        } else {
+            this.ageWarning.setVisibility(GONE);
         }
     }
 

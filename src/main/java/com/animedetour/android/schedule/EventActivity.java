@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014,2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -94,6 +93,9 @@ final public class EventActivity extends BaseActivity
     @Bind(R.id.event_container)
     ScrollView detailsContainer;
 
+    @Bind(R.id.event_age_warning)
+    TextView ageWarning;
+
     @Inject
     Monolog logger;
 
@@ -156,6 +158,18 @@ final public class EventActivity extends BaseActivity
             this.descriptionView.setText("");
         }
         this.bannerView.setTitle(this.event.getName());
+
+        if (this.event.getTags().contains("21+")) {
+            String warning = this.getString(R.string.event_age_warning, "21+");
+            this.ageWarning.setText(warning);
+            this.ageWarning.setVisibility(View.VISIBLE);
+        } else if (this.event.getTags().contains("18+")) {
+            String warning = this.getString(R.string.event_age_warning, "18+");
+            this.ageWarning.setText(warning);
+            this.ageWarning.setVisibility(View.VISIBLE);
+        } else {
+            this.ageWarning.setVisibility(View.GONE);
+        }
 
         String type = this.event.getCategory();
         this.eventType.setText(type);
