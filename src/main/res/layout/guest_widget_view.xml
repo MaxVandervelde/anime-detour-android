@@ -13,6 +13,7 @@
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:layout_centerHorizontal="true"
+        app:actualImageScaleType="focusCrop"
         app:placeholderImage="@drawable/account_96dp"
         app:roundAsCircle="true"
     />

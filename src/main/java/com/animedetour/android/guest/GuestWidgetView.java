@@ -9,6 +9,7 @@
 package com.animedetour.android.guest;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class GuestWidgetView extends FrameLayout
 
         LayoutInflater.from(context).inflate(R.layout.guest_widget_view, this);
         this.image = (SimpleDraweeView) this.findViewById(R.id.guest_widget_image);
+        this.image.getHierarchy().setActualImageFocusPoint(new PointF(.5f, .38f));
         this.name = (TextView) this.findViewById(R.id.guest_widget_name);
     }
 
@@ -65,7 +67,7 @@ public class GuestWidgetView extends FrameLayout
     public void bindGuest(Guest guest)
     {
         this.setName(guest.getFullName());
-        this.setImageUri(guest.getFullPhoto());
+        this.setImageUri(guest.getPhoto());
     }
 
     /**
