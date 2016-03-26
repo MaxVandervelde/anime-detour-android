@@ -14,10 +14,8 @@
             style="@style/headline"
             android:id="@+id/event_days_pager_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="top"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
             android:textColor="@color/foreground_inverse"
             android:background="@color/primary"
         />

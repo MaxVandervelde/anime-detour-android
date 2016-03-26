@@ -13,4 +13,10 @@
         android:layout_height="match_parent"
     />
     <include android:id="@+id/panel_empty_view" layout="@layout/schedule_empty" />
+
+    <ProgressBar
+        android:id="@+id/events_loading_indicator"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>

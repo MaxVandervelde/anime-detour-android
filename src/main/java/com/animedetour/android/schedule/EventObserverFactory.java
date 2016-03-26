@@ -10,12 +10,15 @@ package com.animedetour.android.schedule;
 
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.animedetour.android.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import monolog.Monolog;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import monolog.Monolog;
 
 /**
  * Creates new Event Update observer factories at runtime.
@@ -39,8 +42,9 @@ public class EventObserverFactory
     public EventUpdateObserver create(
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
-        View emptyView
+        View emptyView,
+        ProgressBar loadingIndicator
     ) {
-        return new EventUpdateObserver(panelList, listAdapter, emptyView, this.logger);
+        return new EventUpdateObserver(panelList, listAdapter, emptyView, this.logger, loadingIndicator);
     }
 }

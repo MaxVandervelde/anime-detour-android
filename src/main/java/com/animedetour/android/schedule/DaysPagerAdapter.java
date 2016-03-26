@@ -11,8 +11,10 @@ package com.animedetour.android.schedule;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
 import com.animedetour.android.R;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import java.util.List;
  *
  * @author Maxwell Vandervelde (Max@MaxVandervelde.com)
  */
-public class DaysPagerAdapter extends FragmentPagerAdapter
+public class DaysPagerAdapter extends FragmentStatePagerAdapter
 {
     /** List of days to display in the pager */
     private List<DateTime> days;
@@ -48,13 +50,27 @@ public class DaysPagerAdapter extends FragmentPagerAdapter
     }
 
     @Override
-    public Fragment getItem(int i)
+    public Fragment getItem(int position)
     {
-        DateTime day = this.days.get(i);
-        DayFragment dayFragment = new DayFragment(day);
-        this.fragments.add(dayFragment);
+        if (this.fragments.size() == 0) {
+            this.fragments = this.createDayFragments();
+        }
 
-        return dayFragment;
+        return this.fragments.get(position);
+    }
+
+    /**
+     * Instantiates list of {@link DayFragment} against list of
+     * {@link DateTime} provided to adapter.
+     *
+     * @return List of DayFragments corresponding to days given to adapter.
+     */
+    private List<DayFragment> createDayFragments() {
+        List<DayFragment> dayFragments = new ArrayList<>();
+        for (DateTime day : this.days) {
+            dayFragments.add(new DayFragment(day));
+        }
+        return dayFragments;
     }
 
     @Override

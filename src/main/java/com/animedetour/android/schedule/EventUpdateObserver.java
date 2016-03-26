@@ -10,12 +10,15 @@ package com.animedetour.android.schedule;
 
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.animedetour.android.model.Event;
 import com.inkapplications.android.widget.listview.ItemAdapter;
-import monolog.Monolog;
-import rx.Observer;
 
 import java.util.List;
+
+import monolog.Monolog;
+import rx.Observer;
 
 /**
  * Listens to data updates of the event list for a single day.
@@ -31,6 +34,10 @@ public class EventUpdateObserver implements Observer<List<Event>>
 
     /** View to display when there are no items in the list */
     final private View emptyView;
+
+    /**
+     * ProgressBar to indicate whether or not content is being loaded */
+    final private ProgressBar loadingIndicator;
 
     /** The list view we're to put events into. */
     final private ListView panelList;
@@ -61,12 +68,15 @@ public class EventUpdateObserver implements Observer<List<Event>>
         ListView panelList,
         ItemAdapter<PanelView, Event> listAdapter,
         View emptyView,
-        Monolog logger
+        Monolog logger,
+        ProgressBar loadingIndicator
     ) {
         this.panelList = panelList;
         this.itemAdapter = listAdapter;
         this.emptyView = emptyView;
         this.logger = logger;
+        this.loadingIndicator = loadingIndicator;
+
     }
 
     @Override
@@ -83,6 +93,9 @@ public class EventUpdateObserver implements Observer<List<Event>>
     @Override
     public void onNext(List<Event> events)
     {
+        if (this.loadingIndicator != null) {
+            this.loadingIndicator.setVisibility(View.GONE);
+        }
         this.displayEvents(events);
     }
 

@@ -11,7 +11,8 @@ package com.animedetour.android.schedule;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import butterknife.Bind;
+import android.widget.ProgressBar;
+
 import com.animedetour.android.R;
 import com.animedetour.android.database.event.EventRepository;
 import com.animedetour.android.framework.BaseFragment;
@@ -19,12 +20,15 @@ import com.animedetour.android.model.Event;
 import com.animedetour.android.settings.PreferenceManager;
 import com.inkapplications.android.widget.listview.ItemAdapter;
 import com.inkapplications.groundcontrol.SubscriptionManager;
-import icepick.State;
+
 import org.joda.time.DateTime;
-import prism.framework.Layout;
-import rx.Subscription;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
+import icepick.State;
+import prism.framework.Layout;
+import rx.Subscription;
 
 /**
  * Day schedule fragment
@@ -57,6 +61,9 @@ final public class DayFragment extends BaseFragment
     @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
+    @Bind(R.id.events_loading_indicator)
+    ProgressBar loadingIndicator;
+
     @State
     DateTime day;
 
@@ -79,7 +86,12 @@ final public class DayFragment extends BaseFragment
 
         ItemAdapter<PanelView, Event> adapter = new ItemAdapter<>(this.viewBinder);
         this.panelList.setAdapter(adapter);
-        this.eventUpdateObserver = this.subscriberFactory.create(this.panelList, adapter, this.panelEmptyView);
+        this.eventUpdateObserver = this.subscriberFactory.create(
+                this.panelList,
+                adapter,
+                this.panelEmptyView,
+                this.loadingIndicator
+        );
     }
 
     @Override
