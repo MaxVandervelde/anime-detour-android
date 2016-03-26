@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,13 +9,13 @@
 package com.animedetour.android.database.event;
 
 import com.animedetour.android.model.Event;
+import com.animedetour.android.model.MetaData;
 import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.api.sched.ScheduleEndpoint;
 import com.animedetour.api.sched.model.ApiEvent;
-import com.inkapplications.PairMerge;
 import com.inkapplications.groundcontrol.RemovableSyncWorker;
 import com.j256.ormlite.dao.Dao;
-import org.javatuples.Pair;
+import monolog.Monolog;
 import org.joda.time.DateTime;
 
 import java.sql.SQLException;
@@ -32,47 +32,68 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
     /** A local DAO for storing events. */
     final private Dao<Event, String> localAccess;
 
+    /** Local information about the event data. */
+    final private Dao<MetaData, Integer> metaDataAccess;
+
     /** A remote endpoint for updating the local storage. */
     final private ScheduleEndpoint remoteAccess;
 
-    final private Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer;
+    /** Service for changing API events into local models. */
+    final private Transformer<ApiEvent, Event> eventTransformer;
+
+    /** Application logger for database errors. */
+    final private Monolog logger;
 
     /**
      * @param localAccess A local DAO for storing events.
+     * @param metaDataAccess Local information about the event data.
      * @param remoteAccess A remote endpoint for updating the local storage.
-     * @param eventTransformer
+     * @param eventTransformer Service for changing API events into local models.
+     * @param logger Application logger for database errors.
      */
     public SyncEventsWorker(
         Dao<Event, String> localAccess,
+        Dao<MetaData, Integer> metaDataAccess,
         ScheduleEndpoint remoteAccess,
-        Transformer<Pair<ApiEvent, DateTime>, Event> eventTransformer
+        Transformer<ApiEvent, Event> eventTransformer,
+        Monolog logger
     ) {
         this.localAccess = localAccess;
+        this.metaDataAccess = metaDataAccess;
         this.remoteAccess = remoteAccess;
         this.eventTransformer = eventTransformer;
+        this.logger = logger;
     }
 
     @Override
     public List<Event> lookupRemote() throws SQLException
     {
         List<ApiEvent> events = this.remoteAccess.getSchedule();
-        List<Pair<ApiEvent, DateTime>> fetchedEvents = PairMerge.mergeRight(events, new DateTime());
-
-
-        return this.eventTransformer.bulkTransform(fetchedEvents);
+        return this.eventTransformer.bulkTransform(events);
     }
 
     @Override
-    public void saveLocal(List<Event> events) throws SQLException
+    public void saveLocal(final List<Event> events) throws SQLException
     {
-        for (Event event : events) {
-            this.localAccess.createOrUpdate(event);
+        this.logger.info("Saving " + events.size() + " events");
+
+        try {
+            this.localAccess.callBatchTasks(new BatchEventSave(this.localAccess, events));
+        } catch (Exception e) {
+            this.logger.error("Failed saving events", e);
         }
+
+        MetaData metaData = this.metaDataAccess.queryForId(MetaData.SINGLETON);
+        metaData = null == metaData ? new MetaData() : metaData;
+        metaData = metaData.withEventsFetched(new DateTime());
+        this.metaDataAccess.createOrUpdate(metaData);
     }
 
     @Override
     public void removeLocal(List<Event> events) throws SQLException
     {
+        this.logger.info("Removing " + events.size() + " events");
+
         for (Event event : events) {
             this.localAccess.deleteById(event.getId());
         }
@@ -90,6 +111,17 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
     @Override
     public boolean dataIsStale() throws SQLException
     {
-        return true;
+        MetaData metaData = this.metaDataAccess.queryForId(MetaData.SINGLETON);
+
+        if (null == metaData || null == metaData.getEventsFetched()) {
+            return true;
+        }
+
+        DateTime cutoff = new DateTime().minusHours(1);
+        if (metaData.getEventsFetched().isBefore(cutoff)) {
+            return true;
+        }
+
+        return false;
     }
 }

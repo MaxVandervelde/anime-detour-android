@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014 Anime Twin Cities, Inc.
+ * Copyright (c) 2014,2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -58,8 +58,7 @@ final public class HomeFragment extends BaseFragment
     {
         super.onResume();
 
-        this.loadBannerData(this.scrim, 1);
-        this.loadBannerData(this.scrim2, 2);
+        this.loadBannerData(this.scrim, this.scrim2);
     }
 
     @Override
@@ -71,12 +70,12 @@ final public class HomeFragment extends BaseFragment
     }
 
     /**
-     * Lookup a featured event and load the data into a specified banner.
+     * Lookup a featured event and load the data into banners.
      */
-    private void loadBannerData(ImageScrim banner, int ordinal)
+    private void loadBannerData(ImageScrim banner, ImageScrim banner2)
     {
-        FeaturedUpdater updater = this.updaterFactory.create(banner);
-        Subscription subscription = this.eventData.findFeatured(updater, ordinal);
+        FeaturedUpdater updater = this.updaterFactory.create(banner, banner2);
+        Subscription subscription = this.eventData.findFeatured(updater);
         this.subscriptionManager.add(subscription);
     }
 }

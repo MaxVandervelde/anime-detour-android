@@ -1,13 +1,14 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2015-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 package com.animedetour.android.database.guest;
 
+import com.animedetour.android.model.MetaData;
 import com.animedetour.api.guest.GuestEndpoint;
 import com.animedetour.api.guest.model.Category;
 import com.animedetour.api.guest.model.Guest;
@@ -15,8 +16,8 @@ import com.inkapplications.groundcontrol.SyncWorker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
+import monolog.Monolog;
+import org.joda.time.DateTime;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,21 +29,24 @@ import java.util.List;
  */
 public class AllCategoriesWorker extends SyncWorker<List<Category>>
 {
-    final private ConnectionSource connectionSource;
-    final private Dao<Category, Integer> localCategoryAccess;
+    final private Dao<Category, String> localCategoryAccess;
     final private Dao<Guest, String> localGuestAccess;
+    final private Dao<MetaData, Integer> metaData;
     final private GuestEndpoint remoteAccess;
+    final private Monolog logger;
 
     public AllCategoriesWorker(
-        ConnectionSource connectionSource,
-        Dao<Category, Integer> localCategoryAccess,
+        Dao<Category, String> localCategoryAccess,
         Dao<Guest, String> localGuestAccess,
-        GuestEndpoint remoteAccess
+        Dao<MetaData, Integer> metaData,
+        GuestEndpoint remoteAccess,
+        Monolog logger
     ) {
-        this.connectionSource = connectionSource;
         this.localCategoryAccess = localCategoryAccess;
         this.localGuestAccess = localGuestAccess;
+        this.metaData = metaData;
         this.remoteAccess = remoteAccess;
+        this.logger = logger;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class AllCategoriesWorker extends SyncWorker<List<Category>>
     @Override
     public List<Category> lookupLocal() throws SQLException
     {
-        QueryBuilder<Category, Integer> builder = this.localCategoryAccess.queryBuilder();
+        QueryBuilder<Category, String> builder = this.localCategoryAccess.queryBuilder();
 
         PreparedQuery<Category> query = builder.prepare();
         List<Category> result = this.localCategoryAccess.query(query);
@@ -65,28 +69,33 @@ public class AllCategoriesWorker extends SyncWorker<List<Category>>
     @Override
     public boolean dataIsStale() throws SQLException
     {
-        return true;
+        MetaData metaData = this.metaData.queryForId(MetaData.SINGLETON);
+
+        if (null == metaData || null == metaData.getGuestsFetched()) {
+            return true;
+        }
+
+        DateTime cutoff = new DateTime().minusHours(8);
+        if (metaData.getGuestsFetched().isBefore(cutoff)) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public void saveLocal(List<Category> categories) throws SQLException
     {
-        TableUtils.dropTable(this.connectionSource, Guest.class, true);
-        TableUtils.createTable(this.connectionSource, Guest.class);
-        TableUtils.dropTable(this.connectionSource, Category.class, true);
-        TableUtils.createTable(this.connectionSource, Category.class);
-
-        for (Category category : categories) {
-            this.saveLocal(category);
+        try {
+            BatchCategorySave batch = new BatchCategorySave(this.localCategoryAccess, this.localGuestAccess, categories);
+            this.localCategoryAccess.callBatchTasks(batch);
+        } catch (Exception e) {
+            this.logger.error("Error saving Guest Categories", e);
         }
-    }
 
-    private void saveLocal(Category category) throws SQLException
-    {
-        this.localCategoryAccess.create(category);
-
-        for (Guest guest : category.getGuests()) {
-            this.localGuestAccess.create(guest);
-        }
+        MetaData metaData = this.metaData.queryForId(MetaData.SINGLETON);
+        metaData = null == metaData ? new MetaData() : metaData;
+        metaData = metaData.withGuestsFetched(new DateTime());
+        this.metaData.createOrUpdate(metaData);
     }
 }

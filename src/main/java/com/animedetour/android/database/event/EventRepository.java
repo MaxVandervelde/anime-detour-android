@@ -47,7 +47,7 @@ public class EventRepository
     final private CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory;
 
     /** Worker for looking up a single event of a type. */
-    final private CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory;
+    final private CriteriaWorkerFactory<List<Event>, String> upcomingByTypeFactory;
 
     final private CriteriaWorkerFactory<List<Event>, String> allMatchingFactory;
 
@@ -65,7 +65,7 @@ public class EventRepository
         AllEventsWorker allEventsWorker,
         CriteriaWorkerFactory<List<Event>, Pair<DateTime, Boolean>> allByDayFactory,
         CriteriaWorkerFactory<Event, TagCriteria> upcomingByTagFactory,
-        CriteriaWorkerFactory<Event, TypeCriteria> upcomingByTypeFactory,
+        CriteriaWorkerFactory<List<Event>, String> upcomingByTypeFactory,
         CriteriaWorkerFactory<List<Event>, String> allMatchingFactory
     ) {
         this.localAccess = localAccess;
@@ -113,11 +113,10 @@ public class EventRepository
     /**
      * Find all of the "featured" events to suggest to the user.
      */
-    public Subscription findFeatured(Observer<Event> observer, long ordinal)
+    public Subscription findFeatured(Observer<List<Event>> observer)
     {
         return this.findUpcomingByType(
             "Anime Detour Panel",
-            ordinal,
             observer
         );
     }
@@ -125,11 +124,11 @@ public class EventRepository
     /**
      * Finds a single event of a given type.
      */
-    public Subscription findUpcomingByType(String type, long ordinal, Observer<Event> observer)
+    public Subscription findUpcomingByType(String type, Observer<List<Event>> observer)
     {
-        String key = "findUpcomingByType:" + type + ":" + ordinal;
-        return this.subscriptionFactory.createSubscription(
-            this.upcomingByTypeFactory.createWorker(new TypeCriteria(type, ordinal)),
+        String key = "findUpcomingByType:" + type;
+        return this.subscriptionFactory.createCollectionSubscription(
+            this.upcomingByTypeFactory.createWorker(type),
             observer,
             key
         );

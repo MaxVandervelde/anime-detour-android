@@ -12,13 +12,11 @@ import com.animedetour.android.model.Event;
 import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.api.sched.ScheduleEndpoint;
 import com.animedetour.api.sched.model.ApiEvent;
-import com.inkapplications.PairMerge;
 import com.inkapplications.groundcontrol.Worker;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
-import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import rx.Subscriber;
 
@@ -36,12 +34,12 @@ public class UpcomingEventsByTagWorker implements Worker<Event>
     final private Dao<Event, String> localAccess;
     final private ScheduleEndpoint remoteAccess;
     final private TagCriteria criteria;
-    final private Transformer<Pair<ApiEvent, DateTime>, Event> transformer;
+    final private Transformer<ApiEvent, Event> transformer;
 
     public UpcomingEventsByTagWorker(
         Dao<Event, String> localAccess,
         ScheduleEndpoint remoteAccess,
-        Transformer<Pair<ApiEvent, DateTime>, Event> transformer,
+        Transformer<ApiEvent, Event> transformer,
         TagCriteria tag
     ) {
         this.localAccess = localAccess;
@@ -71,8 +69,7 @@ public class UpcomingEventsByTagWorker implements Worker<Event>
         subscriber.onNext(currentEvents);
 
         List<ApiEvent> apiEvents = this.remoteAccess.getSchedule();
-        List<Pair<ApiEvent, DateTime>> fetchedEvents = PairMerge.mergeRight(apiEvents, new DateTime());
-        List<Event> events = this.transformer.bulkTransform(fetchedEvents);
+        List<Event> events = this.transformer.bulkTransform(apiEvents);
         this.saveLocal(events);
 
         Event newEvent = this.lookupLocal();

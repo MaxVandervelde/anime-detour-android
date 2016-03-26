@@ -10,7 +10,6 @@ package com.animedetour.android.model.transformer;
 
 import com.animedetour.android.model.Event;
 import com.animedetour.api.sched.model.ApiEvent;
-import org.javatuples.Pair;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -25,57 +24,51 @@ import java.util.List;
  * @author Maxwell Vandervelde <Max@MaxVandervelde.com>
  */
 @Singleton
-public class ApiEventTransformer implements Transformer<Pair<ApiEvent, DateTime>, Event>
+public class ApiEventTransformer implements Transformer<ApiEvent, Event>
 {
     @Inject
     public ApiEventTransformer() {}
 
     @Override
-    public Event transform(Pair<ApiEvent, DateTime> data)
+    public Event transform(ApiEvent data)
     {
-        ApiEvent apiEvent = data.getValue0();
-        DateTime fetched = data.getValue1();
         return new Event(
-            apiEvent.id,
-            apiEvent.name,
-            new DateTime(apiEvent.start),
-            new DateTime(apiEvent.end),
-            apiEvent.category,
-            apiEvent.tags,
-            apiEvent.room,
-            apiEvent.hosts,
-            apiEvent.description,
-            apiEvent.banner,
-            fetched
+            data.id,
+            data.name,
+            new DateTime(data.start),
+            new DateTime(data.end),
+            data.category,
+            data.tags,
+            data.room,
+            data.hosts,
+            data.description,
+            data.banner
         );
     }
 
     @Override
-    public Pair<ApiEvent, DateTime> reverseTransform(Event data)
+    public ApiEvent reverseTransform(Event data)
     {
-        return new Pair<>(
-            new ApiEvent(
-                data.getId(),
-                data.getName(),
-                ISODateTimeFormat.dateTimeNoMillis().print(data.getStart()),
-                ISODateTimeFormat.dateTimeNoMillis().print(data.getEnd()),
-                data.getCategory(),
-                data.getTags(),
-                data.getRoom(),
-                data.getHosts(),
-                data.getDescription(),
-                data.getBanner()
-            ),
-            data.getFetched()
+        return new ApiEvent(
+            data.getId(),
+            data.getName(),
+            ISODateTimeFormat.dateTimeNoMillis().print(data.getStart()),
+            ISODateTimeFormat.dateTimeNoMillis().print(data.getEnd()),
+            data.getCategory(),
+            data.getTags(),
+            data.getRoom(),
+            data.getHosts(),
+            data.getDescription(),
+            data.getBanner()
         );
     }
 
     @Override
-    public List<Event> bulkTransform(List<Pair<ApiEvent, DateTime>> fromEvents)
+    public List<Event> bulkTransform(List<ApiEvent> fromEvents)
     {
         ArrayList<Event> toEvents = new ArrayList<>(fromEvents.size());
 
-        for (Pair<ApiEvent, DateTime> fromEvent : fromEvents) {
+        for (ApiEvent fromEvent : fromEvents) {
             toEvents.add(this.transform(fromEvent));
         }
 
@@ -83,9 +76,9 @@ public class ApiEventTransformer implements Transformer<Pair<ApiEvent, DateTime>
     }
 
     @Override
-    public List<Pair<ApiEvent, DateTime>> bulkReverseTransform(List<Event> fromEvents)
+    public List<ApiEvent> bulkReverseTransform(List<Event> fromEvents)
     {
-        ArrayList<Pair<ApiEvent, DateTime>> toEvents = new ArrayList<>(fromEvents.size());
+        ArrayList<ApiEvent> toEvents = new ArrayList<>(fromEvents.size());
 
         for (Event fromEvent : fromEvents) {
             toEvents.add(this.reverseTransform(fromEvent));

@@ -31,8 +31,7 @@ public class EventTest
             "room",
             Arrays.asList("host 1", "host 2"),
             "description",
-            "banner",
-            new DateTime("2018-06-24T18:17:16-06:00").withZone(DateTimeZone.forOffsetHours(-6))
+            "banner"
         );
 
         assertEquals("id", test.getId());
@@ -45,18 +44,5 @@ public class EventTest
         assertEquals(Arrays.asList("host 1", "host 2"), test.getHosts());
         assertEquals("description", test.getDescription());
         assertEquals("banner", test.getBanner());
-        assertEquals(new DateTime("2018-06-24T18:17:16-06:00").withZone(DateTimeZone.forOffsetHours(-6)), test.getFetched());
-    }
-
-    @Test
-    public void testImmutability()
-    {
-        Event first = new Event();
-        Event second = first.withFetched(new DateTime());
-
-        assertNull(first.getFetched());
-        assertNotNull(second.getFetched());
-        assertNotEquals(first, second);
-        assertNotSame(first, second);
     }
 }
