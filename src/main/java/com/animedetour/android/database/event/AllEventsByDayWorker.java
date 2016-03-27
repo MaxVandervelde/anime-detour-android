@@ -80,22 +80,17 @@ public class AllEventsByDayWorker extends SyncEventsWorker
         builder.orderBy("name", true);
         if (false == includePast) {
             Where<Event, String> where = builder.where();
-            Where<Event, String> today = where.between("start", start, end);
-            Where<Event, String> endingLater = where.gt("end", now);
-            Where<Event, String> startedNotFinished = where.and(today, endingLater);
-            Where<Event, String> afterNow = where.between("start", now, end);
-            Where<Event, String> startsBefore = where.lt("start", start);
-            Where<Event, String> endsAfter = where.gt("end", end);
-            Where<Event, String> notOver = where.gt("end", now);
-            Where<Event, String> allDay = where.and(startsBefore, endsAfter, notOver);
-            where.or(startedNotFinished, afterNow, allDay);
+
+            Where<Event, String> beforeEndOfDay = where.lt("start", end);
+            Where<Event, String> afterNow = where.gt("end", now);
+            Where<Event, String> endAfterStart = where.gt("end", start);
+            where.and(beforeEndOfDay, afterNow, endAfterStart);
         } else {
             Where<Event, String> where = builder.where();
-            Where<Event, String> duringToday = where.between("start", start, end);
-            Where<Event, String> startsBefore = where.lt("start", start);
-            Where<Event, String> afterStart = where.gt("end", start);
-            Where<Event, String> throughToday = where.and(startsBefore, afterStart);
-            where.or(duringToday, throughToday);
+
+            Where<Event, String> startBeforeEndOfDay = where.lt("start", end);
+            Where<Event, String> endAfterStart = where.gt("end", start);
+            where.and(startBeforeEndOfDay, endAfterStart);
         }
 
         PreparedQuery<Event> query = builder.prepare();
