@@ -11,9 +11,9 @@ package com.animedetour.android.schedule.serach;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.ColorRes;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.animedetour.android.R;
@@ -64,7 +64,7 @@ public class FilterItemView extends FrameLayout
     {
         Resources resources = this.getResources();
         int color = resources.getColor(resourceId);
-        View card = this.findViewById(R.id.view_filter_card);
-        card.setBackgroundColor(color);
+        CardView card = (CardView) this.findViewById(R.id.view_filter_card);
+        card.setCardBackgroundColor(color);
     }
 }
