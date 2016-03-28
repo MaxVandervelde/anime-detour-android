@@ -57,6 +57,9 @@ final public class FavoritesFragment extends BaseFragment
     @Bind(R.id.panel_empty_view)
     View panelEmptyView;
 
+    @Bind(R.id.events_loading_indicator)
+    View loadingIndicator;
+
     @Inject
     SubscriptionManager subscriptionManager;
 
@@ -101,7 +104,7 @@ final public class FavoritesFragment extends BaseFragment
         this.panelList.setAdapter(adapter);
 
         Subscription favoriteSubscription = this.favoriteData.findAll(
-            new FavoriteUpdateObserver(this, this.panelEmptyView, this.logger)
+            new FavoriteUpdateObserver(this, this.panelEmptyView, this.loadingIndicator, this.logger)
         );
         this.subscriptionManager.add(favoriteSubscription);
     }
