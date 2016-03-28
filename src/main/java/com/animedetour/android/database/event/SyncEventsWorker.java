@@ -13,12 +13,16 @@ import com.animedetour.android.model.MetaData;
 import com.animedetour.android.model.transformer.Transformer;
 import com.animedetour.api.sched.ScheduleEndpoint;
 import com.animedetour.api.sched.model.ApiEvent;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.inkapplications.groundcontrol.RemovableSyncWorker;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import monolog.Monolog;
 import org.joda.time.DateTime;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -89,20 +93,37 @@ abstract public class SyncEventsWorker extends RemovableSyncWorker<List<Event>>
         this.metaDataAccess.createOrUpdate(metaData);
     }
 
+    /**
+     * Remove local events that are no longer needed.
+     *
+     * This is currently deleting any events that are not in the remote list
+     * currently.
+     *
+     * @todo Clean this up, and make it more efficient.
+     */
     @Override
-    public void removeLocal(List<Event> events) throws SQLException
+    public void removeLocal(List<Event> deprecated) throws SQLException
     {
-        this.logger.info("Removing " + events.size() + " events");
+        List<Event> events = new ArrayList<>(this.lookupRemote());
+        List<String> newIds = Lists.transform(events, new Function<Event, String>() {
+            @Override public String apply(Event input) {
+                return input.getId();
+            }
+        });
 
-        for (Event event : events) {
-            this.localAccess.deleteById(event.getId());
-        }
+        DeleteBuilder<Event, String> builder = this.localAccess.deleteBuilder();
+        builder.where().notIn("id", newIds);
+        this.localAccess.delete(builder.prepare());
     }
 
     /**
-     * @todo The endpoint to check for deleted events was removed, if added back, implement here.
+     * Not used due to change in logic.
+     *
+     * @deprecated
+     * @see #removeLocal
      */
     @Override
+    @Deprecated
     public List<Event> lookupRemovedRemote() throws Exception
     {
         return Collections.emptyList();
