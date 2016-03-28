@@ -24,17 +24,20 @@ import java.util.List;
  */
 public class FavoriteUpdateObserver implements Observer<List<Favorite>>
 {
-    private FavoritesFragment fragment;
-    private View emptyView;
-    private Monolog logger;
+    final private FavoritesFragment fragment;
+    final private View emptyView;
+    final private View loadingIndicator;
+    final private Monolog logger;
 
     public FavoriteUpdateObserver(
         FavoritesFragment fragment,
         View emptyView,
+        View loadingIndicator,
         Monolog logger
     ) {
         this.fragment = fragment;
         this.emptyView = emptyView;
+        this.loadingIndicator = loadingIndicator;
         this.logger = logger;
     }
 
@@ -49,6 +52,10 @@ public class FavoriteUpdateObserver implements Observer<List<Favorite>>
     @Override
     public void onNext(List<Favorite> favorites)
     {
+        if (null != this.loadingIndicator) {
+            this.loadingIndicator.setVisibility(View.GONE);
+        }
+
         if (favorites.size() == 0) {
             this.emptyView.setVisibility(View.VISIBLE);
         } else {
