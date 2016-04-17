@@ -32,6 +32,7 @@ import com.animedetour.android.view.fader.ToolbarFader;
 import com.animedetour.android.view.fader.ToolbarFaderFactory;
 import com.animedetour.android.view.scrim.ImageScrim;
 import com.google.common.base.Joiner;
+import com.wefika.flowlayout.FlowLayout;
 import monolog.LogName;
 import monolog.Monolog;
 import org.joda.time.DateTime;
@@ -40,7 +41,6 @@ import prism.framework.Layout;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
-import java.util.Date;
 
 /**
  * Event Activity
@@ -99,6 +99,9 @@ final public class EventActivity extends BaseActivity
 
     @Bind(R.id.event_hoh_message)
     View hohMessage;
+
+    @Bind(R.id.event_tags)
+    FlowLayout tags;
 
     @Inject
     Monolog logger;
@@ -211,6 +214,13 @@ final public class EventActivity extends BaseActivity
 
         ToolbarFader fader = this.faderFactory.create(this.bannerView, this.detailsContainer, this.actionBar);
         this.detailsContainer.getViewTreeObserver().addOnScrollChangedListener(fader);
+
+        for (String tag : this.event.getTags()) {
+            if (tag.trim().isEmpty()) { continue; }
+            TextView tagView = (TextView) getLayoutInflater().inflate(R.layout.tag, this.tags, false);
+            tagView.setText(tag);
+            this.tags.addView(tagView);
+        }
     }
 
     @Override

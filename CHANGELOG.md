@@ -7,6 +7,7 @@ v2.2.1
 ---------------------
  * Change panel times to display days.
  * Fix floating badge issue
+ * Add Tags to event details
 
 v2.2.0
 ---------------------
