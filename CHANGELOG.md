@@ -6,6 +6,7 @@ This file summarizes the changes between releases of the application.
 v2.2.1
 ---------------------
  * Change panel times to display days.
+ * Fix floating badge issue
 
 v2.2.0
 ---------------------
