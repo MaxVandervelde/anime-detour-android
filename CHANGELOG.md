@@ -3,6 +3,12 @@ Change Log
 
 This file summarizes the changes between releases of the application.
 
+v2.2.1
+---------------------
+ * Change panel times to display days.
+ * Fix floating badge issue
+ * Add Tags to event details
+
 v2.2.0
 ---------------------
  * Add Ability to search

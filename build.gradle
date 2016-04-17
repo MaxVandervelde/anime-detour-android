@@ -110,6 +110,7 @@ dependencies {
     }
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile "com.wefika:flowlayout:0.4.1"
 
     compile 'frankiesardo:icepick:3.1.0'
     provided 'frankiesardo:icepick-processor:3.1.0'

@@ -19,7 +19,8 @@
     <string name="drawer_maps_label">Hotel Map</string>
     <string name="drawer_settings_label">Settings</string>
 
-    <string name="panel_details">%1$ta, %1$tl:%1$tM - %2$tl:%2$tM%2$tp in %3$s</string>
+    <string name="panel_details">%1$ta, %1$tl:%1$tM%1$tp - %2$tl:%2$tM%2$tp in %3$s</string>
+    <string name="panel_details_multiday">%1$ta, %1$tl:%1$tM%1$tp - %2$ta, %2$tl:%2$tM%2$tp in %3$s</string>
     <string name="schedule_day_headline">%tA</string>
 
     <string name="notification_description">Event is starting soon</string>

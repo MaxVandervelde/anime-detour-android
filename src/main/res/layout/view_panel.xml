@@ -7,7 +7,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:layout_height="80dp"
+    tools:layout_height="95dp"
     card_view:elevation="1dp"
     card_view:cardCornerRadius="0dp"
     android:layout_margin="4dp"
@@ -29,21 +29,33 @@
             android:layout_height="match_parent"
             android:background="@drawable/drawer_row_background"
         >
+            <TextView
+                style="@style/title"
+                android:id="@+id/view_panel_name"
+                android:layout_toLeftOf="@+id/badge_container"
+                android:layout_toStartOf="@+id/badge_container"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+
+                android:layout_marginBottom="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Panel Name"
+                android:maxLines="2"
+                android:ellipsize="end"
+            />
+
             <LinearLayout
-                android:id="@+id/title_container"
+                android:id="@+id/badge_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@id/view_panel_name"
+                android:layout_alignTop="@id/view_panel_name"
             >
-                <TextView
-                    style="@style/title"
-                    android:id="@+id/view_panel_name"
-                    android:layout_marginBottom="0dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    tools:text="Panel Name XXXXXXXXXXXXXXXX"
-                />
                 <TextView
                     android:id="@+id/view_panel_age_warning"
                     android:layout_width="wrap_content"
@@ -65,11 +77,11 @@
             <TextView
                 style="@style/caption"
                 android:id="@+id/view_panel_description"
-                android:layout_below="@id/title_container"
+                android:layout_below="@id/badge_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                tools:text="1:00 - 4:00 in Room B"
+                tools:text="Fri 1:00am - Sun 4:00pm in Room B"
             />
             <com.animedetour.android.view.ColoredImageView
                 android:id="@+id/view_panel_starred"
