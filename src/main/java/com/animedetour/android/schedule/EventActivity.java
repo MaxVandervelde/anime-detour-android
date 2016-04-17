@@ -34,6 +34,7 @@ import com.animedetour.android.view.scrim.ImageScrim;
 import com.google.common.base.Joiner;
 import monolog.LogName;
 import monolog.Monolog;
+import org.joda.time.DateTime;
 import prism.framework.DisplayName;
 import prism.framework.Layout;
 
@@ -273,12 +274,13 @@ final public class EventActivity extends BaseActivity
      */
     protected String getEventDetailsString()
     {
-        String format = this.getString(R.string.panel_details);
-        Date start = this.event.getStart().toDate();
-        Date end = this.event.getEnd().toDate();
+        DateTime start = this.event.getStart();
+        DateTime end = this.event.getEnd();
+
+        String format = start.getDayOfYear() == end.getDayOfYear() ? this.getString(R.string.panel_details) : this.getString(R.string.panel_details_multiday);
         String location = this.event.getRoom();
 
-        return String.format(format, start, end, location);
+        return String.format(format, start.toDate(), end.toDate(), location);
     }
 
     /**
