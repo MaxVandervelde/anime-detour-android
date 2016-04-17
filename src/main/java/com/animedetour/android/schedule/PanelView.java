@@ -66,9 +66,14 @@ public class PanelView extends RelativeLayout
     private View color;
 
     /**
-     * The time format to use for the panel start and end time
+     * The time format to use for the panel.
      */
     final private static DateTimeFormatter TIME_FORMAT = DateTimeFormat.forPattern("hh:mma");
+
+    /**
+     * The time format to use for the panel, with a day marked.
+     */
+    final private static DateTimeFormatter DAY_TIME_FORMAT = DateTimeFormat.forPattern("EEE, hh:mma");
 
     public PanelView(Context context, AttributeSet attrs)
     {
@@ -187,12 +192,23 @@ public class PanelView extends RelativeLayout
     }
 
     /**
+     * Get a time stamp for a panel.
+     *
+     * If the panel ends on a different day than it started, this will include
+     * a day for the end time, like `Sat, 2:00pm - Sun, 8:00am`
+     * Otherwise it will leave it off, like `Sat, 2:00pm - 4:00pm`
+     *
      * @param start The start time of the panel
      * @param end The end time of the panel
-     * @return A formated timespan of the start and end time of the panel, e.g. "2:00PM - 6:00PM"
+     * @return A formated timespan of the start and end time of the panel,
+     *         e.g. `Sun, 2:00PM - 6:00PM`
      */
     protected String getTimeRangeString(DateTime start, DateTime end)
     {
-        return PanelView.TIME_FORMAT.print(start) + " - " + PanelView.TIME_FORMAT.print(end);
+        if (start.dayOfYear().equals(end.dayOfYear())) {
+            return PanelView.DAY_TIME_FORMAT.print(start) + " - " + PanelView.TIME_FORMAT.print(end);
+        } else {
+            return PanelView.DAY_TIME_FORMAT.print(start) + " - " + PanelView.DAY_TIME_FORMAT.print(end);
+        }
     }
 }
