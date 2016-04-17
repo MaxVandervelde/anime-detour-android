@@ -28,7 +28,7 @@ android {
         minSdkVersion  (skipProguard ? 21 : 16)
         targetSdkVersion 23
         versionCode rev
-        versionName "2.2.0"
+        versionName "2.3.0"
         multiDexEnabled skipProguard
     }
 

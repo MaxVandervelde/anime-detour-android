@@ -3,7 +3,7 @@ Change Log
 
 This file summarizes the changes between releases of the application.
 
-v2.2.1
+v2.3.0
 ---------------------
  * Change panel times to display days.
  * Fix floating badge issue
