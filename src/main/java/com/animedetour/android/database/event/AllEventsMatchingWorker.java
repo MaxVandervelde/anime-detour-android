@@ -16,6 +16,7 @@ import com.animedetour.api.sched.model.ApiEvent;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.SelectArg;
 import monolog.Monolog;
 
 import java.sql.SQLException;
@@ -60,10 +61,11 @@ public class AllEventsMatchingWorker extends SyncEventsWorker
 
         String criteria = this.criteria.trim();
 
-        builder.where().like("name","%" + criteria + "%")
-            .or().eq("category", criteria)
-            .or().like("tags", "%" + criteria + "%")
-            .or().like("hosts", "%" + criteria + "%");
+        builder.where().like("name", new SelectArg("%" + criteria + "%"))
+            .or().eq("category", new SelectArg(criteria))
+            .or().like("tags", new SelectArg("%" + criteria + "%"))
+            .or().like("hosts", new SelectArg("%" + criteria + "%"))
+            .or().like("room", new SelectArg("%" + criteria + "%"));
 
         PreparedQuery<Event> query = builder.prepare();
         List<Event> result = this.localAccess.query(query);
