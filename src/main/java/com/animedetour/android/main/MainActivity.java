@@ -1,7 +1,7 @@
 /*
  * This file is part of the Anime Detour Android application
  *
- * Copyright (c) 2014-2015 Anime Twin Cities, Inc.
+ * Copyright (c) 2014-2016 Anime Twin Cities, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,6 +21,7 @@ import com.animedetour.android.R;
 import com.animedetour.android.framework.BaseActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
+import com.animedetour.android.home.OffSeasonHomeFragment;
 import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.ScheduleFragment;
 import com.animedetour.android.schedule.favorite.FavoritesFragment;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import icepick.State;
+import org.joda.time.DateTime;
 import prism.framework.Layout;
 
 /**
@@ -112,7 +114,13 @@ final public class MainActivity extends BaseActivity
     protected void openLandingFragment()
     {
         this.drawerController.closeToPage(HomeFragment.class);
-        this.contentFragmentTransaction(new HomeFragment(), "home");
+
+        // @todo – Remove this hardcoded date check when the API has the capability to lookup convention dates (soon, I promise)
+        if (DateTime.now().isAfter(new DateTime("2016-04-24").withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59))) {
+            this.contentFragmentTransaction(new OffSeasonHomeFragment(), "home");
+        } else {
+            this.contentFragmentTransaction(new HomeFragment(), "home");
+        }
     }
 
     /**

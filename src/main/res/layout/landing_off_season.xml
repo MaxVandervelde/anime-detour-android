@@ -1,0 +1,45 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/default_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <TextView
+        style="@style/display1"
+        android:layout_centerInParent="true"
+        android:textColor="@color/foreground_highlight"
+        android:fontFamily="sans-serif-thin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/off_season_headline"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="48dp"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+    >
+        <Button
+            android:id="@+id/more_events"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/foreground_inverse"
+            android:layout_margin="16dp"
+            android:padding="16dp"
+            android:text="@string/atc_link"
+            android:layout_weight=".5"
+        />
+        <Button
+            android:theme="@style/button_primary"
+            android:id="@+id/register_next_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:padding="16dp"
+            android:text="@string/register_action"
+            android:layout_weight=".5"
+        />
+    </LinearLayout>
+</RelativeLayout>
