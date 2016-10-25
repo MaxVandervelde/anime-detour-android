@@ -43,4 +43,14 @@
     <style name="panel">
         <item name="android:padding">16dp</item>
     </style>
+    <style name="button_primary" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/primary_highlight</item>
+        <item name="colorButtonNormal">@color/primary</item>
+        <item name="android:textColor">@color/foreground_inverse</item>
+    </style>
+    <style name="button_secondary" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#22000000</item>
+        <item name="colorButtonNormal">@android:color/transparent</item>
+        <item name="android:textColor">#ff3949AB</item>
+    </style>
 </resources>

@@ -71,6 +71,9 @@ public class AllEventsByDayWorker extends SyncEventsWorker
     {
         DateTime dayCriteria = this.criteria.getValue0();
         Boolean includePast = this.criteria.getValue1();
+        if (dayCriteria.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).isBefore(DateTime.now())) {
+            includePast = true;
+        }
         DateTime now = new DateTime();
 
         DateTime start = dayCriteria.withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);

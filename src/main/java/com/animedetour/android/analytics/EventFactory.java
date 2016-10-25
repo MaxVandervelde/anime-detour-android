@@ -58,4 +58,14 @@ final public class EventFactory
     {
         return new TrackedEvent("Settings", "Dev-enable");
     }
+
+    public static TrackedEvent moreEventsClick()
+    {
+        return new TrackedEvent("Home", "More Events");
+    }
+
+    public static TrackedEvent registerClick()
+    {
+        return new TrackedEvent("Home", "Register");
+    }
 }

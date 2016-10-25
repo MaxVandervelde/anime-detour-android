@@ -11,6 +11,7 @@ package com.animedetour.android.framework.dependencyinjection.module;
 import com.animedetour.android.guest.GuestDetailActivity;
 import com.animedetour.android.guest.GuestIndexFragment;
 import com.animedetour.android.home.HomeFragment;
+import com.animedetour.android.home.OffSeasonHomeFragment;
 import com.animedetour.android.main.MainActivity;
 import com.animedetour.android.map.HotelMapFragment;
 import com.animedetour.android.schedule.DayFragment;
@@ -29,6 +30,7 @@ import dagger.Module;
         EventSearchActivity.class,
 
         HomeFragment.class,
+        OffSeasonHomeFragment.class,
         DayFragment.class,
         ScheduleFragment.class,
         GuestIndexFragment.class,
